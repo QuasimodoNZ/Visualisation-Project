@@ -1,20 +1,1260 @@
-'''
-Created on 23/08/2015
-
-Just a whole bunch of places to show the list of tuples that are the choices for a given field
-
-@author: Benjamin Riddell
-'''
-
-CITIZENSHIP_STATUS = [
-    (1, "Born in the, Guam, the U.S. Virgin Islands, or the Northern Marianas if current residence is Puerto Rico"),
-    (2, "Born in Puerto Rico, Guam, the U.S. Virgin Islands, or the Northern Marianas, Born in Puerto Rico if current residence is Puerto Rico"),
-    (3, "Born abroad of American parents"),
-    (4, "U.S. citizen by naturalization"),
-    (5, "Not a citizen of the U.S."),
+DIVISION = [
+    (0, 'Puerto Rico'),
+    (1, 'New England (Northeast region)'),
+    (2, 'Middle Atlantic (Northeast region)'),
+    (3, 'East North Central (Midwest region)'),
+    (4, 'West North Central (Midwest region)'),
+    (5, 'South Atlantic (South region)'),
+    (6, 'East South Central (South region)'),
+    (7, 'West South Central (South Region)'),
+    (8, 'Mountain (West region)'),
+    (9, 'Pacific (West region)'),
 ]
 
-CLASS_OF_WORKER = [
+REGION = [
+    (1, 'Northeast'),
+    (2, 'Midwest'),
+    (3, 'South'),
+    (4, 'West'),
+    (9, 'Puerto Rico'),
+]
+
+ST = [
+    (1, 'Alabama/AL'),
+    (2, 'Alaska/AK'),
+    (4, 'Arizona/AZ'),
+    (5, 'Arkansas/AR'),
+    (6, 'California/CA'),
+    (8, 'Colorado/CO'),
+    (9, 'Connecticut/CT'),
+    (10, 'Delaware/DE'),
+    (11, 'District of Columbia/DC'),
+    (12, 'Florida/FL'),
+    (13, 'Georgia/GA'),
+    (15, 'Hawaii/HI'),
+    (16, 'Idaho/ID'),
+    (17, 'Illinois/IL'),
+    (18, 'Indiana/IN'),
+    (19, 'Iowa/IA'),
+    (20, 'Kansas/KS'),
+    (21, 'Kentucky/KY'),
+    (22, 'Louisiana/LA'),
+    (23, 'Maine/ME'),
+    (24, 'Maryland/MD'),
+    (25, 'Massachusetts/MA'),
+    (26, 'Michigan/MI'),
+    (27, 'Minnesota/MN'),
+    (28, 'Mississippi/MS'),
+    (29, 'Missouri/MO'),
+    (30, 'Montana/MT'),
+    (31, 'Nebraska/NE'),
+    (32, 'Nevada/NV'),
+    (33, 'New Hampshire/NH'),
+    (34, 'New Jersey/NJ'),
+    (35, 'New Mexico/NM'),
+    (36, 'New York/NY'),
+    (37, 'North Carolina/NC'),
+    (38, 'North Dakota/ND'),
+    (39, 'Ohio/OH'),
+    (40, 'Oklahoma/OK'),
+    (41, 'Oregon/OR'),
+    (42, 'Pennsylvania/PA'),
+    (44, 'Rhode Island/RI'),
+    (45, 'South Carolina/SC'),
+    (46, 'South Dakota/SD'),
+    (47, 'Tennessee/TN'),
+    (48, 'Texas/TX'),
+    (49, 'Utah/UT'),
+    (50, 'Vermont/VT'),
+    (51, 'Virginia/VA'),
+    (53, 'Washington/WA'),
+    (54, 'West Virginia/WV'),
+    (55, 'Wisconsin/WI'),
+    (56, 'Wyoming/WY'),
+    (72, 'Puerto Rico/PR'),
+]
+
+ADJUST = [
+    (1015675, '2006 factor (1.015675)'),
+]
+
+WGTP = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+NP = [
+    (00, 'Vacant unit'),
+    (01, 'One person record (one person in household or any person in group quarters)'),
+    (02..20, 'Number of person records (number of persons in household)'),
+]
+
+TYPE = [
+    (1, 'Housing unit'),
+    (2, 'Institutional group quarters'),
+    (3, 'Noninstitutional group quarters'),
+]
+
+ACR = [
+    (b, 'N/A (GQ/not a one-family house or mobile home)'),
+    (1, 'House on less than one acre'),
+    (2, 'House on one to less than ten acres'),
+    (3, 'House on ten or more acres'),
+]
+
+AGS = [
+    (b, 'N/A (less than 1 acre/GQ/vacant/ 2 or more units in structure)'),
+    (1, 'None'),
+    (2, '$ 1 - $ 999'),
+    (3, '$ 1000 - $ 2499'),
+    (4, '$ 2500 - $ 4999'),
+    (5, '$ 5000 - $ 9999'),
+    (6, '$10000+'),
+]
+
+BDS = [
+    (b, 'N/A (GQ)'),
+    (0, 'No bedrooms'),
+    (1, '1 Bedroom'),
+    (2, '2 Bedrooms'),
+    (3, '3 Bedrooms'),
+    (4, '4 Bedrooms'),
+    (5, '5 or more bedrooms'),
+]
+
+BLD = [
+    (bb, 'N/A (GQ)'),
+    (01, 'Mobile home or trailer'),
+    (02, 'One-family house detached'),
+    (03, 'One-family house attached'),
+    (04, '2 Apartments'),
+    (05, '3-4 Apartments'),
+    (06, '5-9 Apartments'),
+    (07, '10-19 Apartments'),
+    (08, '20-49 Apartments'),
+    (09, '50 or more apartments'),
+    (10, 'Boat, RV, van, etc.'),
+]
+
+BUS = [
+    (b, 'N/A (GQ/not a one-family house or mobile home)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+CONP = [
+    (bbbb, 'N/A (not owned or being bought/not condo/GQ/vacant/no condo fee)'),
+    (0001..9999, '$1 - $9999 (Rounded and top-coded)'),
+]
+
+ELEP = [
+    (bbb, 'N/A (GQ/vacant)'),
+    (001, 'Included in rent or in condo fee'),
+    (002, 'No charge or electricity not used'),
+    (003..999, '$3 to $999 (Rounded and top-coded)'),
+]
+
+FS = [
+    (bbbbb, 'N/A (vacant)'),
+    (0, 'None'),
+    (1..99999, '$1 to $99999'),
+]
+
+FULP = [
+    (bbbb, 'N/A (GQ/vacant)'),
+    (0001, 'Included in rent or in condo fee'),
+    (0002, 'No charge or these fuels not used'),
+    (0003..9999, '$3 to $9999 (Rounded and top-coded)'),
+]
+
+GASP = [
+    (bbb, 'N/A (GQ/vacant)'),
+    (001, 'Included in rent or in condo fee'),
+    (002, 'Included in electricity payment'),
+    (003, 'No charge or gas not used'),
+    (004..999, '$4 to $999 (Rounded and top-coded)'),
+]
+
+HFL = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'Utility gas'),
+    (2, 'Bottled, tank, or LP gas'),
+    (3, 'Electricity'),
+    (4, 'Fuel oil, kerosene, etc.'),
+    (5, 'Coal or coke'),
+    (6, 'Wood'),
+    (7, 'Solar energy'),
+    (8, 'Other fuel'),
+    (9, 'No fuel used'),
+]
+
+INSP = [
+    (bbbb, 'N/A (not owned or being bought/not a one family house, mobile home, or condo/GQ/vacant)'),
+    (0000, 'None'),
+    (0001..9999, '$1 to $9999 (Rounded and top-coded)'),
+]
+
+KIT = [
+    (b, 'N/A (GQ)'),
+    (1, 'Yes, has all three facilities'),
+    (2, 'No'),
+]
+
+MHP = [
+    (bbbbb, 'N/A (GQ/vacant/not owned or being bought/ not mobile home/no costs)'),
+    (00000..99999, '$0 to $99999 (Rounded and top-coded)'),
+]
+
+MRGI = [
+    (b, 'N/A (GQ/vacant/not owned or being bought/ Not a one family house, MHT or condo/not mortgaged/no regular mortgage payment)'),
+    (1, 'Yes, insurance included in payment'),
+    (2, 'No, insurance paid separately or no insurance'),
+]
+
+MRGP = [
+    (bbbbb, 'N/A (not owned or being bought/not a one family house, mobile home, or condo/GQ/vacant)'),
+    (00001..99999, '$1 to $99999 (Rounded and top-coded)'),
+]
+
+MRGT = [
+    (b, 'N/A (GQ/vacant/not owned or being bought/not a one family house or condo/not mortgaged/ No regular mortgage payment)'),
+    (1, 'Yes, taxes included in payment'),
+    (2, 'No, taxes paid separately or taxes not required'),
+]
+
+MRGX = [
+    (b, 'N/A (not owned or being bought/not a one family house, mobile home, or condo/GQ/vacant)'),
+    (1, 'Mortgage deed of trust, or similar debt'),
+    (2, 'Contract to purchase'),
+    (3, 'None'),
+]
+
+PLM = [
+    (b, 'N/A (GQ)'),
+    (1, 'Yes, has all three facilities'),
+    (2, 'No'),
+]
+
+RMS = [
+    (b, 'N/A (GQ)'),
+    (1, '1 Room'),
+    (2, '2 Rooms'),
+    (3, '3 Rooms'),
+    (4, '4 Rooms'),
+    (5, '5 Rooms'),
+    (6, '6 Rooms'),
+    (7, '7 Rooms'),
+    (8, '8 Rooms'),
+    (9, '9 or more rooms'),
+]
+
+RNTM = [
+    (b, 'N/A (GQ/not a rental unit/rental-NCR)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+RNTP = [
+    (bbbbb, 'N/A (GQ/not a rental unit)'),
+    (00001..99999, '$1 to $99999 (Rounded and top-coded)'),
+]
+
+SMP = [
+    (bbbbb, 'N/A (GQ/vacant/condo/not owned or being bought/not a one family house/not mortgaged/ no second mortgage)'),
+    (00001..99999, '$1 to $99999 (Rounded and top-coded)'),
+]
+
+TEL = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+TEN = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'Owned with mortgage or loan'),
+    (2, 'Owned free and clear'),
+    (3, 'Rented for cash rent'),
+    (4, 'No cash rent'),
+]
+
+VACS = [
+    (b, 'N/A (occupied/GQ)'),
+    (1, 'For rent'),
+    (2, 'Rented, not occupied'),
+    (3, 'For sale only'),
+    (4, 'Sold, not occupied'),
+    (5, 'For seasonal/recreational/occasional use'),
+    (6, 'For migratory workers'),
+    (7, 'Other vacant'),
+]
+
+VAL = [
+    (bb, 'N/A (GQ/rental unit/vacant, not for sale only)'),
+    (01, 'Less than $ 10000'),
+    (02, '$ 10000 - $ 14999'),
+    (03, '$ 15000 - $ 19999'),
+    (04, '$ 20000 - $ 24999'),
+    (05, '$ 25000 - $ 29999'),
+    (06, '$ 30000 - $ 34999'),
+    (07, '$ 35000 - $ 39999'),
+    (08, '$ 40000 - $ 49999'),
+    (09, '$ 50000 - $ 59999'),
+    (10, '$ 60000 - $ 69999'),
+    (11, '$ 70000 - $ 79999'),
+    (12, '$ 80000 - $ 89999'),
+    (13, '$ 90000 - $ 99999'),
+    (14, '$100000 - $124999'),
+    (15, '$125000 - $149999'),
+    (16, '$150000 - $174999'),
+    (17, '$175000 - $199999'),
+    (18, '$200000 - $249999'),
+    (19, '$250000 - $299999'),
+    (20, '$300000 - $399999'),
+    (21, '$400000 - $499999'),
+    (22, '$500000 - $749999'),
+    (23, '$750000 - $999999'),
+    (24, '$1000000+'),
+]
+
+VEH = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'No vehicles'),
+    (1, '1 vehicle'),
+    (2, '2 vehicles'),
+    (3, '3 vehicles'),
+    (4, '4 vehicles'),
+    (5, '5 vehicles'),
+    (6, '6 or more vehicles'),
+]
+
+WATP = [
+    (bbbb, 'N/A (GQ/vacant)'),
+    (0001, 'Included in rent or in condo fee'),
+    (0002, 'No charge'),
+    (0003..9999, '$3 to $9999 (Rounded and top-coded)'),
+]
+
+YBL = [
+    (b, 'N/A (GQ)'),
+    (1, '2005 or later'),
+    (2, '2000 to 2004'),
+    (3, '1990 to 1999'),
+    (4, '1980 to 1989'),
+    (5, '1970 to 1979'),
+    (6, '1960 to 1969'),
+    (7, '1950 to 1959'),
+    (8, '1940 to 1949'),
+    (9, '1939 or earlier'),
+]
+
+FES = [
+    (b, 'N/A (GQ/vacant/not a family)'),
+    (1, 'Married-couple family: Husband and wife in LF'),
+    (2, 'Married-couple family: Husband in labor force, wife not in LF'),
+    (3, 'Married-couple family: Husband not in LF, wife in LF'),
+    (4, 'Married-couple family: Neither husband nor wife in LF'),
+    (5, 'Other family: Male householder, no wife present, in LF'),
+    (6, 'Other family: Male householder, no wife present, not in LF'),
+    (7, 'Other family: Female householder, no husband present, in LF'),
+    (8, 'Other family: Female householder, no husband present, not in LF'),
+]
+
+FINCP = [
+    (bbbbbbbb, 'N/A(GQ/vacant)'),
+    (00000000, 'No family income'),
+    (-59999..99999999, 'Total family income in dollars'),
+]
+
+FPARC = [
+    (b, 'N/A (GQ/vacant/not a family)'),
+    (1, 'With related children under 5 years only'),
+    (2, 'With related children 5 to 17 years only'),
+    (3, 'With related children under 5 years and 5 to 17 years'),
+    (4, 'No related children'),
+]
+
+GRNTP = [
+    (bbbb, 'N/A (GQ/vacant, not rented for cash rent)'),
+    (0001..9999, '$1 - $9999'),
+]
+
+GRPIP = [
+    (bbb, 'N/A (GQ/vacant/not rented for cash rent/owner occupied/no household income)'),
+    (001..100, '1% to 100%'),
+    (101, '101% or more'),
+]
+
+HHL = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'English only'),
+    (2, 'Spanish'),
+    (3, 'Other Indo-European language'),
+    (4, 'Asian or Pacific Island language'),
+    (5, 'Other language'),
+]
+
+HHT = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'Married-couple family household Other family household:'),
+    (2, 'Male householder, no wife present'),
+    (3, 'Female householder, no husband present Nonfamily household: Male householder:'),
+    (4, 'Living alone'),
+    (5, 'Not living alone Female householder:'),
+    (6, 'Living alone'),
+    (7, 'Not living alone'),
+]
+
+HINCP = [
+    (bbbbbbbb, 'N/A(GQ/vacant)'),
+    (00000000, 'No household income'),
+    (-59999..99999999, 'Total household income in dollars'),
+]
+
+HUGCL = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'HU does not contain grandchildren'),
+    (1, 'HU does contain grandchildren'),
+]
+
+HUPAC = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'With children under 6 years only'),
+    (2, 'With children 6 to 17 years only'),
+    (3, 'With children under 6 years and 6 to 17 years'),
+    (4, 'No children'),
+]
+
+HUPAOC = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'Presence of own children under 6 years only'),
+    (2, 'Presence of own children 6 to 17 years only'),
+    (3, 'Presence of own children under 6 years and 6 to 17 years'),
+    (4, 'No own children present'),
+]
+
+HUPARC = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'Presence of related children under 6 years only'),
+    (2, 'Presence of related children 6 to 17 years only'),
+    (3, 'Presence of related children under 6 years and 6 to 17 years'),
+    (4, 'No related children present'),
+]
+
+LNGI = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, 'Not linguistically isolated'),
+    (2, 'Linguistically isolated'),
+]
+
+MV = [
+    (b, 'N/A (GQ/vacant)'),
+    (1, '12 months or less'),
+    (2, '13 to 23 months'),
+    (3, '2 to 4 years'),
+    (4, '5 to 9 years'),
+    (5, '10 to 19 years'),
+    (6, '20 to 29 years'),
+    (7, '30 years or more'),
+]
+
+NOC = [
+    (bb, 'N/A(GQ/vacant)'),
+    (00, 'No own children'),
+    (01..19, 'Number of own children in household'),
+]
+
+NPF = [
+    (bb, 'N/A (GQ/vacant/non-family household)'),
+    (02..20, 'Number of persons in family'),
+]
+
+NPP = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'Not a grandparent headed household with no parent present'),
+    (1, 'Grandparent headed household with no parent present'),
+]
+
+NR = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'None'),
+    (1, '1 or more nonrelatives'),
+]
+
+NRC = [
+    (bb, 'N/A (GQ/vacant)'),
+    (00, 'No related children'),
+    (01..19, 'Number of related children in household'),
+]
+
+OCPIP = [
+    (bbb, 'N/A (not owned or being bought/not a one family house, mobile home, or condo/GQ/vacant/no HH income)'),
+    (001..100, '1% to 100%'),
+    (101, '101% or more'),
+]
+
+PARTNER = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'No unmarried partner in household'),
+    (1, 'Male householder, male partner'),
+    (2, 'Male householder, female partner'),
+    (3, 'Female householder, male partner'),
+    (4, 'Female householder, female partner'),
+]
+
+PSF = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'No subfamilies'),
+    (1, '1 or more subfamilies'),
+]
+
+R18 = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'No person under 18 in household'),
+    (1, '1 or more persons under 18 in household'),
+]
+
+R60 = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'No person 60 and over'),
+    (1, '1 person 60 and over'),
+    (2, '2 or more persons 60 and over'),
+]
+
+R65 = [
+    (b, 'N/A (GQ/vacant)'),
+    (0, 'No person 65 and over'),
+    (1, '1 person 65 and over'),
+    (2, '2 or more persons 65 and over'),
+]
+
+RESMODE = [
+    (b, 'N/A (GQ)'),
+    (1, 'Mail'),
+    (2, 'CATI/CAPI'),
+]
+
+SMOCP = [
+    (bbbbb, 'N/A (not owned or being bought/not a one family house, mobile home, or condo/GQ/vacant/no costs )'),
+    (00000, 'No costs'),
+    (00001..99999, '$1 - $99999'),
+]
+
+SMX = [
+    (b, 'N/A (GQ/vacant/not owned or being bought/ not a one family house, mobile home, trailer or condo/not mortgaged/no second mortgage)'),
+    (1, 'Yes, a second mortgage'),
+    (2, 'Yes, a home equity loan'),
+    (3, 'No'),
+    (4, 'Both a second mortgage and a home equity loan'),
+]
+
+SRNT = [
+    (0, 'Not specified rent unit'),
+    (1, 'Specified rent unit'),
+]
+
+SVAL = [
+    (0, 'Not specified owner unit'),
+    (1, 'Specified value unit'),
+]
+
+TAXP = [
+    (bb, 'N/A (GQ/vacant/not owned or being bought/not a one-family house, mobile home or trailer or condo)'),
+    (01, 'None'),
+    (02, '$ 1 - $ 49'),
+    (03, '$ 50 - $ 99'),
+    (04, '$ 100 - $ 149'),
+    (05, '$ 150 - $ 199'),
+    (06, '$ 200 - $ 249'),
+    (07, '$ 250 - $ 299'),
+    (08, '$ 300 - $ 349'),
+    (09, '$ 350 - $ 399'),
+    (10, '$ 400 - $ 449'),
+    (11, '$ 450 - $ 499'),
+    (12, '$ 500 - $ 549'),
+    (13, '$ 550 - $ 599'),
+    (14, '$ 600 - $ 649'),
+    (15, '$ 650 - $ 699'),
+    (16, '$ 700 - $ 749'),
+    (17, '$ 750 - $ 799'),
+    (18, '$ 800 - $ 849'),
+    (19, '$ 850 - $ 899'),
+    (20, '$ 900 - $ 949'),
+    (21, '$ 950 - $ 999'),
+    (22, '$1000 - $1099'),
+    (23, '$1100 - $1199'),
+    (24, '$1200 - $1299'),
+    (25, '$1300 - $1399'),
+    (26, '$1400 - $1499'),
+    (27, '$1500 - $1599'),
+    (28, '$1600 - $1699'),
+    (29, '$1700 - $1799'),
+    (30, '$1800 - $1899'),
+    (31, '$1900 - $1999'),
+    (32, '$2000 - $2099'),
+    (33, '$2100 - $2199'),
+    (34, '$2200 - $2299'),
+    (35, '$2300 - $2399'),
+    (36, '$2400 - $2499'),
+    (37, '$2500 - $2599'),
+    (38, '$2600 - $2699'),
+    (39, '$2700 - $2799'),
+    (40, '$2800 - $2899'),
+    (41, '$2900 - $2999'),
+    (42, '$3000 - $3099'),
+    (43, '$3100 - $3199'),
+    (44, '$3200 - $3299'),
+    (45, '$3300 - $3399'),
+    (46, '$3400 - $3499'),
+    (47, '$3500 - $3599'),
+    (48, '$3600 - $3699'),
+    (49, '$3700 - $3799'),
+    (50, '$3800 - $3899'),
+    (51, '$3900 - $3999'),
+    (52, '$4000 - $4099'),
+    (53, '$4100 - $4199'),
+    (54, '$4200 - $4299'),
+    (55, '$4300 - $4399'),
+    (56, '$4400 - $4499'),
+    (57, '$4500 - $4599'),
+    (58, '$4600 - $4699'),
+    (59, '$4700 - $4799'),
+    (60, '$4800 - $4899'),
+    (61, '$4900 - $4999'),
+    (62, '$5000 - $5499'),
+    (63, '$5500 - $5999'),
+    (64, '$6000 - $6999'),
+    (65, '$7000 - $7999'),
+    (66, '$8000 - $8999'),
+    (67, '$9000 - $9999'),
+    (68, '$10000+'),
+]
+
+WIF = [
+    (b, 'N/A (GQ/vacant/non-family household)'),
+    (0, 'No workers'),
+    (1, '1 worker'),
+    (2, '2 workers'),
+    (3, '3 or more workers in family'),
+]
+
+WKEXREL = [
+    (b, 'N/A (GQ/vacant/not a family)'),
+    (1, 'Householder and spouse worked FT'),
+    (2, 'Householder worked FT; spouse worked < FT'),
+    (3, 'Householder worked FT; spouse did not work'),
+    (4, 'Householder worked < FT; spouse worked FT'),
+    (5, 'Householder worked < FT; spouse worked < FT'),
+    (6, 'Householder worked < FT; spouse did not work'),
+    (7, 'Householder did not work; spouse worked FT'),
+    (8, 'Householder did not work; spouse worked < FT'),
+    (9, 'Householder did not work; spouse did not work'),
+    (10, 'Male householder worked FT; no spouse present'),
+    (11, 'Male householder worked < FT; no spouse present'),
+    (12, 'Male householder did not work; no spouse present'),
+    (13, 'Female householder worked FT; no spouse present'),
+    (14, 'Female householder worked < FT; no spouse present'),
+    (15, 'Female householder did not work; no spouse present'),
+]
+
+WORKSTAT = [
+    (bb, 'N/A (GQ/not a family household)'),
+    (1, 'Husband and wife both in labor force, both employed or in Armed Forces'),
+    (2, 'Husband and wife both in labor force, husband employed or in Armed Forces, wife unemployed'),
+    (3, 'Husband in labor force and wife not in labor force, husband employed or in Armed Forces'),
+    (4, 'Husband and wife both in labor force, husband unemployed, wife employed or in Armed Forces'),
+    (5, 'Husband and wife both in labor force, husband unemployed, wife unemployed'),
+    (6, 'Husband in labor force, husband unemployed, wife not in labor force'),
+    (7, 'Husband not in labor force, wife in labor force, wife employed or in Armed Forces'),
+    (8, 'Husband not in labor force, wife in labor force, wife unemployed'),
+    (9, 'Neither husband nor wife in labor force'),
+    (10, 'Male householder with no wife present, householder in labor force, employed or in Armed Forces'),
+    (11, 'Male householder with no wife present, householder in labor force and unemployed'),
+    (12, 'Male householder with no wife present, householder not in labor force'),
+    (13, 'Female householder with no husband present, householder in labor force, employed or in Armed Forces'),
+    (14, 'Female householder with no husband present, householder in labor force and unemployed'),
+    (15, 'Female householder with no husband present, householder not in labor force'),
+]
+
+FACRP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FAGSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FBDSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FBLDP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FBUSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FCONP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FELEP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FFSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FFULP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FGASP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FHFLP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FINSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FKITP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMHP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMRGIP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMRGP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMRGTP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMRGXP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMVYP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FPLMP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FRMSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FRNTMP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FRNTP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSMP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSMXHP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSMXSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FTAXP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FTELP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FTENP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FVACSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FVALP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FVEHP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FWATP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FYBLP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+WGTP1 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP2 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP3 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP4 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP5 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP6 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP7 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP8 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP9 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP10 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP11 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP12 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP13 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP14 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP15 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP16 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP17 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP18 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP19 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP20 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP21 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP22 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP23 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP24 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP25 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP26 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP27 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP28 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP29 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP30 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP31 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP32 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP33 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP34 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP35 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP36 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP37 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP38 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP39 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP40 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP41 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP42 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP43 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP44 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP45 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP46 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP47 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP48 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP49 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP50 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP51 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP52 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP53 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP54 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP55 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP56 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP57 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP58 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP59 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP60 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP61 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP62 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP63 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP64 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP65 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP66 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP67 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP68 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP69 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP70 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP71 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP72 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP73 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP74 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP75 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP76 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP77 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP78 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+WGTP79 = [
+    (0001..9999, 'Integer weight of housing unit'),
+]
+
+RT = [
+    (P, 'Person Record'),
+]
+
+SERIALNO = [
+    (0000001..9999999, 'Unique identifier assigned within state'),
+]
+
+SPORDER = [
+    (01..20, 'Person number'),
+]
+
+PUMA = [
+    (77777, 'combination of 01801, 01802, and 01905 in Louisiana'),
+]
+
+ST = [
+    (01, 'Alabama/AL'),
+    (02, 'Alaska/AK'),
+    (04, 'Arizona/AZ'),
+    (05, 'Arkansas/AR'),
+    (06, 'California/CA'),
+    (08, 'Colorado/CO'),
+    (09, 'Connecticut/CT'),
+    (10, 'Delaware/DE'),
+    (11, 'District of Columbia/DC'),
+    (12, 'Florida/FL'),
+    (13, 'Georgia/GA'),
+    (15, 'Hawaii/HI'),
+    (16, 'Idaho/ID'),
+    (17, 'Illinois/IL'),
+    (18, 'Indiana/IN'),
+    (19, 'Iowa/IA'),
+    (20, 'Kansas/KS'),
+    (21, 'Kentucky/KY'),
+    (22, 'Louisiana/LA'),
+    (23, 'Maine/ME'),
+    (24, 'Maryland/MD'),
+    (25, 'Massachusetts/MA'),
+    (26, 'Michigan/MI'),
+    (27, 'Minnesota/MN'),
+    (28, 'Mississippi/MS'),
+    (29, 'Missouri/MO'),
+    (30, 'Montana/MT'),
+    (31, 'Nebraska/NE'),
+    (32, 'Nevada/NV'),
+    (33, 'New Hampshire/NH'),
+    (34, 'New Jersey/NJ'),
+    (35, 'New Mexico/NM'),
+    (36, 'New York/NY'),
+    (37, 'North Carolina/NC'),
+    (38, 'North Dakota/ND'),
+    (39, 'Ohio/OH'),
+    (40, 'Oklahoma/OK'),
+    (41, 'Oregon/OR'),
+    (42, 'Pennsylvania/PA'),
+    (44, 'Rhode Island/RI'),
+    (45, 'South Carolina/SC'),
+    (46, 'South Dakota/SD'),
+    (47, 'Tennessee/TN'),
+    (48, 'Texas/TX'),
+    (49, 'Utah/UT'),
+    (50, 'Vermont/VT'),
+    (51, 'Virginia/VA'),
+    (53, 'Washington/WA'),
+    (54, 'West Virginia/WV'),
+    (55, 'Wisconsin/WI'),
+    (56, 'Wyoming/WY'),
+    (72, 'Puerto Rico/PR'),
+]
+
+ADJUST = [
+    (1015675, '2006 factor (1.015675)'),
+]
+
+PWGTP = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+AGEP = [
+    (00, 'Under 1 year'),
+    (01..99, '1 to 99 years (Top-coded***)'),
+]
+
+CIT = [
+    (1, 'Born in the U.S. Born in the U.S., Guam, the U.S. Virgin Islands, or the Northern Marianas if current residence is Puerto Rico'),
+    (2, 'Born in Puerto Rico, Guam, the U.S. Virgin Islands, or the Northern Marianas Born in Puerto Rico if current residence is Puerto Rico'),
+    (3, 'Born abroad of American parents'),
+    (4, 'U.S. citizen by naturalization'),
+    (5, 'Not a citizen of the U.S.'),
+]
+
+COW = [
+    (b, 'N/A (less than 16 years old/unemployed who never worked/NILF who last worked more than 5 years ago)'),
     (1, 'Employee of a private for profit company or business or of an individual, for wages, salary, or commissions'),
     (2, 'Employee of a private not-for-profit, tax-exempt, or charitable organization'),
     (3, 'Local government employee (city, county, etc.)'),
@@ -26,30 +1266,64 @@ CLASS_OF_WORKER = [
     (9, 'Unemployed'),
 ]
 
-YES_NO = [
+DDRS = [
+    (b, 'N/A (Less than 5 years old)'),
     (1, 'Yes'),
     (2, 'No'),
 ]
 
-NO_YES = [
-    (0, 'No'),
-    (1, 'Yes'),
-]
-
-YES_NO_REPORT = [
+DEYE = [
+    (b, 'N/A (Less than 5 years old)'),
     (1, 'Yes'),
     (2, 'No'),
-    (3, 'Did not report'),
 ]
 
-SPEAKS_ENGLISH = [
+DOUT = [
+    (b, 'N/A (Less than 16 years old)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+DPHY = [
+    (b, 'N/A (Less than 5 years old)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+DREM = [
+    (b, 'N/A (Less than 5 years old)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+DWRK = [
+    (b, 'N/A (Less than 16 years old)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+ENG = [
+    (b, 'N/A (less than 5 years old/speaks only English)'),
     (1, 'Very well'),
     (2, 'Well'),
     (3, 'Not well'),
     (4, 'Not at all'),
 ]
 
-GRANDCHILDREN_MONTHS_RESPONSIBLE = [
+FER = [
+    (b, 'N/A (less than 15 years/greater than 50 years/ male)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+GCL = [
+    (b, 'N/A (less than 30 years/institutional GQ)'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+GCM = [
+    (b, 'N/A (less than 30 years/grandparent not responsible for grandchild/institutional GQ)'),
     (1, 'Less than 6 months'),
     (2, '6 to 11 months'),
     (3, '1 to 2 years'),
@@ -57,35 +1331,63 @@ GRANDCHILDREN_MONTHS_RESPONSIBLE = [
     (5, '5 or more years'),
 ]
 
-VEHICLE_OCCUPANCY = [
-    (1, 'Drove alone'),
-    (2, 'In 2-person carpool'),
-    (3, 'In 3-person carpool'),
-    (4, 'In 4-person carpool'),
-    (5, 'In 5-person carpool'),
-    (6, 'In 6-person carpool'),
-    (7, 'In 7-person carpool'),
-    (8, 'In 8-person carpool'),
-    (9, 'In 9-person carpool'),
+GCR = [
+    (b, 'N/A (less than 30 years/grandchild not living in'),
+    (1, 'Yes'),
+    (2, 'No'),
+]
+
+INTP = [
+    (bbbbbb, 'N/A (less than 15 years old)'),
+    (000000, 'None'),
+    (-09999, 'Loss of $9999 or more'),
+    (-00001..-09998, 'Loss $1 to $9998'),
+    (000001, '$1 or breakeven'),
+    (000002..999999, '$2 to $999999 (Rounded and top-coded)'),
+]
+
+JWMNP = [
+    (bbb, 'N/A (not a worker or worker who worked at home)'),
+    (001..200, '1 to 200 minutes to get to work (Top-coded)'),
+]
+
+JWRIP = [
+    (bb, 'N/A (not a worker or worker whose means of transportation to work was not car, truck, or van)'),
+    (01, 'Drove alone'),
+    (02, 'In 2-person carpool'),
+    (03, 'In 3-person carpool'),
+    (04, 'In 4-person carpool'),
+    (05, 'In 5-person carpool'),
+    (06, 'In 6-person carpool'),
+    (07, 'In 7-person carpool'),
+    (08, 'In 8-person carpool'),
+    (09, 'In 9-person carpool'),
     (10, 'In 10-person or more carpool'),
 ]
 
-WORK_TRANSPORTATION = [
-    (1, 'Car, truck, or van'),
-    (2, 'Bus or trolley bus'),
-    (3, 'Streetcar or trolley car (carro publico in Puerto Rico)'),
-    (4, 'Subway or elevated'),
-    (5, 'Railroad'),
-    (6, 'Ferryboat'),
-    (7, 'Taxicab'),
-    (8, 'Motorcycle'),
-    (9, 'Bicycle'),
+JWTR = [
+    (bb, 'N/A (not a worker--not in the labor force, including persons under 16 years; unemployed; employed, with a job but not at work; Armed Forces, with a job but not at work)'),
+    (01, 'Car, truck, or van'),
+    (02, 'Bus or trolley bus'),
+    (03, 'Streetcar or trolley car (carro publico in Puerto Rico)'),
+    (04, 'Subway or elevated'),
+    (05, 'Railroad'),
+    (06, 'Ferryboat'),
+    (07, 'Taxicab'),
+    (08, 'Motorcycle'),
+    (09, 'Bicycle'),
     (10, 'Walked'),
     (11, 'Worked at home'),
     (12, 'Other method'),
 ]
 
-MARITAL_STATUS = [
+LANX = [
+    (b, 'N/A (less than 5 years old)'),
+    (1, 'Yes, speaks another language'),
+    (2, 'No, speaks only English'),
+]
+
+MAR = [
     (1, 'Married'),
     (2, 'Widowed'),
     (3, 'Divorced'),
@@ -93,13 +1395,15 @@ MARITAL_STATUS = [
     (5, 'Never married or under 15 years old'),
 ]
 
-MOBILITY_STATUS = [
+MIG = [
+    (b, 'N/A(less than 1 year old)'),
     (1, 'Yes, same house (nonmovers)'),
     (2, 'No, outside US if current residence is US; No, outside Puerto Rico and US if current residence is Puerto Rico'),
     (3, 'No, different house in US if current residence is US; No, different house in Puerto Rico is current residence is Puerto Rico'),
 ]
 
-MILITARY_SERVICE = [
+MIL = [
+    (b, 'N/A (less than 17 years old)'),
     (1, 'Yes, now on active duty'),
     (2, 'Yes, on active duty during the last 12 months, but not now'),
     (3, 'Yes, on active duty in the past, but not during the last 12 months'),
@@ -107,13 +1411,87 @@ MILITARY_SERVICE = [
     (5, 'No, never served in the military'),
 ]
 
-MILITARY_YEARS = [
+MILY = [
+    (b, 'N/A (less than 17 years/no active duty military service)'),
     (1, 'Less than 2 years of service'),
     (2, '2 years or more of service'),
 ]
 
+MLPA = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
 
-WORK_AVAILABILITY = [
+MLPB = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPC = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPD = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPE = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPF = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPG = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPH = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPI = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPJ = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+MLPK = [
+    (b, 'N/A (Less than 17 years old/no active duty)'),
+    (0, 'Did not serve this period'),
+    (1, 'Served this period'),
+]
+
+NWAB = [
+    (b, 'N/A (less than 16 years old/at work/on layoff)'),
+    (1, 'Yes'),
+    (2, 'No'),
+    (3, 'Did not report'),
+]
+
+NWAV = [
+    (b, 'N/A (less than 16 years/at work/not looking)'),
     (1, 'Yes'),
     (2, 'No, temporarily ill'),
     (3, 'No, other reasons'),
@@ -121,17 +1499,50 @@ WORK_AVAILABILITY = [
     (5, 'Did not report'),
 ]
 
-RELATIONSHIP = [
-    (0, 'Reference person'),
-    (1, 'Husband/wife'),
-    (2, 'Son/daughter'),
-    (3, 'Brother/sister'),
-    (4, 'Father/mother'),
-    (5, 'Grandchild'),
-    (6, 'Inlaw'),
-    (7, 'Other relative'),
-    (8, 'Roomer/boarder'),
-    (9, 'Housemate/roommate'),
+NWLA = [
+    (b, 'N/A (less than 16 years old/at work)'),
+    (1, 'Yes'),
+    (2, 'No'),
+    (3, 'Did not report'),
+]
+
+NWLK = [
+    (b, 'N/A (less than 16 years old/at work/temporarily absent/informed of recall)'),
+    (1, 'Yes'),
+    (2, 'No'),
+    (3, 'Did not report'),
+]
+
+NWRE = [
+    (b, 'N/A (less than 16 years old/at work/not on layoff)'),
+    (1, 'Yes'),
+    (2, 'No'),
+    (3, 'Did not report'),
+]
+
+OIP = [
+    (bbbbbb, 'N/A (less than 15 years old)'),
+    (000000, 'None'),
+    (000001..999999, '$1 to $999999 (Rounded and top-coded)'),
+]
+
+PAP = [
+    (bbbbb, 'N/A (less than 15 years old)'),
+    (00000, 'None'),
+    (00001..99999, '$1 to $99999 (Rounded)'),
+]
+
+REL = [
+    (00, 'Reference person'),
+    (01, 'Husband/wife'),
+    (02, 'Son/daughter'),
+    (03, 'Brother/sister'),
+    (04, 'Father/mother'),
+    (05, 'Grandchild'),
+    (06, 'Inlaw'),
+    (07, 'Other relative'),
+    (08, 'Roomer/boarder'),
+    (09, 'Housemate/roommate'),
     (10, 'Unmarried partner'),
     (11, 'Foster child'),
     (12, 'Other nonrelative'),
@@ -139,13 +1550,21 @@ RELATIONSHIP = [
     (14, 'Noninstitutionalized group quarters population'),
 ]
 
-SCHOOL_ENROLLMENT = [
+RETP = [
+    (bbbbbb, 'N/A (less than 15 years old)'),
+    (000000, 'None'),
+    (000001..999999, '$1 to $999999 (Rounded and top-coded)'),
+]
+
+SCH = [
+    (b, 'N/A (less than 3 years old)'),
     (1, 'No, has not attended in the last 3 months'),
     (2, 'Yes, public school or public college'),
     (3, 'Yes, private school or private college'),
 ]
 
-SCHOOL_GRADE = [
+SCHG = [
+    (b, 'N/A (not attending school)'),
     (1, 'Nursery school/preschool'),
     (2, 'Kindergarten'),
     (3, 'Grade 1 to grade 4'),
@@ -155,23 +1574,33 @@ SCHOOL_GRADE = [
     (7, 'Graduate or professional school'),
 ]
 
-SCHOOL_ATTAINMENT = [
-    (1, 'No school completed'),
-    (2, 'Nursery school to grade 4'),
-    (3, 'Grade 5 or grade 6'),
-    (4, 'Grade 7 or grade 8'),
-    (5, 'Grade 9'),
-    (6, 'Grade 10'),
-    (7, 'Grade 11'),
-    (8, 'Grade 12 no diploma'),
-    (9, 'High school graduate'),
+SCHL = [
+    (bb, 'N/A (less than 3 years old)'),
+    (01, 'No school completed'),
+    (02, 'Nursery school to grade 4'),
+    (03, 'Grade 5 or grade 6'),
+    (04, 'Grade 7 or grade 8'),
+    (05, 'Grade 9'),
+    (06, 'Grade 10'),
+    (07, 'Grade 11'),
+    (08, 'Grade 12 no diploma'),
+    (09, 'High school graduate'),
     (10, 'Some college, but less than 1 year'),
     (11, 'One or more years of college, no degree'),
-    (12, 'Associate\'s degree'),
-    (13, 'Bachelor\'s degree'),
-    (14, 'Master\'s degree'),
+    (12, 'Associate's degree'),
+    (13, 'Bachelor's degree'),
+    (14, 'Master's degree'),
     (15, 'Professional school degree'),
     (16, 'Doctorate degree'),
+]
+
+SEMP = [
+    (bbbbbb, 'N/A (less than 15 years old)'),
+    (000000, 'None'),
+    (-09999, 'Loss of $9999 or more'),
+    (-00001..-09998, 'Loss $1 to $9998'),
+    (000001, '$1 or breakeven'),
+    (000002..999999, '$2 to $999999 (Rounded and top-coded)'),
 ]
 
 SEX = [
@@ -179,55 +1608,176 @@ SEX = [
     (2, 'Female'),
 ]
 
-LAST_WORKED = [
+SSIP = [
+    (bbbbb, 'N/A (less than 15 years old)'),
+    (00000, 'None'),
+    (00001..99999, '$1 to $99999 (Rounded)'),
+]
+
+SSP = [
+    (bbbbb, 'N/A (less than 15 years old)'),
+    (00000, 'None'),
+    (00001..99999, '$1 to $99999 (Rounded)'),
+]
+
+WAGP = [
+    (bbbbbb, 'N/A (less than 15 years old)'),
+    (000000, 'None'),
+    (000001..999999, '$1 to 999999 (Rounded and top-coded)'),
+]
+
+WKHP = [
+    (bb, 'N/A (less than 16 years old/did not work during the past 12 months)'),
+    (01..98, '1 to 98 usual hours'),
+    (99, '99 or more usual hours'),
+]
+
+WKL = [
+    (b, 'N/A (less than 16 years old)'),
     (1, 'Within the past 12 months'),
     (2, '1-5 years ago'),
     (3, 'Over 5 years ago or never worked'),
 ]
 
-WORKED_LAST_WEEK = [
+WKW = [
+    (bb, 'N/A (less than 16 years old/did not work during the past 12 months)'),
+    (01..52, '1 to 52 weeks worked past 12 months'),
+]
+
+YOEP = [
+    (bbbb, 'Born in the US'),
+    (1919, '1919 or earlier'),
+    (1920, '1920'),
+    (1921, '1921'),
+    (1922, '1922'),
+    (1923, '1923'),
+    (1924, '1924'),
+    (1925, '1925'),
+    (1926, '1926'),
+    (1927, '1927'),
+    (1928, '1928'),
+    (1929, '1929'),
+    (1930, '1930'),
+    (1931, '1931 or 1932'),
+    (1933, '1933 or 1934'),
+    (1935, '1935'),
+    (1936, '1936'),
+    (1937, '1937'),
+    (1938, '1938'),
+    (1939, '1939'),
+    (1940, '1940'),
+    (1941, '1941'),
+    (1942, '1942'),
+    (1943, '1943'),
+    (1944, '1944'),
+    (1945, '1945'),
+    (1946, '1946'),
+    (1947, '1947'),
+    (1948, '1948'),
+    (1949, '1949'),
+    (1950, '1950'),
+    (1951, '1951'),
+    (1952, '1952'),
+    (1953, '1953'),
+    (1954, '1954'),
+    (1955, '1955'),
+    (1956, '1956'),
+    (1957, '1957'),
+    (1958, '1958'),
+    (1959, '1959'),
+    (1960, '1960'),
+    (1961, '1961'),
+    (1962, '1962'),
+    (1963, '1963'),
+    (1964, '1964'),
+    (1965, '1965'),
+    (1966, '1966'),
+    (1967, '1967'),
+    (1968, '1968'),
+    (1969, '1969'),
+    (1970, '1970'),
+    (1971, '1971'),
+    (1972, '1972'),
+    (1973, '1973'),
+    (1974, '1974'),
+    (1975, '1975'),
+    (1976, '1976'),
+    (1977, '1977'),
+    (1978, '1978'),
+    (1979, '1979'),
+    (1980, '1980'),
+    (1981, '1981'),
+    (1982, '1982'),
+    (1983, '1983'),
+    (1984, '1984'),
+    (1985, '1985'),
+    (1986, '1986'),
+    (1987, '1987'),
+    (1988, '1988'),
+    (1989, '1989'),
+    (1990, '1990'),
+    (1991, '1991'),
+    (1992, '1992'),
+    (1993, '1993'),
+    (1994, '1994'),
+    (1995, '1995'),
+    (1996, '1996'),
+    (1997, '1997'),
+    (1998, '1998'),
+    (1999, '1999'),
+    (2000, '2000'),
+    (2001, '2001'),
+    (2002, '2002'),
+    (2003, '2003'),
+    (2004, '2004'),
+    (2005, '2005'),
+    (2006, '2006'),
+]
+
+UWRK = [
+    (b, 'N/A (less than 16 years/not reported)'),
     (1, 'Worked'),
     (2, 'Did not work'),
 ]
 
-ANCESTRY_RECODE = [
+ANC = [
     (1, 'Single'),
     (2, 'Multiple'),
     (3, 'Unclassified'),
     (4, 'Not reported'),
 ]
 
-ANCESTRY_DETAIL = [
-    (1, 'Alsatian'),
-    (3, 'Austrian'),
-    (5, 'Basque'),
-    (8, 'Belgian'),
-    (9, 'Flemish'),
-    (11, 'British'),
-    (12, 'British Isles'),
-    (20, 'Danish'),
-    (21, 'Dutch'),
-    (22, 'English'),
-    (24, 'Finnish'),
-    (26, 'French'),
-    (32, 'German'),
-    (40, 'Prussian'),
-    (46, 'Greek'),
-    (49, 'Icelander'),
-    (50, 'Irish'),
-    (51, 'Italian'),
-    (68, 'Sicilian'),
-    (77, 'Luxemburger'),
-    (78, 'Maltese'),
-    (82, 'Norwegian'),
-    (84, 'Portuguese'),
-    (87, 'Scotch Irish'),
-    (88, 'Scottish'),
-    (89, 'Swedish'),
-    (91, 'Swiss'),
-    (97, 'Welsh'),
-    (98, 'Scandinavian'),
-    (99, 'Celtic'),
+ANC1P = [
+    (001, 'Alsatian'),
+    (003, 'Austrian'),
+    (005, 'Basque'),
+    (008, 'Belgian'),
+    (009, 'Flemish'),
+    (011, 'British'),
+    (012, 'British Isles'),
+    (020, 'Danish'),
+    (021, 'Dutch'),
+    (022, 'English'),
+    (024, 'Finnish'),
+    (026, 'French'),
+    (032, 'German'),
+    (040, 'Prussian'),
+    (046, 'Greek'),
+    (049, 'Icelander'),
+    (050, 'Irish'),
+    (051, 'Italian'),
+    (068, 'Sicilian'),
+    (077, 'Luxemburger'),
+    (078, 'Maltese'),
+    (082, 'Norwegian'),
+    (084, 'Portuguese'),
+    (087, 'Scotch Irish'),
+    (088, 'Scottish'),
+    (089, 'Swedish'),
+    (091, 'Swiss'),
+    (097, 'Welsh'),
+    (098, 'Scandinavian'),
+    (099, 'Celtic'),
     (100, 'Albanian'),
     (102, 'Belorussian'),
     (103, 'Bulgarian'),
@@ -416,12 +1966,254 @@ ANCESTRY_DETAIL = [
     (999, 'Not reported'),
 ]
 
-DISABLED = [
+ANC2P = [
+    (001, 'Alsatian'),
+    (003, 'Austrian'),
+    (005, 'Basque'),
+    (008, 'Belgian'),
+    (009, 'Flemish'),
+    (011, 'British'),
+    (012, 'British Isles'),
+    (020, 'Danish'),
+    (021, 'Dutch'),
+    (022, 'English'),
+    (024, 'Finnish'),
+    (026, 'French'),
+    (032, 'German'),
+    (040, 'Prussian'),
+    (046, 'Greek'),
+    (049, 'Icelander'),
+    (050, 'Irish'),
+    (051, 'Italian'),
+    (068, 'Sicilian'),
+    (077, 'Luxemburger'),
+    (078, 'Maltese'),
+    (082, 'Norwegian'),
+    (084, 'Portuguese'),
+    (087, 'Scotch Irish'),
+    (088, 'Scottish'),
+    (089, 'Swedish'),
+    (091, 'Swiss'),
+    (097, 'Welsh'),
+    (098, 'Scandinavian'),
+    (099, 'Celtic'),
+    (100, 'Albanian'),
+    (102, 'Belorussian'),
+    (103, 'Bulgarian'),
+    (109, 'Croatian'),
+    (111, 'Czech'),
+    (112, 'Bohemian'),
+    (114, 'Czechoslovakian'),
+    (115, 'Estonian'),
+    (122, 'German Russian'),
+    (124, 'Rom'),
+    (125, 'Hungarian'),
+    (128, 'Latvian'),
+    (129, 'Lithuanian'),
+    (130, 'Macedonian'),
+    (142, 'Polish'),
+    (144, 'Romanian'),
+    (148, 'Russian'),
+    (152, 'Serbian'),
+    (153, 'Slovak'),
+    (154, 'Slovene'),
+    (170, 'Georgia CIS'),
+    (171, 'Ukrainian'),
+    (176, 'Yugoslavian'),
+    (177, 'Herzegovinian'),
+    (178, 'Slavic'),
+    (179, 'Slavonian'),
+    (183, 'Northern European'),
+    (187, 'Western European'),
+    (190, 'Eastern European'),
+    (195, 'European'),
+    (200, 'Spaniard'),
+    (210, 'Mexican'),
+    (211, 'Mexican American'),
+    (212, 'Mexicano'),
+    (213, 'Chicano'),
+    (215, 'Mexican American Indian'),
+    (218, 'Mexican State'),
+    (221, 'Costa Rican'),
+    (222, 'Guatemalan'),
+    (223, 'Honduran'),
+    (224, 'Nicaraguan'),
+    (225, 'Panamanian'),
+    (226, 'Salvadoran'),
+    (227, 'Central American'),
+    (231, 'Argentinean'),
+    (232, 'Bolivian'),
+    (233, 'Chilean'),
+    (234, 'Colombian'),
+    (235, 'Ecuadorian'),
+    (236, 'Paraguayan'),
+    (237, 'Peruvian'),
+    (238, 'Uruguayan'),
+    (239, 'Venezuelan'),
+    (249, 'South American'),
+    (250, 'Latin American'),
+    (251, 'Latin'),
+    (252, 'Latino'),
+    (261, 'Puerto Rican'),
+    (271, 'Cuban'),
+    (275, 'Dominican'),
+    (290, 'Hispanic'),
+    (291, 'Spanish'),
+    (295, 'Spanish American'),
+    (300, 'Bahamian'),
+    (301, 'Barbadian'),
+    (302, 'Belizean'),
+    (308, 'Jamaican'),
+    (310, 'Dutch West Indian'),
+    (314, 'Trinidadian Tobagonian'),
+    (322, 'British West Indian'),
+    (325, 'Antigua and Barbuda'),
+    (329, 'Grenadian'),
+    (330, 'Vincent-Grenadine Islander'),
+    (331, 'St Lucia Islander'),
+    (335, 'West Indian'),
+    (336, 'Haitian'),
+    (359, 'Other West Indian'),
+    (360, 'Brazilian'),
+    (370, 'Guyanese'),
+    (400, 'Algerian'),
+    (402, 'Egyptian'),
+    (406, 'Moroccan'),
+    (416, 'Iranian'),
+    (417, 'Iraqi'),
+    (419, 'Israeli'),
+    (421, 'Jordanian'),
+    (425, 'Lebanese'),
+    (429, 'Syrian'),
+    (431, 'Armenian'),
+    (434, 'Turkish'),
+    (435, 'Yemeni'),
+    (442, 'Kurdish'),
+    (465, 'Palestinian'),
+    (483, 'Assyrian'),
+    (484, 'Chaldean'),
+    (490, 'Mideast'),
+    (495, 'Arab'),
+    (496, 'Arabic'),
+    (499, 'Other Arab'),
+    (508, 'Cameroon'),
+    (510, 'Cape Verdean'),
+    (522, 'Ethiopian'),
+    (523, 'Eritrean'),
+    (529, 'Ghanian'),
+    (534, 'Kenyan'),
+    (541, 'Liberian'),
+    (553, 'Nigerian'),
+    (564, 'Senegalese'),
+    (566, 'Sierra Leonean'),
+    (568, 'Somalian'),
+    (570, 'South African'),
+    (576, 'Sudanese'),
+    (587, 'Other Subsaharan African'),
+    (598, 'Western African'),
+    (599, 'African'),
+    (600, 'Afghan'),
+    (603, 'Bangladeshi'),
+    (609, 'Nepali'),
+    (615, 'Asian Indian'),
+    (618, 'Bengali'),
+    (620, 'East Indian'),
+    (650, 'Punjab'),
+    (680, 'Pakistani'),
+    (690, 'Sri Lankan'),
+    (700, 'Burmese'),
+    (703, 'Cambodian'),
+    (706, 'Chinese'),
+    (707, 'Cantonese'),
+    (712, 'Mongolian'),
+    (720, 'Filipino'),
+    (730, 'Indonesian'),
+    (740, 'Japanese'),
+    (748, 'Okinawan'),
+    (750, 'Korean'),
+    (765, 'Laotian'),
+    (768, 'Hmong'),
+    (770, 'Malaysian'),
+    (776, 'Thai'),
+    (782, 'Taiwanese'),
+    (785, 'Vietnamese'),
+    (793, 'Eurasian'),
+    (794, 'Amerasian'),
+    (795, 'Asian'),
+    (799, 'Other Asian'),
+    (800, 'Austrailian'),
+    (803, 'New Zealander'),
+    (808, 'Polynesian'),
+    (811, 'Hawaiian'),
+    (814, 'Samoan'),
+    (815, 'Tongan'),
+    (820, 'Micronesian'),
+    (821, 'Guamanian'),
+    (822, 'Chamorro Islander'),
+    (841, 'Fijian'),
+    (850, 'Pacific Islander'),
+    (899, 'Other Pacific'),
+    (900, 'Afro American'),
+    (901, 'Afro'),
+    (902, 'African American'),
+    (903, 'Black'),
+    (904, 'Negro'),
+    (907, 'Creole'),
+    (913, 'Central American Indian'),
+    (914, 'South American Indian'),
+    (917, 'Native American'),
+    (918, 'Indian'),
+    (919, 'Cherokee'),
+    (920, 'American Indian'),
+    (921, 'Aleut'),
+    (922, 'Eskimo'),
+    (924, 'White'),
+    (925, 'Anglo'),
+    (927, 'Appalachian'),
+    (929, 'Pennsylvania German'),
+    (931, 'Canadian'),
+    (935, 'French Canadian'),
+    (936, 'Acadian'),
+    (937, 'Cajun'),
+    (939, 'American or United States'),
+    (983, 'Texas'),
+    (994, 'North American'),
+    (995, 'Mixture'),
+    (996, 'Uncodable entries'),
+    (997, 'Other groups'),
+    (998, 'Other responses'),
+    (999, 'Not reported'),
+]
+
+DECADE = [
+    (b, 'N/A (Born in the US)'),
+    (1, 'Before 1950'),
+    (2, '1950 - 1959'),
+    (3, '1960 - 1969'),
+    (4, '1970 - 1979'),
+    (5, '1980 - 1989'),
+    (6, '1990 - 1999'),
+    (7, '2000 - 2009'),
+]
+
+DRIVESP = [
+    (b, 'N/A (Nonworker or worker who does not drive to work)'),
+    (1, '1.000 vehicles (Drove alone)'),
+    (2, '0.500 vehicles (In a 2-person carpool)'),
+    (3, '0.333 vehicles (In a 3-person carpool)'),
+    (4, '0.250 vehicles (In a 4-person carpool)'),
+    (5, '0.200 vehicles (In a 5- or 6-person carpool)'),
+    (6, '0.143 vehicles (In a 7-or-more person carpool)'),
+]
+
+DS = [
+    (b, 'N/A (Less than 5 years old)'),
     (1, 'With a disability'),
     (2, 'Without a disability'),
 ]
 
-PARENTS_EMPLOYMENT = [
+ESP = [
+    (b, 'N/A (not own child of householder, and not child in subfamily) Living with two parents:'),
     (1, 'Both parents in labor force'),
     (2, 'Father only in labor force'),
     (3, 'Mother only in labor force'),
@@ -432,7 +2224,8 @@ PARENTS_EMPLOYMENT = [
     (8, 'Mother not in labor force'),
 ]
 
-EMPLOYMENT_STATUS = [
+ESR = [
+    (b, 'N/A (less than 16 years old)'),
     (1, 'Civilian employed, at work'),
     (2, 'Civilian employed, with a job but not at work'),
     (3, 'Unemployed'),
@@ -441,16 +2234,16 @@ EMPLOYMENT_STATUS = [
     (6, 'Not in labor force'),
 ]
 
-HISPANIC_ORIGIN = [
-    (1, 'Not Spanish/Hispanic/Latino'),
-    (2, 'Mexican'),
-    (3, 'Puerto Rican'),
-    (4, 'Cuban'),
-    (5, 'Dominican'),
-    (6, 'Costa Rican'),
-    (7, 'Guatemalan'),
-    (8, 'Honduran'),
-    (9, 'Nicaraguan'),
+HISP = [
+    (01, 'Not Spanish/Hispanic/Latino'),
+    (02, 'Mexican'),
+    (03, 'Puerto Rican'),
+    (04, 'Cuban'),
+    (05, 'Dominican'),
+    (06, 'Costa Rican'),
+    (07, 'Guatemalan'),
+    (08, 'Honduran'),
+    (09, 'Nicaraguan'),
     (10, 'Panamanian'),
     (11, 'Salvadoran'),
     (12, 'Other Central American'),
@@ -468,26 +2261,27 @@ HISPANIC_ORIGIN = [
     (24, 'All Other Spanish/Hispanic/Latino'),
 ]
 
-INDUSTRY_RECODE = [
-    (170, 'AGR-CROP PRODUCTION'),
-    (180, 'AGR-ANIMAL PRODUCTION'),
-    (190, 'AGR-FORESTRY EXCEPT LOGGING'),
-    (270, 'AGR-LOGGING'),
-    (280, 'AGR-FISHING, HUNTING, AND TRAPPING'),
-    (290, 'AGR-SUPPORT ACTIVITIES FOR AGRICULTURE AND FORESTRY'),
-    (370, 'EXT-OIL AND GAS EXTRACTION'),
-    (380, 'EXT-COAL MINING'),
-    (390, 'EXT-METAL ORE MINING'),
-    (470, 'EXT-NONMETALLIC MINERAL MINING AND QUARRYING'),
-    (480, 'EXT-NOT SPECIFIED TYPE OF MINING'),
-    (490, 'EXT-SUPPORT ACTIVITIES FOR MINING'),
-    (570, 'UTL-ELECTRIC POWER GENERATION, TRANSMISSION AND DISTRIBUTION'),
-    (580, 'UTL-NATURAL GAS DISTRIBUTION'),
-    (590, 'UTL-ELECTRIC AND GAS, AND OTHER COMBINATIONS'),
-    (670, 'UTL-WATER, STEAM, AIR CONDITIONING, AND IRRIGATION SYSTEMS'),
-    (680, 'UTL-SEWAGE TREATMENT FACILITIES'),
-    (690, 'UTL-NOT SPECIFIED UTILITIES'),
-    (770, 'CON-CONSTRUCTION, INCL CLEANING DURING AND IMM AFTER'),
+INDP = [
+    (bbbb, 'N/A (less than 16 years old/unemployed who never worked/NILF who last worked more than 5 years ago)'),
+    (0170, 'AGR-CROP PRODUCTION'),
+    (0180, 'AGR-ANIMAL PRODUCTION'),
+    (0190, 'AGR-FORESTRY EXCEPT LOGGING'),
+    (0270, 'AGR-LOGGING'),
+    (0280, 'AGR-FISHING, HUNTING, AND TRAPPING'),
+    (0290, 'AGR-SUPPORT ACTIVITIES FOR AGRICULTURE AND FORESTRY'),
+    (0370, 'EXT-OIL AND GAS EXTRACTION'),
+    (0380, 'EXT-COAL MINING'),
+    (0390, 'EXT-METAL ORE MINING'),
+    (0470, 'EXT-NONMETALLIC MINERAL MINING AND QUARRYING'),
+    (0480, 'EXT-NOT SPECIFIED TYPE OF MINING'),
+    (0490, 'EXT-SUPPORT ACTIVITIES FOR MINING'),
+    (0570, 'UTL-ELECTRIC POWER GENERATION, TRANSMISSION AND DISTRIBUTION'),
+    (0580, 'UTL-NATURAL GAS DISTRIBUTION'),
+    (0590, 'UTL-ELECTRIC AND GAS, AND OTHER COMBINATIONS'),
+    (0670, 'UTL-WATER, STEAM, AIR CONDITIONING, AND IRRIGATION SYSTEMS'),
+    (0680, 'UTL-SEWAGE TREATMENT FACILITIES'),
+    (0690, 'UTL-NOT SPECIFIED UTILITIES'),
+    (0770, 'CON-CONSTRUCTION, INCL CLEANING DURING AND IMM AFTER'),
     (1070, 'MFG-ANIMAL FOOD, GRAIN AND OILSEED MILLING'),
     (1080, 'MFG-SUGAR AND CONFECTIONERY PRODUCTS'),
     (1090, 'MFG-FRUIT AND VEGETABLE PRESERVING AND SPECIALTY FOODS'),
@@ -738,109 +2532,110 @@ INDUSTRY_RECODE = [
     (9780, 'MIL-U.S. COAST GUARD'),
     (9790, 'MIL-U.S. ARMED FORCES, BRANCH NOT SPECIFIED'),
     (9870, 'MIL-MILITARY RESERVES OR NATIONAL GUARD'),
-    (9920, 'UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS'),
+    (9920, 'UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS **'),
 ]
 
-WORK_ARRIVAL = [
-    (1, '12:00 a.m. to 12:04 a.m.'),
-    (2, '12:05 a.m. to 12:09 a.m.'),
-    (3, '12:10 a.m. to 12:14 a.m.'),
-    (4, '12:15 a.m. to 12:19 a.m.'),
-    (5, '12:20 a.m. to 12:24 a.m.'),
-    (6, '12:25 a.m. to 12:29 a.m.'),
-    (7, '12:30 a.m. to 12:39 a.m.'),
-    (8, '12:40 a.m. to 12:44 a.m.'),
-    (9, '12:45 a.m. to 12:49 a.m.'),
-    (10, '12:50 a.m. to 12:59 a.m.'),
-    (11, '1:00 a.m. to 1:04 a.m.'),
-    (12, '1:05 a.m. to 1:09 a.m.'),
-    (13, '1:10 a.m. to 1:14 a.m.'),
-    (14, '1:15 a.m. to 1:19 a.m.'),
-    (15, '1:20 a.m. to 1:24 a.m.'),
-    (16, '1:25 a.m. to 1:29 a.m.'),
-    (17, '1:30 a.m. to 1:34 a.m.'),
-    (18, '1:35 a.m. to 1:39 a.m.'),
-    (19, '1:40 a.m. to 1:44 a.m.'),
-    (20, '1:45 a.m. to 1:49 a.m.'),
-    (21, '1:50 a.m. to 1:59 a.m.'),
-    (22, '2:00 a.m. to 2:04 a.m.'),
-    (23, '2:05 a.m. to 2:09 a.m.'),
-    (24, '2:10 a.m. to 2:14 a.m.'),
-    (25, '2:15 a.m. to 2:19 a.m.'),
-    (26, '2:20 a.m. to 2:24 a.m.'),
-    (27, '2:25 a.m. to 2:29 a.m.'),
-    (28, '2:30 a.m. to 2:34 a.m.'),
-    (29, '2:35 a.m. to 2:39 a.m.'),
-    (30, '2:40 a.m. to 2:44 a.m.'),
-    (31, '2:45 a.m. to 2:49 a.m.'),
-    (32, '2:50 a.m. to 2:54 a.m.'),
-    (33, '2:55 a.m. to 2:59 a.m.'),
-    (34, '3:00 a.m. to 3:04 a.m.'),
-    (35, '3:05 a.m. to 3:09 a.m.'),
-    (36, '3:10 a.m. to 3:14 a.m.'),
-    (37, '3:15 a.m. to 3:19 a.m.'),
-    (38, '3:20 a.m. to 3:24 a.m.'),
-    (39, '3:25 a.m. to 3:29 a.m.'),
-    (40, '3:30 a.m. to 3:34 a.m.'),
-    (41, '3:35 a.m. to 3:39 a.m.'),
-    (42, '3:40 a.m. to 3:44 a.m.'),
-    (43, '3:45 a.m. to 3:49 a.m.'),
-    (44, '3:50 a.m. to 3:54 a.m.'),
-    (45, '3:55 a.m. to 3:59 a.m.'),
-    (46, '4:00 a.m. to 4:04 a.m.'),
-    (47, '4:05 a.m. to 4:09 a.m.'),
-    (48, '4:10 a.m. to 4:14 a.m.'),
-    (49, '4:15 a.m. to 4:19 a.m.'),
-    (50, '4:20 a.m. to 4:24 a.m.'),
-    (51, '4:25 a.m. to 4:29 a.m.'),
-    (52, '4:30 a.m. to 4:34 a.m.'),
-    (53, '4:35 a.m. to 4:39 a.m.'),
-    (54, '4:40 a.m. to 4:44 a.m.'),
-    (55, '4:45 a.m. to 4:49 a.m.'),
-    (56, '4:50 a.m. to 4:54 a.m.'),
-    (57, '4:55 a.m. to 4:59 a.m.'),
-    (58, '5:00 a.m. to 5:04 a.m.'),
-    (59, '5:05 a.m. to 5:09 a.m.'),
-    (60, '5:10 a.m. to 5:14 a.m.'),
-    (61, '5:15 a.m. to 5:19 a.m.'),
-    (62, '5:20 a.m. to 5:24 a.m.'),
-    (63, '5:25 a.m. to 5:29 a.m.'),
-    (64, '5:30 a.m. to 5:34 a.m.'),
-    (65, '5:35 a.m. to 5:39 a.m.'),
-    (66, '5:40 a.m. to 5:44 a.m.'),
-    (67, '5:45 a.m. to 5:49 a.m.'),
-    (68, '5:50 a.m. to 5:54 a.m.'),
-    (69, '5:55 a.m. to 5:59 a.m.'),
-    (70, '6:00 a.m. to 6:04 a.m.'),
-    (71, '6:05 a.m. to 6:09 a.m.'),
-    (72, '6:10 a.m. to 6:14 a.m.'),
-    (73, '6:15 a.m. to 6:19 a.m.'),
-    (74, '6:20 a.m. to 6:24 a.m.'),
-    (75, '6:25 a.m. to 6:29 a.m.'),
-    (76, '6:30 a.m. to 6:34 a.m.'),
-    (77, '6:35 a.m. to 6:39 a.m.'),
-    (78, '6:40 a.m. to 6:44 a.m.'),
-    (79, '6:45 a.m. to 6:49 a.m.'),
-    (80, '6:50 a.m. to 6:54 a.m.'),
-    (81, '6:55 a.m. to 6:59 a.m.'),
-    (82, '7:00 a.m. to 7:04 a.m.'),
-    (83, '7:05 a.m. to 7:09 a.m.'),
-    (84, '7:10 a.m. to 7:14 a.m.'),
-    (85, '7:15 a.m. to 7:19 a.m.'),
-    (86, '7:20 a.m. to 7:24 a.m.'),
-    (87, '7:25 a.m. to 7:29 a.m.'),
-    (88, '7:30 a.m. to 7:34 a.m.'),
-    (89, '7:35 a.m. to 7:39 a.m.'),
-    (90, '7:40 a.m. to 7:44 a.m.'),
-    (91, '7:45 a.m. to 7:49 a.m.'),
-    (92, '7:50 a.m. to 7:54 a.m.'),
-    (93, '7:55 a.m. to 7:59 a.m.'),
-    (94, '8:00 a.m. to 8:04 a.m.'),
-    (95, '8:05 a.m. to 8:09 a.m.'),
-    (96, '8:10 a.m. to 8:14 a.m.'),
-    (97, '8:15 a.m. to 8:19 a.m.'),
-    (98, '8:20 a.m. to 8:24 a.m.'),
-    (99, '8:25 a.m. to 8:29 a.m.'),
+JWAP = [
+    (bbb, 'N/A (not a worker; worker who worked at home)'),
+    (001, '12:00 a.m. to 12:04 a.m.'),
+    (002, '12:05 a.m. to 12:09 a.m.'),
+    (003, '12:10 a.m. to 12:14 a.m.'),
+    (004, '12:15 a.m. to 12:19 a.m.'),
+    (005, '12:20 a.m. to 12:24 a.m.'),
+    (006, '12:25 a.m. to 12:29 a.m.'),
+    (007, '12:30 a.m. to 12:39 a.m.'),
+    (008, '12:40 a.m. to 12:44 a.m.'),
+    (009, '12:45 a.m. to 12:49 a.m.'),
+    (010, '12:50 a.m. to 12:59 a.m.'),
+    (011, '1:00 a.m. to 1:04 a.m.'),
+    (012, '1:05 a.m. to 1:09 a.m.'),
+    (013, '1:10 a.m. to 1:14 a.m.'),
+    (014, '1:15 a.m. to 1:19 a.m.'),
+    (015, '1:20 a.m. to 1:24 a.m.'),
+    (016, '1:25 a.m. to 1:29 a.m.'),
+    (017, '1:30 a.m. to 1:34 a.m.'),
+    (018, '1:35 a.m. to 1:39 a.m.'),
+    (019, '1:40 a.m. to 1:44 a.m.'),
+    (020, '1:45 a.m. to 1:49 a.m.'),
+    (021, '1:50 a.m. to 1:59 a.m.'),
+    (022, '2:00 a.m. to 2:04 a.m.'),
+    (023, '2:05 a.m. to 2:09 a.m.'),
+    (024, '2:10 a.m. to 2:14 a.m.'),
+    (025, '2:15 a.m. to 2:19 a.m.'),
+    (026, '2:20 a.m. to 2:24 a.m.'),
+    (027, '2:25 a.m. to 2:29 a.m.'),
+    (028, '2:30 a.m. to 2:34 a.m.'),
+    (029, '2:35 a.m. to 2:39 a.m.'),
+    (030, '2:40 a.m. to 2:44 a.m.'),
+    (031, '2:45 a.m. to 2:49 a.m.'),
+    (032, '2:50 a.m. to 2:54 a.m.'),
+    (033, '2:55 a.m. to 2:59 a.m.'),
+    (034, '3:00 a.m. to 3:04 a.m.'),
+    (035, '3:05 a.m. to 3:09 a.m.'),
+    (036, '3:10 a.m. to 3:14 a.m.'),
+    (037, '3:15 a.m. to 3:19 a.m.'),
+    (038, '3:20 a.m. to 3:24 a.m.'),
+    (039, '3:25 a.m. to 3:29 a.m.'),
+    (040, '3:30 a.m. to 3:34 a.m.'),
+    (041, '3:35 a.m. to 3:39 a.m.'),
+    (042, '3:40 a.m. to 3:44 a.m.'),
+    (043, '3:45 a.m. to 3:49 a.m.'),
+    (044, '3:50 a.m. to 3:54 a.m.'),
+    (045, '3:55 a.m. to 3:59 a.m.'),
+    (046, '4:00 a.m. to 4:04 a.m.'),
+    (047, '4:05 a.m. to 4:09 a.m.'),
+    (048, '4:10 a.m. to 4:14 a.m.'),
+    (049, '4:15 a.m. to 4:19 a.m.'),
+    (050, '4:20 a.m. to 4:24 a.m.'),
+    (051, '4:25 a.m. to 4:29 a.m.'),
+    (052, '4:30 a.m. to 4:34 a.m.'),
+    (053, '4:35 a.m. to 4:39 a.m.'),
+    (054, '4:40 a.m. to 4:44 a.m.'),
+    (055, '4:45 a.m. to 4:49 a.m.'),
+    (056, '4:50 a.m. to 4:54 a.m.'),
+    (057, '4:55 a.m. to 4:59 a.m.'),
+    (058, '5:00 a.m. to 5:04 a.m.'),
+    (059, '5:05 a.m. to 5:09 a.m.'),
+    (060, '5:10 a.m. to 5:14 a.m.'),
+    (061, '5:15 a.m. to 5:19 a.m.'),
+    (062, '5:20 a.m. to 5:24 a.m.'),
+    (063, '5:25 a.m. to 5:29 a.m.'),
+    (064, '5:30 a.m. to 5:34 a.m.'),
+    (065, '5:35 a.m. to 5:39 a.m.'),
+    (066, '5:40 a.m. to 5:44 a.m.'),
+    (067, '5:45 a.m. to 5:49 a.m.'),
+    (068, '5:50 a.m. to 5:54 a.m.'),
+    (069, '5:55 a.m. to 5:59 a.m.'),
+    (070, '6:00 a.m. to 6:04 a.m.'),
+    (071, '6:05 a.m. to 6:09 a.m.'),
+    (072, '6:10 a.m. to 6:14 a.m.'),
+    (073, '6:15 a.m. to 6:19 a.m.'),
+    (074, '6:20 a.m. to 6:24 a.m.'),
+    (075, '6:25 a.m. to 6:29 a.m.'),
+    (076, '6:30 a.m. to 6:34 a.m.'),
+    (077, '6:35 a.m. to 6:39 a.m.'),
+    (078, '6:40 a.m. to 6:44 a.m.'),
+    (079, '6:45 a.m. to 6:49 a.m.'),
+    (080, '6:50 a.m. to 6:54 a.m.'),
+    (081, '6:55 a.m. to 6:59 a.m.'),
+    (082, '7:00 a.m. to 7:04 a.m.'),
+    (083, '7:05 a.m. to 7:09 a.m.'),
+    (084, '7:10 a.m. to 7:14 a.m.'),
+    (085, '7:15 a.m. to 7:19 a.m.'),
+    (086, '7:20 a.m. to 7:24 a.m.'),
+    (087, '7:25 a.m. to 7:29 a.m.'),
+    (088, '7:30 a.m. to 7:34 a.m.'),
+    (089, '7:35 a.m. to 7:39 a.m.'),
+    (090, '7:40 a.m. to 7:44 a.m.'),
+    (091, '7:45 a.m. to 7:49 a.m.'),
+    (092, '7:50 a.m. to 7:54 a.m.'),
+    (093, '7:55 a.m. to 7:59 a.m.'),
+    (094, '8:00 a.m. to 8:04 a.m.'),
+    (095, '8:05 a.m. to 8:09 a.m.'),
+    (096, '8:10 a.m. to 8:14 a.m.'),
+    (097, '8:15 a.m. to 8:19 a.m.'),
+    (098, '8:20 a.m. to 8:24 a.m.'),
+    (099, '8:25 a.m. to 8:29 a.m.'),
     (100, '8:30 a.m. to 8:34 a.m.'),
     (101, '8:35 a.m. to 8:39 a.m.'),
     (102, '8:40 a.m. to 8:44 a.m.'),
@@ -1029,106 +2824,107 @@ WORK_ARRIVAL = [
     (285, '11:55 p.m. to 11:59 p.m.'),
 ]
 
-WORK_DEPARTURE = [
-    (1, '12:00 a.m. to 12:29 a.m.'),
-    (2, '12:30 a.m. to 12:59 a.m.'),
-    (3, '1:00 a.m. to 1:29 a.m.'),
-    (4, '1:30 a.m. to 1:59 a.m.'),
-    (5, '2:00 a.m. to 2:29 a.m.'),
-    (6, '2:30 a.m. to 2:59 a.m.'),
-    (7, '3:00 a.m. to 3:09 a.m.'),
-    (8, '3:10 a.m. to 3:19 a.m.'),
-    (9, '3:20 a.m. to 3:29 a.m.'),
-    (10, '3:30 a.m. to 3:39 a.m.'),
-    (11, '3:40 a.m. to 3:49 a.m.'),
-    (12, '3:50 a.m. to 3:59 a.m.'),
-    (13, '4:00 a.m. to 4:09 a.m.'),
-    (14, '4:10 a.m. to 4:19 a.m.'),
-    (15, '4:20 a.m. to 4:29 a.m.'),
-    (16, '4:30 a.m. to 4:39 a.m.'),
-    (17, '4:40 a.m. to 4:49 a.m.'),
-    (18, '4:50 a.m. to 4:59 a.m.'),
-    (19, '5:00 a.m. to 5:04 a.m.'),
-    (20, '5:05 a.m. to 5:09 a.m.'),
-    (21, '5:10 a.m. to 5:14 a.m.'),
-    (22, '5:15 a.m. to 5:19 a.m.'),
-    (23, '5:20 a.m. to 5:24 a.m.'),
-    (24, '5:25 a.m. to 5:29 a.m.'),
-    (25, '5:30 a.m. to 5:34 a.m.'),
-    (26, '5:35 a.m. to 5:39 a.m.'),
-    (27, '5:40 a.m. to 5:44 a.m.'),
-    (28, '5:45 a.m. to 5:49 a.m.'),
-    (29, '5:50 a.m. to 5:54 a.m.'),
-    (30, '5:55 a.m. to 5:59 a.m.'),
-    (31, '6:00 a.m. to 6:04 a.m.'),
-    (32, '6:05 a.m. to 6:09 a.m.'),
-    (33, '6:10 a.m. to 6:14 a.m.'),
-    (34, '6:15 a.m. to 6:19 a.m.'),
-    (35, '6:20 a.m. to 6:24 a.m.'),
-    (36, '6:25 a.m. to 6:29 a.m.'),
-    (37, '6:30 a.m. to 6:34 a.m.'),
-    (38, '6:35 a.m. to 6:39 a.m.'),
-    (39, '6:40 a.m. to 6:44 a.m.'),
-    (40, '6:45 a.m. to 6:49 a.m.'),
-    (41, '6:50 a.m. to 6:54 a.m.'),
-    (42, '6:55 a.m. to 6:59 a.m.'),
-    (43, '7:00 a.m. to 7:04 a.m.'),
-    (44, '7:05 a.m. to 7:09 a.m.'),
-    (45, '7:10 a.m. to 7:14 a.m.'),
-    (46, '7:15 a.m. to 7:19 a.m.'),
-    (47, '7:20 a.m. to 7:24 a.m.'),
-    (48, '7:25 a.m. to 7:29 a.m.'),
-    (49, '7:30 a.m. to 7:34 a.m.'),
-    (50, '7:35 a.m. to 7:39 a.m.'),
-    (51, '7:40 a.m. to 7:44 a.m.'),
-    (52, '7:45 a.m. to 7:49 a.m.'),
-    (53, '7:50 a.m. to 7:54 a.m.'),
-    (54, '7:55 a.m. to 7:59 a.m.'),
-    (55, '8:00 a.m. to 8:04 a.m.'),
-    (56, '8:05 a.m. to 8:09 a.m.'),
-    (57, '8:10 a.m. to 8:14 a.m.'),
-    (58, '8:15 a.m. to 8:19 a.m.'),
-    (59, '8:20 a.m. to 8:24 a.m.'),
-    (60, '8:25 a.m. to 8:29 a.m.'),
-    (61, '8:30 a.m. to 8:34 a.m.'),
-    (62, '8:35 a.m. to 8:39 a.m.'),
-    (63, '8:40 a.m. to 8:44 a.m.'),
-    (64, '8:45 a.m. to 8:49 a.m.'),
-    (65, '8:50 a.m. to 8:54 a.m.'),
-    (66, '8:55 a.m. to 8:59 a.m.'),
-    (67, '9:00 a.m. to 9:04 a.m.'),
-    (68, '9:05 a.m. to 9:09 a.m.'),
-    (69, '9:10 a.m. to 9:14 a.m.'),
-    (70, '9:15 a.m. to 9:19 a.m.'),
-    (71, '9:20 a.m. to 9:24 a.m.'),
-    (72, '9:25 a.m. to 9:29 a.m.'),
-    (73, '9:30 a.m. to 9:34 a.m.'),
-    (74, '9:35 a.m. to 9:39 a.m.'),
-    (75, '9:40 a.m. to 9:44 a.m.'),
-    (76, '9:45 a.m. to 9:49 a.m.'),
-    (77, '9:50 a.m. to 9:54 a.m.'),
-    (78, '9:55 a.m. to 9:59 a.m.'),
-    (79, '10:00 a.m. to 10:09 a.m.'),
-    (80, '10:10 a.m. to 10:19 a.m.'),
-    (81, '10:20 a.m. to 10:29 a.m.'),
-    (82, '10:30 a.m. to 10:39 a.m.'),
-    (83, '10:40 a.m. to 10:49 a.m.'),
-    (84, '10:50 a.m. to 10:59 a.m.'),
-    (85, '11:00 a.m. to 11:09 a.m.'),
-    (86, '11:10 a.m. to 11:19 a.m.'),
-    (87, '11:20 a.m. to 11:29 a.m.'),
-    (88, '11:30 a.m. to 11:39 a.m.'),
-    (89, '11:40 a.m. to 11:49 a.m.'),
-    (90, '11:50 a.m. to 11:59 a.m.'),
-    (91, '12:00 p.m. to 12:09 p.m.'),
-    (92, '12:10 p.m. to 12:19 p.m.'),
-    (93, '12:20 p.m. to 12:29 p.m.'),
-    (94, '12:30 p.m. to 12:39 p.m.'),
-    (95, '12:40 p.m. to 12:49 p.m.'),
-    (96, '12:50 p.m. to 12:59 p.m.'),
-    (97, '1:00 p.m. to 1:09 p.m.'),
-    (98, '1:10 p.m. to 1:19 p.m.'),
-    (99, '1:20 p.m. to 1:29 p.m.'),
+JWDP = [
+    (bbb, 'N/A (not a worker; worker who worked at home)'),
+    (001, '12:00 a.m. to 12:29 a.m.'),
+    (002, '12:30 a.m. to 12:59 a.m.'),
+    (003, '1:00 a.m. to 1:29 a.m.'),
+    (004, '1:30 a.m. to 1:59 a.m.'),
+    (005, '2:00 a.m. to 2:29 a.m.'),
+    (006, '2:30 a.m. to 2:59 a.m.'),
+    (007, '3:00 a.m. to 3:09 a.m.'),
+    (008, '3:10 a.m. to 3:19 a.m.'),
+    (009, '3:20 a.m. to 3:29 a.m.'),
+    (010, '3:30 a.m. to 3:39 a.m.'),
+    (011, '3:40 a.m. to 3:49 a.m.'),
+    (012, '3:50 a.m. to 3:59 a.m.'),
+    (013, '4:00 a.m. to 4:09 a.m.'),
+    (014, '4:10 a.m. to 4:19 a.m.'),
+    (015, '4:20 a.m. to 4:29 a.m.'),
+    (016, '4:30 a.m. to 4:39 a.m.'),
+    (017, '4:40 a.m. to 4:49 a.m.'),
+    (018, '4:50 a.m. to 4:59 a.m.'),
+    (019, '5:00 a.m. to 5:04 a.m.'),
+    (020, '5:05 a.m. to 5:09 a.m.'),
+    (021, '5:10 a.m. to 5:14 a.m.'),
+    (022, '5:15 a.m. to 5:19 a.m.'),
+    (023, '5:20 a.m. to 5:24 a.m.'),
+    (024, '5:25 a.m. to 5:29 a.m.'),
+    (025, '5:30 a.m. to 5:34 a.m.'),
+    (026, '5:35 a.m. to 5:39 a.m.'),
+    (027, '5:40 a.m. to 5:44 a.m.'),
+    (028, '5:45 a.m. to 5:49 a.m.'),
+    (029, '5:50 a.m. to 5:54 a.m.'),
+    (030, '5:55 a.m. to 5:59 a.m.'),
+    (031, '6:00 a.m. to 6:04 a.m.'),
+    (032, '6:05 a.m. to 6:09 a.m.'),
+    (033, '6:10 a.m. to 6:14 a.m.'),
+    (034, '6:15 a.m. to 6:19 a.m.'),
+    (035, '6:20 a.m. to 6:24 a.m.'),
+    (036, '6:25 a.m. to 6:29 a.m.'),
+    (037, '6:30 a.m. to 6:34 a.m.'),
+    (038, '6:35 a.m. to 6:39 a.m.'),
+    (039, '6:40 a.m. to 6:44 a.m.'),
+    (040, '6:45 a.m. to 6:49 a.m.'),
+    (041, '6:50 a.m. to 6:54 a.m.'),
+    (042, '6:55 a.m. to 6:59 a.m.'),
+    (043, '7:00 a.m. to 7:04 a.m.'),
+    (044, '7:05 a.m. to 7:09 a.m.'),
+    (045, '7:10 a.m. to 7:14 a.m.'),
+    (046, '7:15 a.m. to 7:19 a.m.'),
+    (047, '7:20 a.m. to 7:24 a.m.'),
+    (048, '7:25 a.m. to 7:29 a.m.'),
+    (049, '7:30 a.m. to 7:34 a.m.'),
+    (050, '7:35 a.m. to 7:39 a.m.'),
+    (051, '7:40 a.m. to 7:44 a.m.'),
+    (052, '7:45 a.m. to 7:49 a.m.'),
+    (053, '7:50 a.m. to 7:54 a.m.'),
+    (054, '7:55 a.m. to 7:59 a.m.'),
+    (055, '8:00 a.m. to 8:04 a.m.'),
+    (056, '8:05 a.m. to 8:09 a.m.'),
+    (057, '8:10 a.m. to 8:14 a.m.'),
+    (058, '8:15 a.m. to 8:19 a.m.'),
+    (059, '8:20 a.m. to 8:24 a.m.'),
+    (060, '8:25 a.m. to 8:29 a.m.'),
+    (061, '8:30 a.m. to 8:34 a.m.'),
+    (062, '8:35 a.m. to 8:39 a.m.'),
+    (063, '8:40 a.m. to 8:44 a.m.'),
+    (064, '8:45 a.m. to 8:49 a.m.'),
+    (065, '8:50 a.m. to 8:54 a.m.'),
+    (066, '8:55 a.m. to 8:59 a.m.'),
+    (067, '9:00 a.m. to 9:04 a.m.'),
+    (068, '9:05 a.m. to 9:09 a.m.'),
+    (069, '9:10 a.m. to 9:14 a.m.'),
+    (070, '9:15 a.m. to 9:19 a.m.'),
+    (071, '9:20 a.m. to 9:24 a.m.'),
+    (072, '9:25 a.m. to 9:29 a.m.'),
+    (073, '9:30 a.m. to 9:34 a.m.'),
+    (074, '9:35 a.m. to 9:39 a.m.'),
+    (075, '9:40 a.m. to 9:44 a.m.'),
+    (076, '9:45 a.m. to 9:49 a.m.'),
+    (077, '9:50 a.m. to 9:54 a.m.'),
+    (078, '9:55 a.m. to 9:59 a.m.'),
+    (079, '10:00 a.m. to 10:09 a.m.'),
+    (080, '10:10 a.m. to 10:19 a.m.'),
+    (081, '10:20 a.m. to 10:29 a.m.'),
+    (082, '10:30 a.m. to 10:39 a.m.'),
+    (083, '10:40 a.m. to 10:49 a.m.'),
+    (084, '10:50 a.m. to 10:59 a.m.'),
+    (085, '11:00 a.m. to 11:09 a.m.'),
+    (086, '11:10 a.m. to 11:19 a.m.'),
+    (087, '11:20 a.m. to 11:29 a.m.'),
+    (088, '11:30 a.m. to 11:39 a.m.'),
+    (089, '11:40 a.m. to 11:49 a.m.'),
+    (090, '11:50 a.m. to 11:59 a.m.'),
+    (091, '12:00 p.m. to 12:09 p.m.'),
+    (092, '12:10 p.m. to 12:19 p.m.'),
+    (093, '12:20 p.m. to 12:29 p.m.'),
+    (094, '12:30 p.m. to 12:39 p.m.'),
+    (095, '12:40 p.m. to 12:49 p.m.'),
+    (096, '12:50 p.m. to 12:59 p.m.'),
+    (097, '1:00 p.m. to 1:09 p.m.'),
+    (098, '1:10 p.m. to 1:19 p.m.'),
+    (099, '1:20 p.m. to 1:29 p.m.'),
     (100, '1:30 p.m. to 1:39 p.m.'),
     (101, '1:40 p.m. to 1:49 p.m.'),
     (102, '1:50 p.m. to 1:59 p.m.'),
@@ -1182,7 +2978,8 @@ WORK_DEPARTURE = [
     (150, '11:30 p.m. to 11:59 p.m.'),
 ]
 
-HOME_LANGUAGE = [
+LANP = [
+    (bbb, 'N/A (less than 5 years old/speaks only English)'),
     (601, 'Jamaican Creole'),
     (607, 'German'),
     (608, 'Pennsylvania Dutch'),
@@ -1289,7 +3086,118 @@ HOME_LANGUAGE = [
     (996, 'Uncodable'),
 ]
 
-SPOUSE_PRESENT = [
+MIGPUMA = [
+    (bbbbb, 'N/A (person less than 1 year old/lived in same house 1 year ago)'),
+    (00001, 'Did not live in the United States or in Puerto Rico one year ago'),
+    (00002, 'Lived in Puerto Rico one year ago and current residence is in the U.S.'),
+    (00100..08200, 'Assigned Migration PUMA. Use with MIGSP.'),
+]
+
+MIGSP = [
+    (bbb, 'N/A (person less than 1 year old/lived in same house 1 year ago)'),
+    (001, 'Alabama/AL'),
+    (002, 'Alaska/AK'),
+    (004, 'Arizona/AZ'),
+    (005, 'Arkansas/AR'),
+    (006, 'California/CA'),
+    (008, 'Colorado/CO'),
+    (009, 'Connecticut/CT'),
+    (010, 'Delaware/DE'),
+    (011, 'District of Columbia/DC'),
+    (012, 'Florida/FL'),
+    (013, 'Georgia/GA'),
+    (015, 'Hawaii/HI'),
+    (016, 'Idaho/ID'),
+    (017, 'Illinois/IL'),
+    (018, 'Indiana/IN'),
+    (019, 'Iowa/IA'),
+    (020, 'Kansas/KS'),
+    (021, 'Kentucky/KY'),
+    (022, 'Louisiana/LA'),
+    (023, 'Maine/ME'),
+    (024, 'Maryland/MD'),
+    (025, 'Massachusetts/MA'),
+    (026, 'Michigan/MI'),
+    (027, 'Minnesota/MN'),
+    (028, 'Mississippi/MS'),
+    (029, 'Missouri/MO'),
+    (030, 'Montana/MT'),
+    (031, 'Nebraska/NE'),
+    (032, 'Nevada/NV'),
+    (033, 'New Hampshire/NH'),
+    (034, 'New Jersey/NJ'),
+    (035, 'New Mexico/NM'),
+    (036, 'New York/NY'),
+    (037, 'North Carolina/NC'),
+    (038, 'North Dakota/ND'),
+    (039, 'Ohio/OH'),
+    (040, 'Oklahoma/OK'),
+    (041, 'Oregon/OR'),
+    (042, 'Pennsylvania/PA'),
+    (044, 'Rhode Island/RI'),
+    (045, 'South Carolina/SC'),
+    (046, 'South Dakota/SD'),
+    (047, 'Tennessee/TN'),
+    (048, 'Texas/TX'),
+    (049, 'Utah/UT'),
+    (050, 'Vermont/VT'),
+    (051, 'Virginia/VA'),
+    (053, 'Washington/WA'),
+    (054, 'West Virginia/WV'),
+    (055, 'Wisconsin/WI'),
+    (056, 'Wyoming/WY'),
+    (072, 'Puerto Rico'),
+    (096, 'US Island Areas, Not Specified'),
+    (109, 'France'),
+    (110, 'Germany'),
+    (111, 'Northern Europe, Not Specified'),
+    (112, 'Western Europe, Not Specified'),
+    (113, 'Eastern Europe, Not Specified'),
+    (120, 'Italy'),
+    (128, 'Poland'),
+    (138, 'United Kingdom, Excluding England'),
+    (139, 'England'),
+    (163, 'Russia'),
+    (164, 'Ukraine'),
+    (169, 'Other Europe, Not Specified'),
+    (207, 'China, Hong Kong & Paracel Islands'),
+    (210, 'India'),
+    (213, 'Iraq'),
+    (214, 'Israel'),
+    (215, 'Japan'),
+    (217, 'Korea'),
+    (233, 'Philippines'),
+    (240, 'Taiwan'),
+    (242, 'Thailand'),
+    (247, 'Vietnam'),
+    (251, 'Eastern Asia, Not Specified'),
+    (252, 'Western Asia, Not Specified'),
+    (253, 'South Central Asia or Asia, Not Specified'),
+    (301, 'Canada'),
+    (303, 'Mexico'),
+    (312, 'El Salvador'),
+    (313, 'Guatemala'),
+    (314, 'Honduras'),
+    (317, 'Central America, Not Specified'),
+    (327, 'Cuba'),
+    (329, 'Domincan Republic'),
+    (333, 'Jamaica'),
+    (344, 'Caribbean and North America, Not Specified'),
+    (362, 'Brazil'),
+    (364, 'Colombia'),
+    (370, 'Peru'),
+    (374, 'South America, Not Specified'),
+    (462, 'Africa'),
+    (463, 'Eastern Africa, Not Specified'),
+    (464, 'Northern Africa, Not Specified'),
+    (467, 'Western Africa, Not Specified'),
+    (468, 'Other Africa, Not Specified'),
+    (501, 'Australia'),
+    (554, 'Australian and New Zealand Subregions, Not Specified, Oceania and at Sea'),
+]
+
+MSP = [
+    (b, 'N/A (less than 15 years old)'),
     (1, 'Now married, spouse present'),
     (2, 'Now married, spouse absent'),
     (3, 'Widowed'),
@@ -1298,277 +3206,278 @@ SPOUSE_PRESENT = [
     (6, 'Never married'),
 ]
 
-NAICS_INDUSTRY = [
-    ('111', 'AGR-CROP PRODUCTION'),
-    ('112', 'AGR-ANIMAL PRODUCTION'),
-    ('1133', 'AGR-LOGGING'),
-    ('113M', 'AGR-FORESTRY EXCEPT LOGGING'),
-    ('114', 'AGR-FISHING, HUNTING, AND TRAPPING'),
-    ('115', 'AGR-SUPPORT ACTIVITIES FOR AGRICULTURE AND FORESTRY'),
-    ('211', 'EXT-OIL AND GAS EXTRACTION'),
-    ('2121', 'EXT-COAL MINING'),
-    ('2122', 'EXT-METAL ORE MINING'),
-    ('2123', 'EXT-NONMETALLIC MINERAL MINING AND QUARRYING'),
-    ('213', 'EXT-SUPPORT ACTIVITIES FOR MINING'),
-    ('21S', 'EXT-NOT SPECIFIED TYPE OF MINING'),
-    ('2211P', 'UTL-ELECTRIC POWER GENERATION, TRANSMISSION AND DISTRIBUTION'),
-    ('2212P', 'UTL-NATURAL GAS DISTRIBUTION'),
-    ('22132', 'UTL-SEWAGE TREATMENT FACILITIES'),
-    ('2213M', 'UTL-WATER, STEAM, AIR CONDITIONING, AND IRRIGATION SYSTEMS'),
-    ('221MP', 'UTL-ELECTRIC AND GAS, AND OTHER COMBINATIONS'),
-    ('22S', 'UTL-NOT SPECIFIED UTILITIES'),
-    ('23', 'CON-CONSTRUCTION, INCL CLEANING DURING AND IMM AFTER'),
-    ('3113', 'MFG-SUGAR AND CONFECTIONERY PRODUCTS'),
-    ('3114', 'MFG-FRUIT AND VEGETABLE PRESERVING AND SPECIALTY FOODS'),
-    ('3115', 'MFG-DAIRY PRODUCTS'),
-    ('3116', 'MFG-ANIMAL SLAUGHTERING AND PROCESSING'),
-    ('311811', 'MFG-RETAIL BAKERIES'),
-    ('3118Z', 'MFG-BAKERIES, EXCEPT RETAIL'),
-    ('311M1', 'MFG-ANIMAL FOOD, GRAIN AND OILSEED MILLING'),
-    ('311M2', 'MFG-SEAFOOD AND OTHER MISCELLANEOUS FOODS, N.E.C.'),
-    ('311S', 'MFG-NOT SPECIFIED FOOD INDUSTRIES'),
-    ('3121', 'MFG-BEVERAGE'),
-    ('3122', 'MFG-TOBACCO'),
-    ('3131', 'MFG-FIBER, YARN, AND THREAD MILLS'),
-    ('3132Z', 'MFG-FABRIC MILLS, EXCEPT KNITTING'),
-    ('3133', 'MFG-TEXTILE AND FABRIC FINISHING AND COATING MILLS'),
-    ('31411', 'MFG-CARPETS AND RUGS'),
-    ('314Z', 'MFG-TEXTILE PRODUCT MILLS, EXCEPT CARPETS AND RUGS'),
-    ('3152', 'MFG-CUT AND SEW APPAREL'),
-    ('3159', 'MFG-APPAREL ACCESSORIES AND OTHER APPAREL'),
-    ('3162', 'MFG-FOOTWEAR'),
-    ('316M', 'MFG-LEATHER TANNING AND PRODUCTS, EXCEPT FOOTWEAR'),
-    ('31M', 'MFG-KNITTING MILLS'),
-    ('3211', 'MFG-SAWMILLS AND WOOD PRESERVATION'),
-    ('3212', 'MFG-VENEER, PLYWOOD, AND ENGINEERED WOOD PRODUCTS'),
-    ('32199M', 'MFG-PREFABRICATED WOOD BUILDINGS AND MOBILE HOMES'),
-    ('3219ZM', 'MFG-MISCELLANEOUS WOOD PRODUCTS'),
-    ('3221', 'MFG-PULP, PAPER, AND PAPERBOARD MILLS'),
-    ('32221', 'MFG-PAPERBOARD CONTAINERS AND BOXES'),
-    ('3222M', 'MFG-MISCELLANEOUS PAPER AND PULP PRODUCTS'),
-    ('323', 'MFG-PRINTING AND RELATED SUPPORT ACTIVITIES'),
-    ('32411', 'MFG-PETROLEUM REFINING'),
-    ('3241M', 'MFG-MISCELLANEOUS PETROLEUM AND COAL PRODUCTS'),
-    ('3252', 'MFG-RESIN, SYNTHETIC RUBBER AND FIBERS, AND FILAMENTS'),
-    ('3253', 'MFG-AGRICULTURAL CHEMICALS'),
-    ('3254', 'MFG-PHARMACEUTICALS AND MEDICINES'),
-    ('3255', 'MFG-PAINT, COATING, AND ADHESIVES'),
-    ('3256', 'MFG-SOAP, CLEANING COMPOUND, AND COSMETICS'),
-    ('325M', 'MFG-INDUSTRIAL AND MISCELLANEOUS CHEMICALS'),
-    ('3261', 'MFG-PLASTICS PRODUCTS'),
-    ('32621', 'MFG-TIRES'),
-    ('3262M', 'MFG-RUBBER PRODUCTS, EXCEPT TIRES'),
-    ('32711', 'MFG-POTTERY, CERAMICS, AND RELATED PRODUCTS'),
-    ('32712', 'MFG-STRUCTURAL CLAY PRODUCTS'),
-    ('3272', 'MFG-GLASS AND GLASS PRODUCTS'),
-    ('3279', 'MFG-MISCELLANEOUS NONMETALLIC MINERAL PRODUCTS'),
-    ('327M', 'MFG-CEMENT, CONCRETE, LIME, AND GYPSUM PRODUCTS'),
-    ('3313', 'MFG-ALUMINUM PRODUCTION AND PROCESSING'),
-    ('3314', 'MFG-NONFERROUS METAL, EXCEPT ALUMINUM, PRODUCTION AND PROCESSING'),
-    ('3315', 'MFG-FOUNDRIES'),
-    ('331M', 'MFG-IRON AND STEEL MILLS AND STEEL PRODUCTS'),
-    ('3321', 'MFG-METAL FORGINGS AND STAMPINGS'),
-    ('3322', 'MFG-CUTLERY AND HAND TOOLS'),
-    ('3327', 'MFG-MACHINE SHOPS; TURNED PRODUCTS; SCREWS, NUTS AND BOLTS'),
-    ('3328', 'MFG-COATING, ENGRAVING, HEAT TREATING AND ALLIED ACTIVITIES'),
-    ('33299M', 'MFG-ORDNANCE'),
-    ('332M', 'MFG-STRUCTURAL METALS, AND TANK AND SHIPPING CONTAINERS'),
-    ('332MZ', 'MFG-MISCELLANEOUS FABRICATED METAL PRODUCTS'),
-    ('33311', 'MFG-AGRICULTURAL IMPLEMENTS'),
-    ('3331M', 'MFG-CONSTRUCTION, MINING AND OIL FIELD MACHINERY'),
-    ('3333', 'MFG-COMMERCIAL AND SERVICE INDUSTRY MACHINERY'),
-    ('3335', 'MFG-METALWORKING MACHINERY'),
-    ('3336', 'MFG-ENGINES, TURBINES, AND POWER TRANSMISSION EQUIPMENT'),
-    ('333M', 'MFG-MACHINERY, N.E.C.'),
-    ('333S', 'MFG-NOT SPECIFIED MACHINERY'),
-    ('3341', 'MFG-COMPUTER AND PERIPHERAL EQUIPMENT'),
-    ('3345', 'MFG-NAVIGATIONAL, MEASURING, ELECTROMEDICAL, AND CONTROL INSTRUMENTS'),
-    ('334M1', 'MFG-COMMUNICATIONS, AUDIO, AND VIDEO EQUIPMENT'),
-    ('334M2', 'MFG-ELECTRONIC COMPONENTS AND PRODUCTS, N.E.C.'),
-    ('3352', 'MFG-HOUSEHOLD APPLIANCES'),
-    ('335M', 'MFG-ELECTRICAL LIGHTING, EQUIPMENT, AND SUPPLIES, N.E.C.'),
-    ('33641M1', 'MFG-AIRCRAFT AND PARTS'),
-    ('33641M2', 'MFG-AEROSPACE PRODUCTS AND PARTS'),
-    ('3365', 'MFG-RAILROAD ROLLING STOCK'),
-    ('3366', 'MFG-SHIP AND BOAT BUILDING'),
-    ('3369', 'MFG-OTHER TRANSPORTATION EQUIPMENT'),
-    ('336M', 'MFG-MOTOR VEHICLES AND MOTOR VEHICLE EQUIPMENT'),
-    ('337', 'MFG-FURNITURE AND RELATED PRODUCTS'),
-    ('3391', 'MFG-MEDICAL EQUIPMENT AND SUPPLIES'),
-    ('3399M', 'MFG-TOYS, AMUSEMENT, AND SPORTING GOODS'),
-    ('3399ZM', 'MFG-MISCELLANEOUS MANUFACTURING, N.E.C.'),
-    ('33MS', 'MFG-NOT SPECIFIED METAL INDUSTRIES'),
-    ('3MS', 'MFG-NOT SPECIFIED INDUSTRIES'),
-    ('4231', 'WHL-MOTOR VEHICLES PARTS AND SUPPLIES MERCHANT WHOLESALERS'),
-    ('4232', 'WHL-FURNITURE AND HOME FURNISHING MERCHANT WHOLESALERS'),
-    ('4233', 'WHL-LUMBER AND OTHER CONSTRUCTION MATERIALS MERCHANT WHOLESALERS'),
-    ('4234', 'WHL-PROFESSIONAL AND COMMERCIAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS'),
-    ('4235', 'WHL-METALS AND MINERALS, EXCEPT PETROLEUM, MERCHANT WHOLESALERS'),
-    ('4236', 'WHL-ELECTRICAL GOODS MERCHANT WHOLESALERS'),
-    ('4237', 'WHL-HARDWARE, PLUMBING AND HEATING EQUIPMENT, AND SUPPLIES MERCHANT WHOLESALERS'),
-    ('4238', 'WHL-MACHINERY, EQUIPMENT, AND SUPPLIES MERCHANT WHOLESALERS'),
-    ('42393', 'WHL-RECYCLABLE MATERIAL MERCHANT WHOLESALERS'),
-    ('4239Z', 'WHL-MISCELLANEOUS DURABLE GOODS MERCHANT WHOLESALERS'),
-    ('4241', 'WHL-PAPER AND PAPER PRODUCTS MERCHANT WHOLESALERS'),
-    ('4243', 'WHL-APPAREL, FABRICS, AND NOTIONS MERCHANT WHOLESALERS'),
-    ('4244', 'WHL-GROCERIES AND RELATED PRODUCTS MERCHANT WHOLESALERS'),
-    ('4245', 'WHL-FARM PRODUCT RAW MATERIALS MERCHANT WHOLESALERS'),
-    ('4247', 'WHL-PETROLEUM AND PETROLEUM PRODUCTS MERCHANT WHOLESALERS'),
-    ('4248', 'WHL-ALCOHOLIC BEVERAGES MERCHANT WHOLESALERS'),
-    ('42491', 'WHL-FARM SUPPLIES MERCHANT WHOLESALERS'),
-    ('4249Z', 'WHL-MISCELLANEOUS NONDURABLE GOODS MERCHANT WHOLESALERS'),
-    ('424M', 'WHL-DRUGS, SUNDRIES, AND CHEMICAL AND ALLIED PRODUCTS MERCHANT WHOLESALERS'),
-    ('4251', 'WHL-ELECTRONIC MARKETS AGENTS AND BROKERS'),
-    ('42S', 'WHL-NOT SPECIFIED TRADE'),
-    ('4411', 'RET-AUTOMOBILE DEALERS'),
-    ('4412', 'RET-OTHER MOTOR VEHICLE DEALERS'),
-    ('4413', 'RET-AUTO PARTS, ACCESSORIES, AND TIRE STORES'),
-    ('442', 'RET-FURNITURE AND HOME FURNISHINGS STORES'),
-    ('443111', 'RET-HOUSEHOLD APPLIANCE STORES'),
-    ('4431M', 'RET-RADIO, TV, AND COMPUTER STORES'),
-    ('44413', 'RET-HARDWARE STORES'),
-    ('4441Z', 'RET-BUILDING MATERIAL AND SUPPLIES DEALERS'),
-    ('4442', 'RET-LAWN AND GARDEN EQUIPMENT AND SUPPLIES STORES'),
-    ('4451', 'RET-GROCERY STORES'),
-    ('4452', 'RET-SPECIALTY FOOD STORES'),
-    ('4453', 'RET-BEER, WINE, AND LIQUOR STORES'),
-    ('44611', 'RET-PHARMACIES AND DRUG STORES'),
-    ('446Z', 'RET-HEALTH AND PERSONAL CARE, EXCEPT DRUG, STORES'),
-    ('447', 'RET-GASOLINE STATIONS'),
-    ('44821', 'RET-SHOE STORES'),
-    ('4483', 'RET-JEWELRY, LUGGAGE,AND LEATHER GOODS STORES'),
-    ('448ZM', 'RET-CLOTHING AND ACCESSORIES, EXCEPT SHOE, STORES'),
-    ('45113', 'RET-SEWING, NEEDLEWORK AND PIECE GOODS STORES'),
-    ('45121', 'RET-BOOK STORES AND NEWS DEALERS'),
-    ('451M', 'RET-MUSIC STORES'),
-    ('45211', 'RET-DEPARTMENT AND DISCOUNT STORES'),
-    ('4529', 'RET-MISCELLANEOUS GENERAL MERCHANDISE STORES'),
-    ('4531', 'RET-FLORISTS'),
-    ('45321', 'RET-OFFICE SUPPLIES AND STATIONARY STORES'),
-    ('45322', 'RET-GIFT, NOVELTY, AND SOUVENIR SHOPS'),
-    ('4533', 'RET-USED MERCHANDISE STORES'),
-    ('4539', 'RET-MISCELLANEOUS STORES'),
-    ('454111', 'RET-ELECTRONIC SHOPPING'),
-    ('454112', 'RET-ELECTRONIC AUCTIONS'),
-    ('454113', 'RET-MAIL-ORDER HOUSES'),
-    ('4542', 'RET-VENDING MACHINE OPERATORS'),
-    ('45431', 'RET-FUEL DEALERS'),
-    ('45439', 'RET-OTHER DIRECT SELLING ESTABLISHMENTS'),
-    ('4M', 'RET-SPORTING GOODS, CAMERA, AND HOBBY AND TOY STORES'),
-    ('4MS', 'RET-NOT SPECIFIED TRADE'),
-    ('481', 'TRN-AIR TRANSPORTATION'),
-    ('482', 'TRN-RAIL TRANSPORTATION'),
-    ('483', 'TRN-WATER TRANSPORTATION'),
-    ('484', 'TRN-TRUCK TRANSPORTATION'),
-    ('4853', 'TRN-TAXI AND LIMOUSINE SERVICE'),
-    ('485M', 'TRN-BUS SERVICE AND URBAN TRANSIT'),
-    ('486', 'TRN-PIPELINE TRANSPORTATION'),
-    ('487', 'TRN-SCENIC AND SIGHTSEEING TRANSPORTATION'),
-    ('488', 'TRN-SERVICES INCIDENTAL TO TRANSPORTATION'),
-    ('491', 'TRN-POSTAL SERVICE'),
-    ('492', 'TRN-COURIERS AND MESSENGERS'),
-    ('493', 'TRN-WAREHOUSING AND STORAGE'),
-    ('51111', 'INF-NEWSPAPER PUBLISHERS'),
-    ('5111Z', 'INF-PUBLISHING, EXCEPT NEWSPAPERS AND SOFTWARE'),
-    ('5112', 'INF-SOFTWARE PUBLISHING'),
-    ('5121', 'INF-MOTION PICTURES AND VIDEO INDUSTRIES'),
-    ('5122', 'INF-SOUND RECORDING INDUSTRIES'),
-    ('5161', 'INF-INTERNET PUBLISHING AND BROADCASTING'),
-    ('5171', 'INF-WIRED TELECOMMUNICATIONS CARRIERS'),
-    ('517Z', 'INF-OTHER TELECOMMUNICATION SERVICES'),
-    ('5181', 'INF-INTERNET SERVICE PROVIDERS'),
-    ('5182', 'INF-DATA PROCESSING, HOSTING, AND RELATED SERVICES'),
-    ('51912', 'INF-LIBRARIES AND ARCHIVES'),
-    ('5191Z', 'INF-OTHER INFORMATION SERVICES'),
-    ('51M', 'INF-RADIO AND TELEVISION BROADCASTING AND CABLE'),
-    ('5221M', 'FIN-SAVINGS INSTITUTIONS, INCLUDING CREDIT UNIONS'),
-    ('522M', 'FIN-NON-DEPOSITORY CREDIT AND RELATED ACTIVITIES'),
-    ('524', 'FIN-INSURANCE CARRIERS AND RELATED ACTIVITIES'),
-    ('52M1', 'FIN-BANKING AND RELATED ACTIVITIES'),
-    ('52M2', 'FIN-SECURITIES, COMMODITIES, FUNDS, TRUSTS, AND OTHER FINANCIAL INVESTMENTS'),
-    ('531', 'FIN-REAL ESTATE'),
-    ('5321', 'FIN-AUTOMOTIVE EQUIPMENT RENTAL AND LEASING'),
-    ('53223', 'FIN-VIDEO TAPE AND DISK RENTAL'),
-    ('532M', 'FIN-OTHER CONSUMER GOODS RENTAL'),
-    ('53M', 'FIN-COMMERCIAL, INDUSTRIAL, AND OTHER INTANGIBLE ASSETS RENTAL AND LEASING'),
-    ('5411', 'PRF-LEGAL SERVICES'),
-    ('5412', 'PRF-ACCOUNTING, TAX PREPARATION, BOOKKEEPING AND PAYROLL SERVICES'),
-    ('5413', 'PRF-ARCHITECTURAL, ENGINEERING, AND RELATED SERVICES'),
-    ('5414', 'PRF-SPECIALIZED DESIGN SERVICES'),
-    ('5415', 'PRF-COMPUTER SYSTEMS DESIGN AND RELATED SERVICES'),
-    ('5416', 'PRF-MANAGEMENT, SCIENTIFIC AND TECHNICAL CONSULTING SERVICES'),
-    ('5417', 'PRF-SCIENTIFIC RESEARCH AND DEVELOPMENT SERVICES'),
-    ('5418', 'PRF-ADVERTISING AND RELATED SERVICES'),
-    ('54194', 'PRF-VETERINARY SERVICES'),
-    ('5419Z', 'PRF-OTHER PROFESSIONAL, SCIENTIFIC AND TECHNICAL SERVICES'),
-    ('55', 'PRF-MANAGEMENT OF COMPANIES AND ENTERPRISES'),
-    ('5613', 'PRF-EMPLOYMENT SERVICES'),
-    ('5614', 'PRF-BUSINESS SUPPORT SERVICES'),
-    ('5615', 'PRF-TRAVEL ARRANGEMENTS AND RESERVATION SERVICES'),
-    ('5616', 'PRF-INVESTIGATION AND SECURITY SERVICES'),
-    ('56173', 'PRF-LANDSCAPING SERVICES'),
-    ('5617Z', 'PRF-SERVICES TO BUILDINGS AND DWELLINGS, EX CONSTR CLN'),
-    ('561M', 'PRF-OTHER ADMINISTRATIVE, AND OTHER SUPPORT SERVICES'),
-    ('562', 'PRF-WASTE MANAGEMENT AND REMEDIATION SERVICES'),
-    ('6111', 'EDU-ELEMENTARY AND SECONDARY SCHOOLS'),
-    ('611M1', 'EDU-COLLEGES AND UNIVERSITIES, INCLUDING JUNIOR COLLEGES'),
-    ('611M2', 'EDU-BUSINESS, TECHNICAL, AND TRADE SCHOOLS AND TRAINING'),
-    ('611M3', 'EDU-OTHER SCHOOLS, INSTRUCTION, AND EDUCATIONAL SERVICES'),
-    ('6211', 'MED-OFFICES OF PHYSICIANS'),
-    ('6212', 'MED-OFFICES OF DENTISTS'),
-    ('62131', 'MED-OFFICE OF CHIROPRACTORS'),
-    ('62132', 'MED-OFFICES OF OPTOMETRISTS'),
-    ('6213ZM', 'MED-OFFICES OF OTHER HEALTH PRACTITIONERS'),
-    ('6214', 'MED-OUTPATIENT CARE CENTERS'),
-    ('6216', 'MED-HOME HEALTH CARE SERVICES'),
-    ('621M', 'MED-OTHER HEALTH CARE SERVICES'),
-    ('622', 'MED-HOSPITALS'),
-    ('6231', 'MED-NURSING CARE FACILITIES'),
-    ('623M', 'MED-RESIDENTIAL CARE FACILITIES, WITHOUT NURSING'),
-    ('6241', 'SCA-INDIVIDUAL AND FAMILY SERVICES'),
-    ('6242', 'SCA-COMMUNITY FOOD AND HOUSING, AND EMERGENCY SERVICES'),
-    ('6243', 'SCA-VOCATIONAL REHABILITATION SERVICES'),
-    ('6244', 'SCA-CHILD DAY CARE SERVICES'),
-    ('711', 'ENT-INDEPENDENT ARTISTS, PERFORMING ARTS, SPECTATOR SPORTS AND RELATED INDUSTRIES'),
-    ('712', 'ENT-MUSEUMS, ART GALLERIES, HISTORICAL SITES, AND SIMILAR INSTITUTIONS'),
-    ('71395', 'ENT-BOWLING CENTERS'),
-    ('713Z', 'ENT-OTHER AMUSEMENT, GAMBLING, AND RECREATION INDUSTRIES'),
-    ('7211', 'ENT-TRAVELER ACCOMMODATION'),
-    ('721M', 'ENT-RECREATIONAL VEHICLE PARKS AND CAMPS, AND ROOMING AND BOARDING HOUSES'),
-    ('7224', 'ENT-DRINKING PLACES, ALCOHOLIC BEVERAGES'),
-    ('722Z', 'ENT-RESTAURANTS AND OTHER FOOD SERVICES'),
-    ('811192', 'SRV-CAR WASHES'),
-    ('8111Z', 'SRV-AUTOMOTIVE REPAIR AND MAINTENANCE'),
-    ('8112', 'SRV-ELECTRONIC AND PRECISION EQUIPMENT REPAIR AND MAINTENANCE'),
-    ('8113', 'SRV-COMMERCIAL AND INDUSTRIAL MACHINERY AND EQUIPMENT REPAIR AND MAINTENANCE'),
-    ('8114', 'SRV-PERSONAL AND HOUSEHOLD GOODS REPAIR AND MAINTENANCE'),
-    ('812111', 'SRV-BARBER SHOPS'),
-    ('812112', 'SRV-BEAUTY SALONS'),
-    ('8121M', 'SRV-NAIL SALONS AND OTHER PERSONAL CARE SERVICES'),
-    ('8122', 'SRV-FUNERAL HOMES, CEMETERIES AND CREMATORIES'),
-    ('8123', 'SRV-DRYCLEANING AND LAUNDRY SERVICES'),
-    ('8129', 'SRV-OTHER PERSONAL SERVICES'),
-    ('8131', 'SRV-RELIGIOUS ORGANIZATIONS'),
-    ('81393', 'SRV-LABOR UNIONS'),
-    ('8139Z', 'SRV-BUSINESS, PROFESSIONAL, POLITICAL AND SIMILAR ORGANIZATIONS'),
-    ('813M', 'SRV-CIVIC, SOCIAL, ADVOCACY ORGANIZATIONS, AND GRANTMAKING AND GIVING SERVICES'),
-    ('814', 'SRV-PRIVATE HOUSEHOLDS'),
-    ('92113', 'ADM-PUBLIC FINANCE ACTIVITIES'),
-    ('92119', 'ADM-OTHER GENERAL GOVERNMENT AND SUPPORT'),
-    ('9211MP', 'ADM-EXECUTIVE OFFICES AND LEGISLATIVE BODIES'),
-    ('923', 'ADM-ADMINISTRATION OF HUMAN RESOURCE PROGRAMS'),
-    ('928110P1', 'MIL-U.S. ARMY'),
-    ('928110P2', 'MIL-U.S. AIR FORCE'),
-    ('928110P3', 'MIL-U.S. NAVY'),
-    ('928110P4', 'MIL-U.S. MARINES'),
-    ('928110P5', 'MIL-U.S. COAST GUARD'),
-    ('928110P6', 'MIL-U.S. ARMED FORCES, BRANCH NOT SPECIFIED'),
-    ('928110P7', 'MIL-MILITARY RESERVES OR NATIONAL GUARD'),
-    ('928P', 'ADM-NATIONAL SECURITY AND INTERNATIONAL AFFAIRS'),
-    ('92M1', 'ADM-ADMINISTRATION OF ENVIRONMENTAL QUALITY AND HOUSING PROGRAMS'),
-    ('92M2', 'ADM-ADMINISTRATION OF ECONOMIC PROGRAMS AND SPACE RESEARCH'),
-    ('92MP', 'ADM-JUSTICE, PUBLIC ORDER, AND SAFETY ACTIVITIES'),
-    ('9920', 'UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS'),
+NAICSP = [
+    (bbbbbbbb, 'N/A (less than 16 years old/unemployed who never worked/NILF who last worked more than 5 years ago)'),
+    (111, 'AGR-CROP PRODUCTION'),
+    (112, 'AGR-ANIMAL PRODUCTION'),
+    (1133, 'AGR-LOGGING'),
+    (113M, 'AGR-FORESTRY EXCEPT LOGGING'),
+    (114, 'AGR-FISHING, HUNTING, AND TRAPPING'),
+    (115, 'AGR-SUPPORT ACTIVITIES FOR AGRICULTURE AND FORESTRY'),
+    (211, 'EXT-OIL AND GAS EXTRACTION'),
+    (2121, 'EXT-COAL MINING'),
+    (2122, 'EXT-METAL ORE MINING'),
+    (2123, 'EXT-NONMETALLIC MINERAL MINING AND QUARRYING'),
+    (213, 'EXT-SUPPORT ACTIVITIES FOR MINING'),
+    (21S, 'EXT-NOT SPECIFIED TYPE OF MINING'),
+    (2211P, 'UTL-ELECTRIC POWER GENERATION, TRANSMISSION AND DISTRIBUTION'),
+    (2212P, 'UTL-NATURAL GAS DISTRIBUTION'),
+    (22132, 'UTL-SEWAGE TREATMENT FACILITIES'),
+    (2213M, 'UTL-WATER, STEAM, AIR CONDITIONING, AND IRRIGATION SYSTEMS'),
+    (221MP, 'UTL-ELECTRIC AND GAS, AND OTHER COMBINATIONS'),
+    (22S, 'UTL-NOT SPECIFIED UTILITIES'),
+    (23, 'CON-CONSTRUCTION, INCL CLEANING DURING AND IMM AFTER'),
+    (3113, 'MFG-SUGAR AND CONFECTIONERY PRODUCTS'),
+    (3114, 'MFG-FRUIT AND VEGETABLE PRESERVING AND SPECIALTY FOODS'),
+    (3115, 'MFG-DAIRY PRODUCTS'),
+    (3116, 'MFG-ANIMAL SLAUGHTERING AND PROCESSING'),
+    (311811, 'MFG-RETAIL BAKERIES'),
+    (3118Z, 'MFG-BAKERIES, EXCEPT RETAIL'),
+    (311M1, 'MFG-ANIMAL FOOD, GRAIN AND OILSEED MILLING'),
+    (311M2, 'MFG-SEAFOOD AND OTHER MISCELLANEOUS FOODS, N.E.C.'),
+    (311S, 'MFG-NOT SPECIFIED FOOD INDUSTRIES'),
+    (3121, 'MFG-BEVERAGE'),
+    (3122, 'MFG-TOBACCO'),
+    (3131, 'MFG-FIBER, YARN, AND THREAD MILLS'),
+    (3132Z, 'MFG-FABRIC MILLS, EXCEPT KNITTING'),
+    (3133, 'MFG-TEXTILE AND FABRIC FINISHING AND COATING MILLS'),
+    (31411, 'MFG-CARPETS AND RUGS'),
+    (314Z, 'MFG-TEXTILE PRODUCT MILLS, EXCEPT CARPETS AND RUGS'),
+    (3152, 'MFG-CUT AND SEW APPAREL'),
+    (3159, 'MFG-APPAREL ACCESSORIES AND OTHER APPAREL'),
+    (3162, 'MFG-FOOTWEAR'),
+    (316M, 'MFG-LEATHER TANNING AND PRODUCTS, EXCEPT FOOTWEAR'),
+    (31M, 'MFG-KNITTING MILLS'),
+    (3211, 'MFG-SAWMILLS AND WOOD PRESERVATION'),
+    (3212, 'MFG-VENEER, PLYWOOD, AND ENGINEERED WOOD PRODUCTS'),
+    (32199M, 'MFG-PREFABRICATED WOOD BUILDINGS AND MOBILE HOMES'),
+    (3219ZM, 'MFG-MISCELLANEOUS WOOD PRODUCTS'),
+    (3221, 'MFG-PULP, PAPER, AND PAPERBOARD MILLS'),
+    (32221, 'MFG-PAPERBOARD CONTAINERS AND BOXES'),
+    (3222M, 'MFG-MISCELLANEOUS PAPER AND PULP PRODUCTS'),
+    (323, 'MFG-PRINTING AND RELATED SUPPORT ACTIVITIES'),
+    (32411, 'MFG-PETROLEUM REFINING'),
+    (3241M, 'MFG-MISCELLANEOUS PETROLEUM AND COAL PRODUCTS'),
+    (3252, 'MFG-RESIN, SYNTHETIC RUBBER AND FIBERS, AND FILAMENTS'),
+    (3253, 'MFG-AGRICULTURAL CHEMICALS'),
+    (3254, 'MFG-PHARMACEUTICALS AND MEDICINES'),
+    (3255, 'MFG-PAINT, COATING, AND ADHESIVES'),
+    (3256, 'MFG-SOAP, CLEANING COMPOUND, AND COSMETICS'),
+    (325M, 'MFG-INDUSTRIAL AND MISCELLANEOUS CHEMICALS'),
+    (3261, 'MFG-PLASTICS PRODUCTS'),
+    (32621, 'MFG-TIRES'),
+    (3262M, 'MFG-RUBBER PRODUCTS, EXCEPT TIRES'),
+    (32711, 'MFG-POTTERY, CERAMICS, AND RELATED PRODUCTS'),
+    (32712, 'MFG-STRUCTURAL CLAY PRODUCTS'),
+    (3272, 'MFG-GLASS AND GLASS PRODUCTS'),
+    (3279, 'MFG-MISCELLANEOUS NONMETALLIC MINERAL PRODUCTS'),
+    (327M, 'MFG-CEMENT, CONCRETE, LIME, AND GYPSUM PRODUCTS'),
+    (3313, 'MFG-ALUMINUM PRODUCTION AND PROCESSING'),
+    (3314, 'MFG-NONFERROUS METAL, EXCEPT ALUMINUM, PRODUCTION AND PROCESSING'),
+    (3315, 'MFG-FOUNDRIES'),
+    (331M, 'MFG-IRON AND STEEL MILLS AND STEEL PRODUCTS'),
+    (3321, 'MFG-METAL FORGINGS AND STAMPINGS'),
+    (3322, 'MFG-CUTLERY AND HAND TOOLS'),
+    (3327, 'MFG-MACHINE SHOPS; TURNED PRODUCTS; SCREWS, NUTS AND BOLTS'),
+    (3328, 'MFG-COATING, ENGRAVING, HEAT TREATING AND ALLIED ACTIVITIES'),
+    (33299M, 'MFG-ORDNANCE'),
+    (332M, 'MFG-STRUCTURAL METALS, AND TANK AND SHIPPING CONTAINERS'),
+    (332MZ, 'MFG-MISCELLANEOUS FABRICATED METAL PRODUCTS'),
+    (33311, 'MFG-AGRICULTURAL IMPLEMENTS'),
+    (3331M, 'MFG-CONSTRUCTION, MINING AND OIL FIELD MACHINERY'),
+    (3333, 'MFG-COMMERCIAL AND SERVICE INDUSTRY MACHINERY'),
+    (3335, 'MFG-METALWORKING MACHINERY'),
+    (3336, 'MFG-ENGINES, TURBINES, AND POWER TRANSMISSION EQUIPMENT'),
+    (333M, 'MFG-MACHINERY, N.E.C.'),
+    (333S, 'MFG-NOT SPECIFIED MACHINERY'),
+    (3341, 'MFG-COMPUTER AND PERIPHERAL EQUIPMENT'),
+    (3345, 'MFG-NAVIGATIONAL, MEASURING, ELECTROMEDICAL, AND CONTROL INSTRUMENTS'),
+    (334M1, 'MFG-COMMUNICATIONS, AUDIO, AND VIDEO EQUIPMENT'),
+    (334M2, 'MFG-ELECTRONIC COMPONENTS AND PRODUCTS, N.E.C.'),
+    (3352, 'MFG-HOUSEHOLD APPLIANCES'),
+    (335M, 'MFG-ELECTRICAL LIGHTING, EQUIPMENT, AND SUPPLIES, N.E.C.'),
+    (33641M1, 'MFG-AIRCRAFT AND PARTS'),
+    (33641M2, 'MFG-AEROSPACE PRODUCTS AND PARTS'),
+    (3365, 'MFG-RAILROAD ROLLING STOCK'),
+    (3366, 'MFG-SHIP AND BOAT BUILDING'),
+    (3369, 'MFG-OTHER TRANSPORTATION EQUIPMENT'),
+    (336M, 'MFG-MOTOR VEHICLES AND MOTOR VEHICLE EQUIPMENT'),
+    (337, 'MFG-FURNITURE AND RELATED PRODUCTS'),
+    (3391, 'MFG-MEDICAL EQUIPMENT AND SUPPLIES'),
+    (3399M, 'MFG-TOYS, AMUSEMENT, AND SPORTING GOODS'),
+    (3399ZM, 'MFG-MISCELLANEOUS MANUFACTURING, N.E.C.'),
+    (33MS, 'MFG-NOT SPECIFIED METAL INDUSTRIES'),
+    (3MS, 'MFG-NOT SPECIFIED INDUSTRIES'),
+    (4231, 'WHL-MOTOR VEHICLES PARTS AND SUPPLIES MERCHANT WHOLESALERS'),
+    (4232, 'WHL-FURNITURE AND HOME FURNISHING MERCHANT WHOLESALERS'),
+    (4233, 'WHL-LUMBER AND OTHER CONSTRUCTION MATERIALS MERCHANT WHOLESALERS'),
+    (4234, 'WHL-PROFESSIONAL AND COMMERCIAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS'),
+    (4235, 'WHL-METALS AND MINERALS, EXCEPT PETROLEUM, MERCHANT WHOLESALERS'),
+    (4236, 'WHL-ELECTRICAL GOODS MERCHANT WHOLESALERS'),
+    (4237, 'WHL-HARDWARE, PLUMBING AND HEATING EQUIPMENT, AND SUPPLIES MERCHANT WHOLESALERS'),
+    (4238, 'WHL-MACHINERY, EQUIPMENT, AND SUPPLIES MERCHANT WHOLESALERS'),
+    (42393, 'WHL-RECYCLABLE MATERIAL MERCHANT WHOLESALERS'),
+    (4239Z, 'WHL-MISCELLANEOUS DURABLE GOODS MERCHANT WHOLESALERS'),
+    (4241, 'WHL-PAPER AND PAPER PRODUCTS MERCHANT WHOLESALERS'),
+    (4243, 'WHL-APPAREL, FABRICS, AND NOTIONS MERCHANT WHOLESALERS'),
+    (4244, 'WHL-GROCERIES AND RELATED PRODUCTS MERCHANT WHOLESALERS'),
+    (4245, 'WHL-FARM PRODUCT RAW MATERIALS MERCHANT WHOLESALERS'),
+    (4247, 'WHL-PETROLEUM AND PETROLEUM PRODUCTS MERCHANT WHOLESALERS'),
+    (4248, 'WHL-ALCOHOLIC BEVERAGES MERCHANT WHOLESALERS'),
+    (42491, 'WHL-FARM SUPPLIES MERCHANT WHOLESALERS'),
+    (4249Z, 'WHL-MISCELLANEOUS NONDURABLE GOODS MERCHANT WHOLESALERS'),
+    (424M, 'WHL-DRUGS, SUNDRIES, AND CHEMICAL AND ALLIED PRODUCTS MERCHANT WHOLESALERS'),
+    (4251, 'WHL-ELECTRONIC MARKETS AGENTS AND BROKERS'),
+    (42S, 'WHL-NOT SPECIFIED TRADE'),
+    (4411, 'RET-AUTOMOBILE DEALERS'),
+    (4412, 'RET-OTHER MOTOR VEHICLE DEALERS'),
+    (4413, 'RET-AUTO PARTS, ACCESSORIES, AND TIRE STORES'),
+    (442, 'RET-FURNITURE AND HOME FURNISHINGS STORES'),
+    (443111, 'RET-HOUSEHOLD APPLIANCE STORES'),
+    (4431M, 'RET-RADIO, TV, AND COMPUTER STORES'),
+    (44413, 'RET-HARDWARE STORES'),
+    (4441Z, 'RET-BUILDING MATERIAL AND SUPPLIES DEALERS'),
+    (4442, 'RET-LAWN AND GARDEN EQUIPMENT AND SUPPLIES STORES'),
+    (4451, 'RET-GROCERY STORES'),
+    (4452, 'RET-SPECIALTY FOOD STORES'),
+    (4453, 'RET-BEER, WINE, AND LIQUOR STORES'),
+    (44611, 'RET-PHARMACIES AND DRUG STORES'),
+    (446Z, 'RET-HEALTH AND PERSONAL CARE, EXCEPT DRUG, STORES'),
+    (447, 'RET-GASOLINE STATIONS'),
+    (44821, 'RET-SHOE STORES'),
+    (4483, 'RET-JEWELRY, LUGGAGE,AND LEATHER GOODS STORES'),
+    (448ZM, 'RET-CLOTHING AND ACCESSORIES, EXCEPT SHOE, STORES'),
+    (45113, 'RET-SEWING, NEEDLEWORK AND PIECE GOODS STORES'),
+    (45121, 'RET-BOOK STORES AND NEWS DEALERS'),
+    (451M, 'RET-MUSIC STORES'),
+    (45211, 'RET-DEPARTMENT AND DISCOUNT STORES'),
+    (4529, 'RET-MISCELLANEOUS GENERAL MERCHANDISE STORES'),
+    (4531, 'RET-FLORISTS'),
+    (45321, 'RET-OFFICE SUPPLIES AND STATIONARY STORES'),
+    (45322, 'RET-GIFT, NOVELTY, AND SOUVENIR SHOPS'),
+    (4533, 'RET-USED MERCHANDISE STORES'),
+    (4539, 'RET-MISCELLANEOUS STORES'),
+    (454111, 'RET-ELECTRONIC SHOPPING'),
+    (454112, 'RET-ELECTRONIC AUCTIONS'),
+    (454113, 'RET-MAIL-ORDER HOUSES'),
+    (4542, 'RET-VENDING MACHINE OPERATORS'),
+    (45431, 'RET-FUEL DEALERS'),
+    (45439, 'RET-OTHER DIRECT SELLING ESTABLISHMENTS'),
+    (4M, 'RET-SPORTING GOODS, CAMERA, AND HOBBY AND TOY STORES'),
+    (4MS, 'RET-NOT SPECIFIED TRADE'),
+    (481, 'TRN-AIR TRANSPORTATION'),
+    (482, 'TRN-RAIL TRANSPORTATION'),
+    (483, 'TRN-WATER TRANSPORTATION'),
+    (484, 'TRN-TRUCK TRANSPORTATION'),
+    (4853, 'TRN-TAXI AND LIMOUSINE SERVICE'),
+    (485M, 'TRN-BUS SERVICE AND URBAN TRANSIT'),
+    (486, 'TRN-PIPELINE TRANSPORTATION'),
+    (487, 'TRN-SCENIC AND SIGHTSEEING TRANSPORTATION'),
+    (488, 'TRN-SERVICES INCIDENTAL TO TRANSPORTATION'),
+    (491, 'TRN-POSTAL SERVICE'),
+    (492, 'TRN-COURIERS AND MESSENGERS'),
+    (493, 'TRN-WAREHOUSING AND STORAGE'),
+    (51111, 'INF-NEWSPAPER PUBLISHERS'),
+    (5111Z, 'INF-PUBLISHING, EXCEPT NEWSPAPERS AND SOFTWARE'),
+    (5112, 'INF-SOFTWARE PUBLISHING'),
+    (5121, 'INF-MOTION PICTURES AND VIDEO INDUSTRIES'),
+    (5122, 'INF-SOUND RECORDING INDUSTRIES'),
+    (5161, 'INF-INTERNET PUBLISHING AND BROADCASTING'),
+    (5171, 'INF-WIRED TELECOMMUNICATIONS CARRIERS'),
+    (517Z, 'INF-OTHER TELECOMMUNICATION SERVICES'),
+    (5181, 'INF-INTERNET SERVICE PROVIDERS'),
+    (5182, 'INF-DATA PROCESSING, HOSTING, AND RELATED SERVICES'),
+    (51912, 'INF-LIBRARIES AND ARCHIVES'),
+    (5191Z, 'INF-OTHER INFORMATION SERVICES'),
+    (51M, 'INF-RADIO AND TELEVISION BROADCASTING AND CABLE'),
+    (5221M, 'FIN-SAVINGS INSTITUTIONS, INCLUDING CREDIT UNIONS'),
+    (522M, 'FIN-NON-DEPOSITORY CREDIT AND RELATED ACTIVITIES'),
+    (524, 'FIN-INSURANCE CARRIERS AND RELATED ACTIVITIES'),
+    (52M1, 'FIN-BANKING AND RELATED ACTIVITIES'),
+    (52M2, 'FIN-SECURITIES, COMMODITIES, FUNDS, TRUSTS, AND OTHER FINANCIAL INVESTMENTS'),
+    (531, 'FIN-REAL ESTATE'),
+    (5321, 'FIN-AUTOMOTIVE EQUIPMENT RENTAL AND LEASING'),
+    (53223, 'FIN-VIDEO TAPE AND DISK RENTAL'),
+    (532M, 'FIN-OTHER CONSUMER GOODS RENTAL'),
+    (53M, 'FIN-COMMERCIAL, INDUSTRIAL, AND OTHER INTANGIBLE ASSETS RENTAL AND LEASING'),
+    (5411, 'PRF-LEGAL SERVICES'),
+    (5412, 'PRF-ACCOUNTING, TAX PREPARATION, BOOKKEEPING AND PAYROLL SERVICES'),
+    (5413, 'PRF-ARCHITECTURAL, ENGINEERING, AND RELATED SERVICES'),
+    (5414, 'PRF-SPECIALIZED DESIGN SERVICES'),
+    (5415, 'PRF-COMPUTER SYSTEMS DESIGN AND RELATED SERVICES'),
+    (5416, 'PRF-MANAGEMENT, SCIENTIFIC AND TECHNICAL CONSULTING SERVICES'),
+    (5417, 'PRF-SCIENTIFIC RESEARCH AND DEVELOPMENT SERVICES'),
+    (5418, 'PRF-ADVERTISING AND RELATED SERVICES'),
+    (54194, 'PRF-VETERINARY SERVICES'),
+    (5419Z, 'PRF-OTHER PROFESSIONAL, SCIENTIFIC AND TECHNICAL SERVICES'),
+    (55, 'PRF-MANAGEMENT OF COMPANIES AND ENTERPRISES'),
+    (5613, 'PRF-EMPLOYMENT SERVICES'),
+    (5614, 'PRF-BUSINESS SUPPORT SERVICES'),
+    (5615, 'PRF-TRAVEL ARRANGEMENTS AND RESERVATION SERVICES'),
+    (5616, 'PRF-INVESTIGATION AND SECURITY SERVICES'),
+    (56173, 'PRF-LANDSCAPING SERVICES'),
+    (5617Z, 'PRF-SERVICES TO BUILDINGS AND DWELLINGS, EX CONSTR CLN'),
+    (561M, 'PRF-OTHER ADMINISTRATIVE, AND OTHER SUPPORT SERVICES'),
+    (562, 'PRF-WASTE MANAGEMENT AND REMEDIATION SERVICES'),
+    (6111, 'EDU-ELEMENTARY AND SECONDARY SCHOOLS'),
+    (611M1, 'EDU-COLLEGES AND UNIVERSITIES, INCLUDING JUNIOR COLLEGES'),
+    (611M2, 'EDU-BUSINESS, TECHNICAL, AND TRADE SCHOOLS AND TRAINING'),
+    (611M3, 'EDU-OTHER SCHOOLS, INSTRUCTION, AND EDUCATIONAL SERVICES'),
+    (6211, 'MED-OFFICES OF PHYSICIANS'),
+    (6212, 'MED-OFFICES OF DENTISTS'),
+    (62131, 'MED-OFFICE OF CHIROPRACTORS'),
+    (62132, 'MED-OFFICES OF OPTOMETRISTS'),
+    (6213ZM, 'MED-OFFICES OF OTHER HEALTH PRACTITIONERS'),
+    (6214, 'MED-OUTPATIENT CARE CENTERS'),
+    (6216, 'MED-HOME HEALTH CARE SERVICES'),
+    (621M, 'MED-OTHER HEALTH CARE SERVICES'),
+    (622, 'MED-HOSPITALS'),
+    (6231, 'MED-NURSING CARE FACILITIES'),
+    (623M, 'MED-RESIDENTIAL CARE FACILITIES, WITHOUT NURSING'),
+    (6241, 'SCA-INDIVIDUAL AND FAMILY SERVICES'),
+    (6242, 'SCA-COMMUNITY FOOD AND HOUSING, AND EMERGENCY SERVICES'),
+    (6243, 'SCA-VOCATIONAL REHABILITATION SERVICES'),
+    (6244, 'SCA-CHILD DAY CARE SERVICES'),
+    (711, 'ENT-INDEPENDENT ARTISTS, PERFORMING ARTS, SPECTATOR SPORTS AND RELATED INDUSTRIES'),
+    (712, 'ENT-MUSEUMS, ART GALLERIES, HISTORICAL SITES, AND SIMILAR INSTITUTIONS'),
+    (71395, 'ENT-BOWLING CENTERS'),
+    (713Z, 'ENT-OTHER AMUSEMENT, GAMBLING, AND RECREATION INDUSTRIES'),
+    (7211, 'ENT-TRAVELER ACCOMMODATION'),
+    (721M, 'ENT-RECREATIONAL VEHICLE PARKS AND CAMPS, AND ROOMING AND BOARDING HOUSES'),
+    (7224, 'ENT-DRINKING PLACES, ALCOHOLIC BEVERAGES'),
+    (722Z, 'ENT-RESTAURANTS AND OTHER FOOD SERVICES'),
+    (811192, 'SRV-CAR WASHES'),
+    (8111Z, 'SRV-AUTOMOTIVE REPAIR AND MAINTENANCE'),
+    (8112, 'SRV-ELECTRONIC AND PRECISION EQUIPMENT REPAIR AND MAINTENANCE'),
+    (8113, 'SRV-COMMERCIAL AND INDUSTRIAL MACHINERY AND EQUIPMENT REPAIR AND MAINTENANCE'),
+    (8114, 'SRV-PERSONAL AND HOUSEHOLD GOODS REPAIR AND MAINTENANCE'),
+    (812111, 'SRV-BARBER SHOPS'),
+    (812112, 'SRV-BEAUTY SALONS'),
+    (8121M, 'SRV-NAIL SALONS AND OTHER PERSONAL CARE SERVICES'),
+    (8122, 'SRV-FUNERAL HOMES, CEMETERIES AND CREMATORIES'),
+    (8123, 'SRV-DRYCLEANING AND LAUNDRY SERVICES'),
+    (8129, 'SRV-OTHER PERSONAL SERVICES'),
+    (8131, 'SRV-RELIGIOUS ORGANIZATIONS'),
+    (81393, 'SRV-LABOR UNIONS'),
+    (8139Z, 'SRV-BUSINESS, PROFESSIONAL, POLITICAL AND SIMILAR ORGANIZATIONS'),
+    (813M, 'SRV-CIVIC, SOCIAL, ADVOCACY ORGANIZATIONS, AND GRANTMAKING AND GIVING SERVICES'),
+    (814, 'SRV-PRIVATE HOUSEHOLDS'),
+    (92113, 'ADM-PUBLIC FINANCE ACTIVITIES'),
+    (92119, 'ADM-OTHER GENERAL GOVERNMENT AND SUPPORT'),
+    (9211MP, 'ADM-EXECUTIVE OFFICES AND LEGISLATIVE BODIES'),
+    (923, 'ADM-ADMINISTRATION OF HUMAN RESOURCE PROGRAMS'),
+    (928110P1, 'MIL-U.S. ARMY'),
+    (928110P2, 'MIL-U.S. AIR FORCE'),
+    (928110P3, 'MIL-U.S. NAVY'),
+    (928110P4, 'MIL-U.S. MARINES'),
+    (928110P5, 'MIL-U.S. COAST GUARD'),
+    (928110P6, 'MIL-U.S. ARMED FORCES, BRANCH NOT SPECIFIED'),
+    (928110P7, 'MIL-MILITARY RESERVES OR NATIONAL GUARD'),
+    (928P, 'ADM-NATIONAL SECURITY AND INTERNATIONAL AFFAIRS'),
+    (92M1, 'ADM-ADMINISTRATION OF ENVIRONMENTAL QUALITY AND HOUSING PROGRAMS'),
+    (92M2, 'ADM-ADMINISTRATION OF ECONOMIC PROGRAMS AND SPACE RESEARCH'),
+    (92MP, 'ADM-JUSTICE, PUBLIC ORDER, AND SAFETY ACTIVITIES'),
+    (9920, 'UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS **'),
 ]
 
 NATIVITY = [
@@ -1576,7 +3485,8 @@ NATIVITY = [
     (2, 'Foreign born'),
 ]
 
-PARENTS_NATIVITY = [
+NOP = [
+    (b, 'N/A (greater than 17 years old/not an own child of householder, and not child in subfamily)'),
     (1, 'Living with two parents: Both parents NATIVE'),
     (2, 'Living with two parents: Father only FOREIGN BORN'),
     (3, 'Living with two parents: Mother only FOREIGN BORN'),
@@ -1587,57 +3497,63 @@ PARENTS_NATIVITY = [
     (8, 'Living with mother only: Mother FOREIGN BORN'),
 ]
 
-OCCUPATION = [
-    (10, 'MGR-CHIEF EXECUTIVES AND LEGISLATORS'),
-    (20, 'MGR-GENERAL AND OPERATIONS MANAGERS'),
-    (40, 'MGR-ADVERTISING AND PROMOTIONS MANAGERS'),
-    (50, 'MGR-MARKETING AND SALES MANAGERS'),
-    (60, 'MGR-PUBLIC RELATIONS MANAGERS'),
-    (100, 'MGR-ADMINISTRATIVE SERVICES MANAGERS'),
-    (110, 'MGR-COMPUTER AND INFORMATION SYSTEMS MANAGERS'),
-    (120, 'MGR-FINANCIAL MANAGERS'),
-    (130, 'MGR-HUMAN RESOURCES MANAGERS'),
-    (140, 'MGR-INDUSTRIAL PRODUCTION MANAGERS'),
-    (150, 'MGR-PURCHASING MANAGERS'),
-    (160, 'MGR-TRANSPORTATION, STORAGE, AND DISTRIBUTION MANAGERS'),
-    (200, 'MGR-FARM, RANCH, AND OTHER AGRICULTURAL MANAGERS'),
-    (210, 'MGR-FARMERS AND RANCHERS'),
-    (220, 'MGR-CONSTRUCTION MANAGERS'),
-    (230, 'MGR-EDUCATION ADMINISTRATORS'),
-    (300, 'MGR-ENGINEERING MANAGERS'),
-    (310, 'MGR-FOOD SERVICE MANAGERS'),
-    (320, 'MGR-FUNERAL DIRECTORS'),
-    (330, 'MGR-GAMING MANAGERS'),
-    (340, 'MGR-LODGING MANAGERS'),
-    (350, 'MGR-MEDICAL AND HEALTH SERVICES MANAGERS'),
-    (360, 'MGR-NATURAL SCIENCES MANAGERS'),
-    (410, 'MGR-PROPERTY, REAL ESTATE, AND COMMUNITY ASSOCIATION MANAGERS'),
-    (420, 'MGR-SOCIAL AND COMMUNITY SERVICE MANAGERS'),
-    (430, 'MGR-MISCELLANEOUS MANAGERS, INCLUDING POSTMASTERS AND MAIL SUPERINTENDENTS'),
-    (500, 'BUS-AGENTS AND BUSINESS MANAGERS OF ARTISTS, PERFORMERS, AND ATHLETES'),
-    (510, 'BUS-PURCHASING AGENTS AND BUYERS, FARM PRODUCTS'),
-    (520, 'BUS-WHOLESALE AND RETAIL BUYERS, EXCEPT FARM PRODUCTS'),
-    (530, 'BUS-PURCHASING AGENTS, EXCEPT WHOLESALE, RETAIL, AND FARM PRODUCTS'),
-    (540, 'BUS-CLAIMS ADJUSTERS, APPRAISERS, EXAMINERS, AND INVESTIGATORS'),
-    (560, 'BUS-COMPLIANCE OFFICERS, EXCEPT AGRICULTURE, CONSTRUCTION, HEALTH AND SAFETY, AND TRANSPORTATION'),
-    (600, 'BUS-COST ESTIMATORS'),
-    (620, 'BUS-HUMAN RESOURCES, TRAINING, AND LABOR RELATIONS SPECIALISTS'),
-    (700, 'BUS-LOGISTICIANS'),
-    (710, 'BUS-MANAGEMENT ANALYSTS'),
-    (720, 'BUS-MEETING AND CONVENTION PLANNERS'),
-    (730, 'BUS-OTHER BUSINESS OPERATIONS SPECIALISTS'),
-    (800, 'FIN-ACCOUNTANTS AND AUDITORS'),
-    (810, 'FIN-APPRAISERS AND ASSESSORS OF REAL ESTATE'),
-    (820, 'FIN-BUDGET ANALYSTS'),
-    (830, 'FIN-CREDIT ANALYSTS'),
-    (840, 'FIN-FINANCIAL ANALYSTS'),
-    (850, 'FIN-PERSONAL FINANCIAL ADVISORS'),
-    (860, 'FIN-INSURANCE UNDERWRITERS'),
-    (900, 'FIN-FINANCIAL EXAMINERS'),
-    (910, 'FIN-LOAN COUNSELORS AND OFFICERS'),
-    (930, 'FIN-TAX EXAMINERS, COLLECTORS, AND REVENUE AGENTS'),
-    (940, 'FIN-TAX PREPARERS'),
-    (950, 'FIN-FINANCIAL SPECIALISTS, ALL OTHER'),
+OC = [
+    (0, 'No (includes GQ)'),
+    (1, 'Yes'),
+]
+
+OCCP = [
+    (bbbb, 'N/A (less than 16 years old/unemployed who never worked/NILF who last worked more than 5 years ago)'),
+    (0010, 'MGR-CHIEF EXECUTIVES AND LEGISLATORS'),
+    (0020, 'MGR-GENERAL AND OPERATIONS MANAGERS'),
+    (0040, 'MGR-ADVERTISING AND PROMOTIONS MANAGERS'),
+    (0050, 'MGR-MARKETING AND SALES MANAGERS'),
+    (0060, 'MGR-PUBLIC RELATIONS MANAGERS'),
+    (0100, 'MGR-ADMINISTRATIVE SERVICES MANAGERS'),
+    (0110, 'MGR-COMPUTER AND INFORMATION SYSTEMS MANAGERS'),
+    (0120, 'MGR-FINANCIAL MANAGERS'),
+    (0130, 'MGR-HUMAN RESOURCES MANAGERS'),
+    (0140, 'MGR-INDUSTRIAL PRODUCTION MANAGERS'),
+    (0150, 'MGR-PURCHASING MANAGERS'),
+    (0160, 'MGR-TRANSPORTATION, STORAGE, AND DISTRIBUTION MANAGERS'),
+    (0200, 'MGR-FARM, RANCH, AND OTHER AGRICULTURAL MANAGERS'),
+    (0210, 'MGR-FARMERS AND RANCHERS'),
+    (0220, 'MGR-CONSTRUCTION MANAGERS'),
+    (0230, 'MGR-EDUCATION ADMINISTRATORS'),
+    (0300, 'MGR-ENGINEERING MANAGERS'),
+    (0310, 'MGR-FOOD SERVICE MANAGERS'),
+    (0320, 'MGR-FUNERAL DIRECTORS'),
+    (0330, 'MGR-GAMING MANAGERS'),
+    (0340, 'MGR-LODGING MANAGERS'),
+    (0350, 'MGR-MEDICAL AND HEALTH SERVICES MANAGERS'),
+    (0360, 'MGR-NATURAL SCIENCES MANAGERS'),
+    (0410, 'MGR-PROPERTY, REAL ESTATE, AND COMMUNITY ASSOCIATION MANAGERS'),
+    (0420, 'MGR-SOCIAL AND COMMUNITY SERVICE MANAGERS'),
+    (0430, 'MGR-MISCELLANEOUS MANAGERS, INCLUDING POSTMASTERS AND MAIL SUPERINTENDENTS'),
+    (0500, 'BUS-AGENTS AND BUSINESS MANAGERS OF ARTISTS, PERFORMERS, AND ATHLETES'),
+    (0510, 'BUS-PURCHASING AGENTS AND BUYERS, FARM PRODUCTS'),
+    (0520, 'BUS-WHOLESALE AND RETAIL BUYERS, EXCEPT FARM PRODUCTS'),
+    (0530, 'BUS-PURCHASING AGENTS, EXCEPT WHOLESALE, RETAIL, AND FARM PRODUCTS'),
+    (0540, 'BUS-CLAIMS ADJUSTERS, APPRAISERS, EXAMINERS, AND INVESTIGATORS'),
+    (0560, 'BUS-COMPLIANCE OFFICERS, EXCEPT AGRICULTURE, CONSTRUCTION, HEALTH AND SAFETY, AND TRANSPORTATION'),
+    (0600, 'BUS-COST ESTIMATORS'),
+    (0620, 'BUS-HUMAN RESOURCES, TRAINING, AND LABOR RELATIONS SPECIALISTS'),
+    (0700, 'BUS-LOGISTICIANS'),
+    (0710, 'BUS-MANAGEMENT ANALYSTS'),
+    (0720, 'BUS-MEETING AND CONVENTION PLANNERS'),
+    (0730, 'BUS-OTHER BUSINESS OPERATIONS SPECIALISTS'),
+    (0800, 'FIN-ACCOUNTANTS AND AUDITORS'),
+    (0810, 'FIN-APPRAISERS AND ASSESSORS OF REAL ESTATE'),
+    (0820, 'FIN-BUDGET ANALYSTS'),
+    (0830, 'FIN-CREDIT ANALYSTS'),
+    (0840, 'FIN-FINANCIAL ANALYSTS'),
+    (0850, 'FIN-PERSONAL FINANCIAL ADVISORS'),
+    (0860, 'FIN-INSURANCE UNDERWRITERS'),
+    (0900, 'FIN-FINANCIAL EXAMINERS'),
+    (0910, 'FIN-LOAN COUNSELORS AND OFFICERS'),
+    (0930, 'FIN-TAX EXAMINERS, COLLECTORS, AND REVENUE AGENTS'),
+    (0940, 'FIN-TAX PREPARERS'),
+    (0950, 'FIN-FINANCIAL SPECIALISTS, ALL OTHER'),
     (1000, 'CMM-COMPUTER SCIENTISTS AND SYSTEMS ANALYSTS'),
     (1010, 'CMM-COMPUTER PROGRAMMERS'),
     (1020, 'CMM-COMPUTER SOFTWARE ENGINEERS'),
@@ -2057,24 +3973,328 @@ OCCUPATION = [
     (9810, 'MIL-FIRST-LINE ENLISTED MILITARY SUPERVISORS/MANAGERS'),
     (9820, 'MIL-MILITARY ENLISTED TACTICAL OPERATIONS AND AIR/WEAPONS SPECIALISTS AND CREW MEMBERS'),
     (9830, 'MIL-MILITARY, RANK NOT SPECIFIED **'),
-    (9920, 'UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS'),
+    (9920, 'UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS **'),
 ]
 
-CHILDREN_AGE = [
+PAOC = [
+    (b, 'N/A (male/female under 16 years old/GQ)'),
     (1, 'With own children under 6 years only'),
     (2, 'With own children 6 to 17 years only'),
     (3, 'With own children under 6 years and 6 to 17 years'),
     (4, 'No own children'),
 ]
 
-QUARTER_OF_BIRTH = [
+PERNP = [
+    (bbbbbbb, 'N/A (less than 15 years old)'),
+    (0000000, 'No earnings'),
+    (-009999, 'Loss of $9999 or more'),
+    (-000001..-009998, 'Loss $1 to $9998'),
+    (0000001, '$1 or breakeven'),
+    (0000002..9999999, '$2 to $9999999 (Rounded & top-coded components)'),
+]
+
+PINCP = [
+    (bbbbbbb, 'N/A (less than 15 years old)'),
+    (0000000, 'None'),
+    (-019998, 'Loss of $19998 or more'),
+    (-000001..-019997, 'Loss $1 to $19997'),
+    (0000001, '$1 or breakeven'),
+    (0000002..9999999, '$2 to $9999999 (Rounded & top-coded components)'),
+]
+
+POBP = [
+    (001, 'Alabama/AL'),
+    (002, 'Alaska/AK'),
+    (004, 'Arizona/AZ'),
+    (005, 'Arkansas/AR'),
+    (006, 'California/CA'),
+    (008, 'Colorado/CO'),
+    (009, 'Connecticut/CT'),
+    (010, 'Delaware/DE'),
+    (011, 'District of Columbia/DC'),
+    (012, 'Florida/FL'),
+    (013, 'Georgia/GA'),
+    (015, 'Hawaii/HI'),
+    (016, 'Idaho/ID'),
+    (017, 'Illinois/IL'),
+    (018, 'Indiana/IN'),
+    (019, 'Iowa/IA'),
+    (020, 'Kansas/KS'),
+    (021, 'Kentucky/KY'),
+    (022, 'Louisiana/LA'),
+    (023, 'Maine/ME'),
+    (024, 'Maryland/MD'),
+    (025, 'Massachusetts/MA'),
+    (026, 'Michigan/MI'),
+    (027, 'Minnesota/MN'),
+    (028, 'Mississippi/MS'),
+    (029, 'Missouri/MO'),
+    (030, 'Montana/MT'),
+    (031, 'Nebraska/NE'),
+    (032, 'Nevada/NV'),
+    (033, 'New Hampshire/NH'),
+    (034, 'New Jersey/NJ'),
+    (035, 'New Mexico/NM'),
+    (036, 'New York/NY'),
+    (037, 'North Carolina/NC'),
+    (038, 'North Dakota/ND'),
+    (039, 'Ohio/OH'),
+    (040, 'Oklahoma/OK'),
+    (041, 'Oregon/OR'),
+    (042, 'Pennsylvania/PA'),
+    (044, 'Rhode Island/RI'),
+    (045, 'South Carolina/SC'),
+    (046, 'South Dakota/SD'),
+    (047, 'Tennessee/TN'),
+    (048, 'Texas/TX'),
+    (049, 'Utah/UT'),
+    (050, 'Vermont/VT'),
+    (051, 'Virginia/VA'),
+    (053, 'Washington/WA'),
+    (054, 'West Virginia/WV'),
+    (055, 'Wisconsin/WI'),
+    (056, 'Wyoming/WY'),
+    (060, 'American Samoa'),
+    (066, 'Guam'),
+    (072, 'Puerto Rico'),
+    (078, 'US Virgin Islands'),
+    (100, 'Albania'),
+    (102, 'Austria'),
+    (103, 'Belgium'),
+    (104, 'Bulgaria'),
+    (105, 'Czechoslovakia'),
+    (106, 'Denmark'),
+    (108, 'Finland'),
+    (109, 'France'),
+    (110, 'Germany'),
+    (116, 'Greece'),
+    (117, 'Hungary'),
+    (118, 'Iceland'),
+    (119, 'Ireland'),
+    (120, 'Italy'),
+    (126, 'Netherlands'),
+    (127, 'Norway'),
+    (128, 'Poland'),
+    (129, 'Portugal'),
+    (130, 'Azores Islands'),
+    (132, 'Romania'),
+    (134, 'Spain'),
+    (136, 'Sweden'),
+    (137, 'Switzerland'),
+    (138, 'United Kingdom, Not Specified'),
+    (139, 'England'),
+    (140, 'Scotland'),
+    (142, 'Northern Ireland'),
+    (147, 'Yugoslavia'),
+    (148, 'Czech Republic'),
+    (149, 'Slovakia'),
+    (150, 'Bosnia and Herzegovina'),
+    (151, 'Croatia'),
+    (152, 'Macedonia'),
+    (155, 'Estonia'),
+    (156, 'Latvia'),
+    (157, 'Lithuania'),
+    (158, 'Armenia'),
+    (159, 'Azerbaijan'),
+    (160, 'Belarus'),
+    (161, 'Georgia'),
+    (162, 'Moldova'),
+    (163, 'Russia'),
+    (164, 'Ukraine'),
+    (165, 'USSR'),
+    (166, 'Europe, Not Specified'),
+    (169, 'Other Europe, Not Specified'),
+    (200, 'Afghanistan'),
+    (202, 'Bangladesh'),
+    (205, 'Myanmar'),
+    (206, 'Cambodia'),
+    (207, 'China'),
+    (209, 'Hong Kong'),
+    (210, 'India'),
+    (211, 'Indonesia'),
+    (212, 'Iran'),
+    (213, 'Iraq'),
+    (214, 'Israel'),
+    (215, 'Japan'),
+    (216, 'Jordan'),
+    (217, 'Korea'),
+    (218, 'Kazakhstan'),
+    (222, 'Kuwait'),
+    (223, 'Laos'),
+    (224, 'Lebanon'),
+    (226, 'Malaysia'),
+    (229, 'Nepal'),
+    (231, 'Pakistan'),
+    (233, 'Philippines'),
+    (235, 'Saudi Arabia'),
+    (236, 'Singapore'),
+    (238, 'Sri Lanka'),
+    (239, 'Syria'),
+    (240, 'Taiwan'),
+    (242, 'Thailand'),
+    (243, 'Turkey'),
+    (246, 'Uzbekistan'),
+    (247, 'Vietnam'),
+    (248, 'Yemen'),
+    (249, 'Asia'),
+    (251, 'Eastern Asia, Not Specified'),
+    (253, 'Other South Central Asia, Not Specified'),
+    (254, 'Other Asia, Not Specified'),
+    (300, 'Bermuda'),
+    (301, 'Canada'),
+    (303, 'Mexico'),
+    (310, 'Belize'),
+    (311, 'Costa Rica'),
+    (312, 'El Salvador'),
+    (313, 'Guatemala'),
+    (314, 'Honduras'),
+    (315, 'Nicaragua'),
+    (316, 'Panama'),
+    (321, 'Antigua & Barbuda'),
+    (323, 'Bahamas'),
+    (324, 'Barbados'),
+    (327, 'Cuba'),
+    (328, 'Dominica'),
+    (329, 'Dominican Republic'),
+    (330, 'Grenada'),
+    (332, 'Haiti'),
+    (333, 'Jamaica'),
+    (338, 'St. Kitts-Nevis'),
+    (339, 'St. Lucia'),
+    (340, 'St. Vincent & the Grenadines'),
+    (341, 'Trinidad & Tobago'),
+    (343, 'West Indies'),
+    (344, 'Caribbean, Not Specified'),
+    (360, 'Argentina'),
+    (361, 'Bolivia'),
+    (362, 'Brazil'),
+    (363, 'Chile'),
+    (364, 'Colombia'),
+    (365, 'Ecuador'),
+    (368, 'Guyana'),
+    (369, 'Paraguay'),
+    (370, 'Peru'),
+    (372, 'Uruguay'),
+    (373, 'Venezuela'),
+    (374, 'South America'),
+    (399, 'Americas, Not Specified'),
+    (400, 'Algeria'),
+    (407, 'Cameroon'),
+    (408, 'Cape Verde'),
+    (414, 'Egypt'),
+    (416, 'Ethiopia'),
+    (417, 'Eritrea'),
+    (421, 'Ghana'),
+    (423, 'Guinea'),
+    (427, 'Kenya'),
+    (429, 'Liberia'),
+    (436, 'Morocco'),
+    (440, 'Nigeria'),
+    (444, 'Senegal'),
+    (447, 'Sierra Leone'),
+    (448, 'Somalia'),
+    (449, 'South Africa'),
+    (451, 'Sudan'),
+    (453, 'Tanzania'),
+    (457, 'Uganda'),
+    (461, 'Zimbabwe'),
+    (462, 'Africa'),
+    (463, 'Eastern Africa, Not Specified'),
+    (464, 'Northern Africa, Not Specified'),
+    (467, 'Western Africa, Not Specified'),
+    (468, 'Other Africa, Not Specified'),
+    (501, 'Australia'),
+    (508, 'Fiji'),
+    (512, 'Micronesia'),
+    (515, 'New Zealand'),
+    (523, 'Tonga'),
+    (527, 'Samoa'),
+    (554, 'Other US Island Areas, Oceania, Not Specified, or at Sea'),
+]
+
+POVPIP = [
+    (bbb, 'N/A'),
+    (000..500, 'Percent of poverty status value'),
+    (501, '501 percent or more of poverty status value'),
+]
+
+POWPUMA = [
+    (bbbbb, 'N/A (not a worker--not in the labor force, force, including persons under 16 years; unemployed; civilian employed, with a job not at work; Armed Forces, with a job but not at work)'),
+    (00001, 'Did not work in the United States or in Puerto Rico'),
+    (00100..08200, 'Assigned Place of work PUMA. Use with POWSP.'),
+]
+
+POWSP = [
+    (bbb, 'N/A (not a worker--not in the labor force, including persons under 16 years; unemployed; employed, with a job not at work; Armed Forces, with a job but not at work)'),
+    (001, 'Alabama/AL'),
+    (002, 'Alaska/AK'),
+    (004, 'Arizona/AZ'),
+    (005, 'Arkansas/AR'),
+    (006, 'California/CA'),
+    (008, 'Colorado/CO'),
+    (009, 'Connecticut/CT'),
+    (010, 'Delaware/DE'),
+    (011, 'District of Columbia/DC'),
+    (012, 'Florida/FL'),
+    (013, 'Georgia/GA'),
+    (015, 'Hawaii/HI'),
+    (016, 'Idaho/ID'),
+    (017, 'Illinois/IL'),
+    (018, 'Indiana/IN'),
+    (019, 'Iowa/IA'),
+    (020, 'Kansas/KS'),
+    (021, 'Kentucky/KY'),
+    (022, 'Louisiana/LA'),
+    (023, 'Maine/ME'),
+    (024, 'Maryland/MD'),
+    (025, 'Massachusetts/MA'),
+    (026, 'Michigan/MI'),
+    (027, 'Minnesota/MN'),
+    (028, 'Mississippi/MS'),
+    (029, 'Missouri/MO'),
+    (030, 'Montana/MT'),
+    (031, 'Nebraska/NE'),
+    (032, 'Nevada/NV'),
+    (033, 'New Hampshire/NH'),
+    (034, 'New Jersey/NJ'),
+    (035, 'New Mexico/NM'),
+    (036, 'New York/NY'),
+    (037, 'North Carolina/NC'),
+    (038, 'North Dakota/ND'),
+    (039, 'Ohio/OH'),
+    (040, 'Oklahoma/OK'),
+    (041, 'Oregon/OR'),
+    (042, 'Pennsylvania/PA'),
+    (044, 'Rhode Island/RI'),
+    (045, 'South Carolina/SC'),
+    (046, 'South Dakota/SD'),
+    (047, 'Tennessee/TN'),
+    (048, 'Texas/TX'),
+    (049, 'Utah/UT'),
+    (050, 'Vermont/VT'),
+    (051, 'Virginia/VA'),
+    (053, 'Washington/WA'),
+    (054, 'West Virginia/WV'),
+    (055, 'Wisconsin/WI'),
+    (056, 'Wyoming/WY'),
+    (072, 'Puerto Rico'),
+    (166, 'Europe'),
+    (213, 'Iraq'),
+    (251, 'Eastern Asia'),
+    (254, 'Other Asia, Not Specified'),
+    (303, 'Mexico'),
+    (399, 'Americas, Not Specified'),
+    (555, 'Other US Island Areas Not Specified, Africa, Oceania, at Sea, or Abroad, Not Specified'),
+]
+
+QTRBIR = [
     (1, 'January through March'),
     (2, 'April through June'),
     (3, 'July through September'),
     (4, 'October through December'),
 ]
 
-RACE_1 = [
+RAC1P = [
     (1, 'White alone'),
     (2, 'Black or African American alone'),
     (3, 'American Indian alone'),
@@ -2086,16 +4306,16 @@ RACE_1 = [
     (9, 'Two or more major race groups'),
 ]
 
-RACE_2 = [
-    (1, 'White alone'),
-    (2, 'Black or African American alone'),
-    (3, 'Apache alone'),
-    (4, 'Blackfeet alone'),
-    (5, 'Cherokee alone'),
-    (6, 'Cheyenne alone'),
-    (7, 'Chickasaw alone'),
-    (8, 'Chippewa alone'),
-    (9, 'Choctaw alone'),
+RAC2P = [
+    (01, 'White alone'),
+    (02, 'Black or African American alone'),
+    (03, 'Apache alone'),
+    (04, 'Blackfeet alone'),
+    (05, 'Cherokee alone'),
+    (06, 'Cheyenne alone'),
+    (07, 'Chickasaw alone'),
+    (08, 'Chippewa alone'),
+    (09, 'Choctaw alone'),
     (10, 'Colville alone'),
     (11, 'Comanche alone'),
     (12, 'Creek alone'),
@@ -2113,7 +4333,7 @@ RACE_2 = [
     (24, 'Puget Sound Salish alone'),
     (25, 'Seminole alone'),
     (26, 'Sioux alone'),
-    (27, 'Tohono O\'Odham alone'),
+    (27, 'Tohono O'Odham alone'),
     (28, 'Yakama alone'),
     (29, 'Yaqui alone'),
     (30, 'Yuman alone'),
@@ -2156,16 +4376,16 @@ RACE_2 = [
     (67, 'Two or more races'),
 ]
 
-RACE_3 = [
-    (1, 'Some other race alone'),
-    (2, 'Other Pacific Islander alone'),
-    (3, 'Samoan alone'),
-    (4, 'Guamanian or Chamorro alone'),
-    (5, 'Native Hawaiian alone'),
-    (6, 'Native Hawaiian and Other Pacific Islander groups only'),
-    (7, 'Other Asian; Some other race'),
-    (8, 'Other Asian alone'),
-    (9, 'Vietnamese alone'),
+RAC3P = [
+    (01, 'Some other race alone'),
+    (02, 'Other Pacific Islander alone'),
+    (03, 'Samoan alone'),
+    (04, 'Guamanian or Chamorro alone'),
+    (05, 'Native Hawaiian alone'),
+    (06, 'Native Hawaiian and Other Pacific Islander groups only'),
+    (07, 'Other Asian; Some other race'),
+    (08, 'Other Asian alone'),
+    (09, 'Vietnamese alone'),
     (10, 'Korean alone'),
     (11, 'Japanese; Some other race'),
     (12, 'Japanese; Native Hawaiian'),
@@ -2231,14 +4451,55 @@ RACE_3 = [
     (72, 'White race; Some other race; Black or African American race and/or American Indian and Alaska Native race and/or Asian groups and/or Native Hawaiian and Other Pacific Islander groups'),
 ]
 
-SUBFAMILY_NUMBER = [
+RACAIAN = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+RACASN = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+RACBLK = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+RACNHPI = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+RACNUM = [
+    (1..6, 'Race groups'),
+]
+
+RACSOR = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+RACWHT = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+RC = [
+    (0, 'No (includes GQ)'),
+    (1, 'Yes'),
+]
+
+SFN = [
+    (b, 'N/A (GQ/not in a subfamily)'),
     (1, 'In subfamily 1'),
     (2, 'In subfamily 2'),
     (3, 'In subfamily 3'),
     (4, 'In subfamily 4'),
 ]
 
-SUBFAMILY_RELATIONSHIP = [
+SFR = [
+    (b, 'N/A (GQ/not in a subfamily)'),
     (1, 'Husband/wife no children'),
     (2, 'Husband/wife with children'),
     (3, 'Parent in a parent/child subfamily'),
@@ -2247,8 +4508,10 @@ SUBFAMILY_RELATIONSHIP = [
     (6, 'Child in a father-child subfamily'),
 ]
 
-SOC_OCCUPATION = [
-    (111021, 'MGR-GENERAL AND OPERATIONS MANAGERS 110XX .MGR-CHIEF EXECUTIVES AND LEGISLATORS *'),
+SOCP = [
+    (bbbbbb, 'N/A (less than 16 years old/unemployed who never worked/NILF who last worked more than 5 years ago)'),
+    (111021, 'MGR-GENERAL AND OPERATIONS MANAGERS'),
+    (1110XX, 'MGR-CHIEF EXECUTIVES AND LEGISLATORS *'),
     (112011, 'MGR-ADVERTISING AND PROMOTIONS MANAGERS'),
     (112020, 'MGR-MARKETING AND SALES MANAGERS'),
     (112031, 'MGR-PUBLIC RELATIONS MANAGERS'),
@@ -2271,7 +4534,8 @@ SOC_OCCUPATION = [
     (119111, 'MGR-MEDICAL AND HEALTH SERVICES MANAGERS'),
     (119121, 'MGR-NATURAL SCIENCES MANAGERS'),
     (119141, 'MGR-PROPERTY, REAL ESTATE, AND COMMUNITY ASSOCIATION MANAGERS'),
-    (119151, 'MGR-SOCIAL AND COMMUNITY SERVICE MANAGERS 191XX .MGR-MISCELLANEOUS MANAGERS, INCLUDING POSTMASTERS AND MAIL SUPERINTENDENTS'),
+    (119151, 'MGR-SOCIAL AND COMMUNITY SERVICE MANAGERS'),
+    (1191XX, 'MGR-MISCELLANEOUS MANAGERS, INCLUDING POSTMASTERS AND MAIL SUPERINTENDENTS'),
     (131011, 'BUS-AGENTS AND BUSINESS MANAGERS OF ARTISTS, PERFORMERS, AND ATHLETES'),
     (131021, 'BUS-PURCHASING AGENTS AND BUYERS, FARM PRODUCTS'),
     (131022, 'BUS-WHOLESALE AND RETAIL BUYERS, EXCEPT FARM PRODUCTS'),
@@ -2282,7 +4546,8 @@ SOC_OCCUPATION = [
     (131070, 'BUS-HUMAN RESOURCES, TRAINING, AND LABOR RELATIONS SPECIALISTS'),
     (131081, 'BUS-LOGISTICIANS'),
     (131111, 'BUS-MANAGEMENT ANALYSTS'),
-    (131121, 'BUS-MEETING AND CONVENTION PLANNERS 31XXX .BUS-OTHER BUSINESS OPERATIONS SPECIALISTS *'),
+    (131121, 'BUS-MEETING AND CONVENTION PLANNERS'),
+    (131XXX, 'BUS-OTHER BUSINESS OPERATIONS SPECIALISTS *'),
     (132011, 'FIN-ACCOUNTANTS AND AUDITORS'),
     (132021, 'FIN-APPRAISERS AND ASSESSORS OF REAL ESTATE'),
     (132031, 'FIN-BUDGET ANALYSTS'),
@@ -2300,9 +4565,11 @@ SOC_OCCUPATION = [
     (151041, 'CMM-COMPUTER SUPPORT SPECIALISTS'),
     (151061, 'CMM-DATABASE ADMINISTRATORS'),
     (151071, 'CMM-NETWORK AND COMPUTER SYSTEMS ADMINISTRATORS'),
-    (151081, 'CMM-NETWORK SYSTEMS AND DATA COMMUNICATIONS ANALYSTS 510XX .CMM-COMPUTER SCIENTISTS AND SYSTEMS ANALYSTS *'),
+    (151081, 'CMM-NETWORK SYSTEMS AND DATA COMMUNICATIONS ANALYSTS'),
+    (1510XX, 'CMM-COMPUTER SCIENTISTS AND SYSTEMS ANALYSTS *'),
     (152011, 'CMM-ACTUARIES'),
-    (152031, 'CMM-OPERATIONS RESEARCH ANALYSTS 520XX .CMM-MISCELLANEOUS MATHEMATICAL SCIENCE OCCUPATIONS, INCLUDING MATHEMATICIANS AND STATISTICIANS *'),
+    (152031, 'CMM-OPERATIONS RESEARCH ANALYSTS'),
+    (1520XX, 'CMM-MISCELLANEOUS MATHEMATICAL SCIENCE OCCUPATIONS, INCLUDING MATHEMATICIANS AND STATISTICIANS *'),
     (171010, 'ENG-ARCHITECTS, EXCEPT NAVAL'),
     (171020, 'ENG-SURVEYORS, CARTOGRAPHERS, AND PHOTOGRAMMETRISTS'),
     (172011, 'ENG-AEROSPACE ENGINEERS'),
@@ -2310,11 +4577,14 @@ SOC_OCCUPATION = [
     (172051, 'ENG-CIVIL ENGINEERS'),
     (172061, 'ENG-COMPUTER HARDWARE ENGINEERS'),
     (172070, 'ENG-ELECTRICAL AND ELECTRONICS ENGINEERS'),
-    (172081, 'ENG-ENVIRONMENTAL ENGINEERS 720XX .ENG-BIOMEDICAL AND AGRICULTURAL ENGINEERS *'),
+    (172081, 'ENG-ENVIRONMENTAL ENGINEERS'),
+    (1720XX, 'ENG-BIOMEDICAL AND AGRICULTURAL ENGINEERS *'),
     (172110, 'ENG-INDUSTRIAL ENGINEERS, INCLUDING HEALTH AND SAFETY'),
     (172121, 'ENG-MARINE ENGINEERS AND NAVAL ARCHITECTS'),
     (172131, 'ENG-MATERIALS ENGINEERS'),
-    (172141, 'ENG-MECHANICAL ENGINEERS 721XX .ENG-PETROLEUM, MINING AND GEOLOGICAL ENGINEERS, INCLUDING MINING SAFETY ENGINEERS * 721YY .ENG-MISCELLANEOUS ENGINEERS, INCLUDING NUCLEAR ENGINEERS *'),
+    (172141, 'ENG-MECHANICAL ENGINEERS'),
+    (1721XX, 'ENG-PETROLEUM, MINING AND GEOLOGICAL ENGINEERS, INCLUDING MINING SAFETY ENGINEERS *'),
+    (1721YY, 'ENG-MISCELLANEOUS ENGINEERS, INCLUDING NUCLEAR ENGINEERS *'),
     (173010, 'ENG-DRAFTERS'),
     (173020, 'ENG-ENGINEERING TECHNICIANS, EXCEPT DRAFTERS'),
     (173031, 'ENG-SURVEYING AND MAPPING TECHNICIANS'),
@@ -2330,17 +4600,20 @@ SOC_OCCUPATION = [
     (193011, 'SCI-ECONOMISTS'),
     (193020, 'SCI-MARKET AND SURVEY RESEARCHERS'),
     (193030, 'SCI-PSYCHOLOGISTS'),
-    (193051, 'SCI-URBAN AND REGIONAL PLANNERS 930XX .SCI-MISCELLANEOUS SOCIAL SCIENTISTS, INCLUDING SOCIOLOGISTS *'),
+    (193051, 'SCI-URBAN AND REGIONAL PLANNERS'),
+    (1930XX, 'SCI-MISCELLANEOUS SOCIAL SCIENTISTS, INCLUDING SOCIOLOGISTS *'),
     (194011, 'SCI-AGRICULTURAL AND FOOD SCIENCE TECHNICIANS'),
     (194021, 'SCI-BIOLOGICAL TECHNICIANS'),
     (194031, 'SCI-CHEMICAL TECHNICIANS'),
-    (194041, 'SCI-GEOLOGICAL AND PETROLEUM TECHNICIANS 940XX .SCI-MISCELLANEOUS LIFE, PHYSICAL, AND SOCIAL SCIENCE TECHNICIANS, INCLUDING SOCIAL SCIENCE RESEARCH ASSISTANTS AND NUCLEAR TECHNICIANS *'),
+    (194041, 'SCI-GEOLOGICAL AND PETROLEUM TECHNICIANS'),
+    (1940XX, 'SCI-MISCELLANEOUS LIFE, PHYSICAL, AND SOCIAL SCIENCE TECHNICIANS, INCLUDING SOCIAL SCIENCE RESEARCH ASSISTANTS AND NUCLEAR TECHNICIANS *'),
     (211010, 'CMS-COUNSELORS'),
     (211020, 'CMS-SOCIAL WORKERS'),
     (211090, 'CMS-MISCELLANEOUS COMMUNITY AND SOCIAL SERVICE SPECIALISTS'),
     (212011, 'CMS-CLERGY'),
     (212021, 'CMS-DIRECTORS, RELIGIOUS ACTIVITIES AND EDUCATION'),
-    (212099, 'CMS-RELIGIOUS WORKERS, ALL OTHER 310XX .LGL-LAWYERS AND JUDGES, MAGISTRATES, AND OTHER JUDICIAL WORKERS'),
+    (212099, 'CMS-RELIGIOUS WORKERS, ALL OTHER'),
+    (2310XX, 'LGL-LAWYERS AND JUDGES, MAGISTRATES, AND OTHER JUDICIAL WORKERS'),
     (232011, 'LGL-PARALEGALS AND LEGAL ASSISTANTS'),
     (232090, 'LGL-MISCELLANEOUS LEGAL SUPPORT WORKERS'),
     (251000, 'EDU-POSTSECONDARY TEACHERS'),
@@ -2352,7 +4625,8 @@ SOC_OCCUPATION = [
     (254010, 'EDU-ARCHIVISTS, CURATORS, AND MUSEUM TECHNICIANS'),
     (254021, 'EDU-LIBRARIANS'),
     (254031, 'EDU-LIBRARY TECHNICIANS'),
-    (259041, 'EDU-TEACHER ASSISTANTS 590XX .EDU-OTHER EDUCATION, TRAINING, AND LIBRARY WORKERS *'),
+    (259041, 'EDU-TEACHER ASSISTANTS'),
+    (2590XX, 'EDU-OTHER EDUCATION, TRAINING, AND LIBRARY WORKERS *'),
     (271010, 'ENT-ARTISTS AND RELATED WORKERS'),
     (271020, 'ENT-DESIGNERS'),
     (272011, 'ENT-ACTORS'),
@@ -2369,7 +4643,8 @@ SOC_OCCUPATION = [
     (273043, 'ENT-WRITERS AND AUTHORS'),
     (273090, 'ENT-MISCELLANEOUS MEDIA AND COMMUNICATION WORKERS'),
     (274021, 'ENT-PHOTOGRAPHERS'),
-    (274030, 'ENT-TELEVISION, VIDEO, AND MOTION PICTURE CAMERA OPERATORS AND EDITORS 740XX .ENT-BROADCAST AND SOUND ENGINEERING TECHNICIANS AND RADIO OPERATORS, AND MEDIA AND COMMUNICATION EQUIPMENT WORKERS, ALL OTHER *'),
+    (274030, 'ENT-TELEVISION, VIDEO, AND MOTION PICTURE CAMERA OPERATORS AND EDITORS'),
+    (2740XX, 'ENT-BROADCAST AND SOUND ENGINEERING TECHNICIANS AND RADIO OPERATORS, AND MEDIA AND COMMUNICATION EQUIPMENT WORKERS, ALL OTHER *'),
     (291011, 'MED-CHIROPRACTORS'),
     (291020, 'MED-DENTISTS'),
     (291031, 'MED-DIETITIANS AND NUTRITIONISTS'),
@@ -2403,7 +4678,8 @@ SOC_OCCUPATION = [
     (312010, 'HLS-OCCUPATIONAL THERAPIST ASSISTANTS AND AIDES'),
     (312020, 'HLS-PHYSICAL THERAPIST ASSISTANTS AND AIDES'),
     (319011, 'HLS-MASSAGE THERAPISTS'),
-    (319091, 'HLS-DENTAL ASSISTANTS 1909X .HLS-MEDICAL ASSISTANTS AND OTHER HEALTHCARE SUPPORT OCCUPATIONS, EXCEPT DENTAL ASSISTANTS *'),
+    (319091, 'HLS-DENTAL ASSISTANTS'),
+    (31909X, 'HLS-MEDICAL ASSISTANTS AND OTHER HEALTHCARE SUPPORT OCCUPATIONS, EXCEPT DENTAL ASSISTANTS *'),
     (331011, 'PRT-FIRST-LINE SUPERVISORS/MANAGERS OF CORRECTIONAL OFFICERS'),
     (331012, 'PRT-FIRST-LINE SUPERVISORS/MANAGERS OF POLICE AND DETECTIVES'),
     (331021, 'PRT-FIRST-LINE SUPERVISORS/MANAGERS OF FIRE FIGHTING AND PREVENTION WORKERS'),
@@ -2412,11 +4688,13 @@ SOC_OCCUPATION = [
     (332020, 'PRT-FIRE INSPECTORS'),
     (333010, 'PRT-BAILIFFS, CORRECTIONAL OFFICERS, AND JAILERS'),
     (333021, 'PRT-DETECTIVES AND CRIMINAL INVESTIGATORS'),
-    (333050, 'PRT-POLICE OFFICERS 330XX .PRT-MISCELLANEOUS LAW ENFORCEMENT WORKERS *'),
+    (333050, 'PRT-POLICE OFFICERS'),
+    (3330XX, 'PRT-MISCELLANEOUS LAW ENFORCEMENT WORKERS *'),
     (339011, 'PRT-ANIMAL CONTROL WORKERS'),
     (339021, 'PRT-PRIVATE DETECTIVES AND INVESTIGATORS'),
     (339030, 'PRT-SECURITY GUARDS AND GAMING SURVEILLANCE OFFICERS'),
-    (339091, 'PRT-CROSSING GUARDS 3909X .PRT-LIFEGUARDS AND OTHER PROTECTIVE SERVICE WORKERS *'),
+    (339091, 'PRT-CROSSING GUARDS'),
+    (33909X, 'PRT-LIFEGUARDS AND OTHER PROTECTIVE SERVICE WORKERS *'),
     (351011, 'EAT-CHEFS AND HEAD COOKS'),
     (351012, 'EAT-FIRST-LINE SUPERVISORS/MANAGERS OF FOOD PREPARATION AND SERVING WORKERS'),
     (352010, 'EAT-COOKS'),
@@ -2427,10 +4705,12 @@ SOC_OCCUPATION = [
     (353031, 'EAT-WAITERS AND WAITRESSES'),
     (353041, 'EAT-FOOD SERVERS, NONRESTAURANT'),
     (359021, 'EAT-DISHWASHERS'),
-    (359031, 'EAT-HOSTS AND HOSTESSES, RESTAURANT, LOUNGE, AND COFFEE SHOP 590XX .EAT-MISCELLANEOUS FOOD PREPARATION AND SERVING RELATED WORKERS, INCLUDING DINING ROOM AND CAFETERIA ATTENDANTS AND BARTENDER HELPERS *'),
+    (359031, 'EAT-HOSTS AND HOSTESSES, RESTAURANT, LOUNGE, AND COFFEE SHOP'),
+    (3590XX, 'EAT-MISCELLANEOUS FOOD PREPARATION AND SERVING RELATED WORKERS, INCLUDING DINING ROOM AND CAFETERIA ATTENDANTS AND BARTENDER HELPERS *'),
     (371011, 'CLN-FIRST-LINE SUPERVISORS/MANAGERS OF HOUSEKEEPING AND JANITORIAL WORKERS'),
     (371012, 'CLN-FIRST-LINE SUPERVISORS/MANAGERS OF LANDSCAPING, LAWN SERVICE, AND GROUNDSKEEPING WORKERS'),
-    (372012, 'CLN-MAIDS AND HOUSEKEEPING CLEANERS 7201X .CLN-JANITORS AND BUILDING CLEANERS *'),
+    (372012, 'CLN-MAIDS AND HOUSEKEEPING CLEANERS'),
+    (37201X, 'CLN-JANITORS AND BUILDING CLEANERS *'),
     (372021, 'CLN-PEST CONTROL WORKERS'),
     (373010, 'CLN-GROUNDS MAINTENANCE WORKERS'),
     (391010, 'PRS-FIRST-LINE SUPERVISORS/MANAGERS OF GAMING WORKERS'),
@@ -2496,7 +4776,8 @@ SOC_OCCUPATION = [
     (434161, 'OFF-HUMAN RESOURCES ASSISTANTS, EXCEPT PAYROLL AND TIMEKEEPING'),
     (434171, 'OFF-RECEPTIONISTS AND INFORMATION CLERKS'),
     (434181, 'OFF-RESERVATION AND TRANSPORTATION TICKET AGENTS AND TRAVEL CLERKS'),
-    (434199, 'OFF-INFORMATION AND RECORD CLERKS, ALL OTHER 34XXX .OFF-CORRESPONDENCE CLERKS AND ORDER CLERKS *'),
+    (434199, 'OFF-INFORMATION AND RECORD CLERKS, ALL OTHER'),
+    (434XXX, 'OFF-CORRESPONDENCE CLERKS AND ORDER CLERKS *'),
     (435011, 'OFF-CARGO AND FREIGHT AGENTS'),
     (435021, 'OFF-COURIERS AND MESSENGERS'),
     (435030, 'OFF-DISPATCHERS'),
@@ -2517,10 +4798,12 @@ SOC_OCCUPATION = [
     (439061, 'OFF-OFFICE CLERKS, GENERAL'),
     (439071, 'OFF-OFFICE MACHINE OPERATORS, EXCEPT COMPUTER'),
     (439081, 'OFF-PROOFREADERS AND COPY MARKERS'),
-    (439111, 'OFF-STATISTICAL ASSISTANTS 39XXX .OFF-MISCELLANEOUS OFFICE AND ADMINISTRATIVE SUPPORT WORKERS, INCLUDING DESKTOP PUBLISHERS *'),
+    (439111, 'OFF-STATISTICAL ASSISTANTS'),
+    (439XXX, 'OFF-MISCELLANEOUS OFFICE AND ADMINISTRATIVE SUPPORT WORKERS, INCLUDING DESKTOP PUBLISHERS *'),
     (451010, 'FFF-FIRST-LINE SUPERVISORS/MANAGERS OF FARMING, FISHING, AND FORESTRY WORKERS'),
     (452011, 'FFF-AGRICULTURAL INSPECTORS'),
-    (452041, 'FFF-GRADERS AND SORTERS, AGRICULTURAL PRODUCTS 520XX .FFF-MISCELLANEOUS AGRICULTURAL WORKERS, INCLUDING ANIMAL BREEDERS *'),
+    (452041, 'FFF-GRADERS AND SORTERS, AGRICULTURAL PRODUCTS'),
+    (4520XX, 'FFF-MISCELLANEOUS AGRICULTURAL WORKERS, INCLUDING ANIMAL BREEDERS *'),
     (453000, 'FFF-FISHING AND HUNTING WORKERS'),
     (454011, 'FFF-FOREST AND CONSERVATION WORKERS'),
     (454020, 'FFF-LOGGING WORKERS'),
@@ -2531,7 +4814,8 @@ SOC_OCCUPATION = [
     (472040, 'CON-CARPET, FLOOR, AND TILE INSTALLERS AND FINISHERS'),
     (472050, 'CON-CEMENT MASONS, CONCRETE FINISHERS, AND TERRAZZO WORKERS'),
     (472061, 'CON-CONSTRUCTION LABORERS'),
-    (472071, 'CON-PAVING, SURFACING, AND TAMPING EQUIPMENT OPERATORS 7207X .CON-CONSTRUCTION EQUIPMENT OPERATORS, EXCEPT PAVING, SURFACING, AND TAMPING EQUIPMENT OPERATORS *'),
+    (472071, 'CON-PAVING, SURFACING, AND TAMPING EQUIPMENT OPERATORS'),
+    (47207X, 'CON-CONSTRUCTION EQUIPMENT OPERATORS, EXCEPT PAVING, SURFACING, AND TAMPING EQUIPMENT OPERATORS *'),
     (472080, 'CON-DRYWALL INSTALLERS, CEILING TILE INSTALLERS, AND TAPERS'),
     (472111, 'CON-ELECTRICIANS'),
     (472121, 'CON-GLAZIERS'),
@@ -2550,10 +4834,13 @@ SOC_OCCUPATION = [
     (474031, 'CON-FENCE ERECTORS'),
     (474041, 'CON-HAZARDOUS MATERIALS REMOVAL WORKERS'),
     (474051, 'CON-HIGHWAY MAINTENANCE WORKERS'),
-    (474061, 'CON-RAIL-TRACK LAYING AND MAINTENANCE EQUIPMENT OPERATORS 740XX .CON-MISCELLANEOUS CONSTRUCTION WORKERS, INCLUDING SEPTIC TANK SERVICERS AND SEWER PIPE CLEANERS *'),
+    (474061, 'CON-RAIL-TRACK LAYING AND MAINTENANCE EQUIPMENT OPERATORS'),
+    (4740XX, 'CON-MISCELLANEOUS CONSTRUCTION WORKERS, INCLUDING SEPTIC TANK SERVICERS AND SEWER PIPE CLEANERS *'),
     (475021, 'EXT-EARTH DRILLERS, EXCEPT OIL AND GAS'),
     (475031, 'EXT-EXPLOSIVES WORKERS, ORDNANCE HANDLING EXPERTS, AND BLASTERS'),
-    (475040, 'EXT-MINING MACHINE OPERATORS 750XX .EXT-MISCELLANEOUS EXTRACTION WORKERS, INCLUDING ROOF BOLTERS AND HELPERS * 750YY .EXT-DERRICK, ROTARY DRILL, AND SERVICE UNIT OPERATORS, AND ROUSTABOUTS, OIL, GAS, AND MINING *'),
+    (475040, 'EXT-MINING MACHINE OPERATORS'),
+    (4750XX, 'EXT-MISCELLANEOUS EXTRACTION WORKERS, INCLUDING ROOF BOLTERS AND HELPERS *'),
+    (4750YY, 'EXT-DERRICK, ROTARY DRILL, AND SERVICE UNIT OPERATORS, AND ROUSTABOUTS, OIL, GAS, AND MINING *'),
     (491011, 'RPR-FIRST-LINE SUPERVISORS/MANAGERS OF MECHANICS, INSTALLERS, AND REPAIRERS'),
     (492011, 'RPR-COMPUTER, AUTOMATED TELLER, AND OFFICE MACHINE REPAIRERS'),
     (492020, 'RPR-RADIO AND TELECOMMUNICATIONS EQUIPMENT INSTALLERS AND REPAIRERS'),
@@ -2561,7 +4848,8 @@ SOC_OCCUPATION = [
     (492092, 'RPR-ELECTRIC MOTOR, POWER TOOL, AND RELATED REPAIRERS'),
     (492096, 'RPR-ELECTRONIC EQUIPMENT INSTALLERS AND REPAIRERS, MOTOR VEHICLES'),
     (492097, 'RPR-ELECTRONIC HOME ENTERTAINMENT EQUIPMENT INSTALLERS AND REPAIRERS'),
-    (492098, 'RPR-SECURITY AND FIRE ALARM SYSTEMS INSTALLERS 9209X .RPR-ELECTRICAL AND ELECTRONICS REPAIRERS, TRANSPORTATION EQUIPMENT, AND INDUSTRIAL AND UTILITY *'),
+    (492098, 'RPR-SECURITY AND FIRE ALARM SYSTEMS INSTALLERS'),
+    (49209X, 'RPR-ELECTRICAL AND ELECTRONICS REPAIRERS, TRANSPORTATION EQUIPMENT, AND INDUSTRIAL AND UTILITY *'),
     (493011, 'RPR-AIRCRAFT MECHANICS AND SERVICE TECHNICIANS'),
     (493021, 'RPR-AUTOMOTIVE BODY AND RELATED REPAIRERS'),
     (493022, 'RPR-AUTOMOTIVE GLASS INSTALLERS AND REPAIRERS'),
@@ -2575,7 +4863,8 @@ SOC_OCCUPATION = [
     (499031, 'RPR-HOME APPLIANCE REPAIRERS'),
     (499042, 'RPR-MAINTENANCE AND REPAIR WORKERS, GENERAL'),
     (499043, 'RPR-MAINTENANCE WORKERS, MACHINERY'),
-    (499044, 'RPR-MILLWRIGHTS 9904X .RPR-INDUSTRIAL AND REFRACTORY MACHINERY MECHANICS *'),
+    (499044, 'RPR-MILLWRIGHTS'),
+    (49904X, 'RPR-INDUSTRIAL AND REFRACTORY MACHINERY MECHANICS *'),
     (499051, 'RPR-ELECTRICAL POWER-LINE INSTALLERS AND REPAIRERS'),
     (499052, 'RPR-TELECOMMUNICATIONS LINE INSTALLERS AND REPAIRERS'),
     (499060, 'RPR-PRECISION INSTRUMENT AND EQUIPMENT REPAIRERS'),
@@ -2583,7 +4872,8 @@ SOC_OCCUPATION = [
     (499094, 'RPR-LOCKSMITHS AND SAFE REPAIRERS'),
     (499095, 'RPR-MANUFACTURED BUILDING AND MOBILE HOME INSTALLERS'),
     (499096, 'RPR-RIGGERS'),
-    (499098, 'RPR-HELPERS--INSTALLATION, MAINTENANCE, AND REPAIR WORKERS 9909X .RPR-OTHER INSTALLATION, MAINTENANCE, AND REPAIR WORKERS, INCLUDING COMMERCIAL DIVERS, AND SIGNAL AND TRACK SWITCH REPAIRERS *'),
+    (499098, 'RPR-HELPERS--INSTALLATION, MAINTENANCE, AND REPAIR WORKERS'),
+    (49909X, 'RPR-OTHER INSTALLATION, MAINTENANCE, AND REPAIR WORKERS, INCLUDING COMMERCIAL DIVERS, AND SIGNAL AND TRACK SWITCH REPAIRERS *'),
     (511011, 'PRD-FIRST-LINE SUPERVISORS/MANAGERS OF PRODUCTION AND OPERATING WORKERS'),
     (512011, 'PRD-AIRCRAFT STRUCTURE, SURFACES, RIGGING, AND SYSTEMS ASSEMBLERS'),
     (512020, 'PRD-ELECTRICAL, ELECTRONICS, AND ELECTROMECHANICAL ASSEMBLERS'),
@@ -2611,7 +4901,8 @@ SOC_OCCUPATION = [
     (514120, 'PRD-WELDING, SOLDERING, AND BRAZING WORKERS'),
     (514191, 'PRD-HEAT TREATING EQUIPMENT SETTERS, OPERATORS, AND TENDERS, METAL AND PLASTIC'),
     (514193, 'PRD-PLATING AND COATING MACHINE SETTERS, OPERATORS, AND TENDERS, METAL AND PLASTIC'),
-    (514194, 'PRD-TOOL GRINDERS, FILERS, AND SHARPENERS 14XXX .PRD-MISCELLANEOUS METAL WORKERS AND PLASTIC WORKERS, INCLUDING MILLING AND PLANING MACHINE SETTERS, AND MULTIPLE MACHINE TOOL SETTERS, AND LAY-OUT WORKERS *'),
+    (514194, 'PRD-TOOL GRINDERS, FILERS, AND SHARPENERS'),
+    (514XXX, 'PRD-MISCELLANEOUS METAL WORKERS AND PLASTIC WORKERS, INCLUDING MILLING AND PLANING MACHINE SETTERS, AND MULTIPLE MACHINE TOOL SETTERS, AND LAY-OUT WORKERS *'),
     (515010, 'PRD-BOOKBINDERS AND BINDERY WORKERS'),
     (515021, 'PRD-JOB PRINTERS'),
     (515022, 'PRD-PREPRESS TECHNICIANS AND WORKERS'),
@@ -2623,12 +4914,15 @@ SOC_OCCUPATION = [
     (516042, 'PRD-SHOE MACHINE OPERATORS AND TENDERS'),
     (516050, 'PRD-TAILORS, DRESSMAKERS, AND SEWERS'),
     (516063, 'PRD-TEXTILE KNITTING AND WEAVING MACHINE SETTERS, OPERATORS, AND TENDERS'),
-    (516064, 'PRD-TEXTILE WINDING, TWISTING, AND DRAWING OUT MACHINE SETTERS, OPERATORS, AND TENDERS 1606X .PRD-TEXTILE BLEACHING AND DYEING, AND CUTTING MACHINE SETTERS, OPERATORS, AND TENDERS *'),
-    (516093, 'PRD-UPHOLSTERERS 1609X .PRD-MISCELLANEOUS TEXTILE, APPAREL, AND FURNISHINGS WORKERS, EXCEPT UPHOLSTERERS *'),
+    (516064, 'PRD-TEXTILE WINDING, TWISTING, AND DRAWING OUT MACHINE SETTERS, OPERATORS, AND TENDERS'),
+    (51606X, 'PRD-TEXTILE BLEACHING AND DYEING, AND CUTTING MACHINE SETTERS, OPERATORS, AND TENDERS *'),
+    (516093, 'PRD-UPHOLSTERERS'),
+    (51609X, 'PRD-MISCELLANEOUS TEXTILE, APPAREL, AND FURNISHINGS WORKERS, EXCEPT UPHOLSTERERS *'),
     (517011, 'PRD-CABINETMAKERS AND BENCH CARPENTERS'),
     (517021, 'PRD-FURNITURE FINISHERS'),
     (517041, 'PRD-SAWING MACHINE SETTERS, OPERATORS, AND TENDERS, WOOD'),
-    (517042, 'PRD-WOODWORKING MACHINE SETTERS, OPERATORS, AND TENDERS, EXCEPT SAWING 170XX .PRD-MISCELLANEOUS WOODWORKERS, INCLUDING MODEL MAKERS AND PATTERNMAKERS *'),
+    (517042, 'PRD-WOODWORKING MACHINE SETTERS, OPERATORS, AND TENDERS, EXCEPT SAWING'),
+    (5170XX, 'PRD-MISCELLANEOUS WOODWORKERS, INCLUDING MODEL MAKERS AND PATTERNMAKERS *'),
     (518010, 'PRD-POWER PLANT OPERATORS, DISTRIBUTORS, AND DISPATCHERS'),
     (518021, 'PRD-STATIONARY ENGINEERS AND BOILER OPERATORS'),
     (518031, 'PRD-WATER AND LIQUID WASTE TREATMENT PLANT AND SYSTEM OPERATORS'),
@@ -2650,7 +4944,8 @@ SOC_OCCUPATION = [
     (519195, 'PRD-MOLDERS, SHAPERS, AND CASTERS, EXCEPT METAL AND PLASTIC'),
     (519196, 'PRD-PAPER GOODS MACHINE SETTERS, OPERATORS, AND TENDERS'),
     (519197, 'PRD-TIRE BUILDERS'),
-    (519198, 'PRD-HELPERS-PRODUCTION WORKERS 191XX .PRD-OTHER PRODUCTION WORKERS, INCLUDING SEMICONDUCTOR PROCESSORS AND COOLING AND FREEZING EQUIPMENT OPERATORS *'),
+    (519198, 'PRD-HELPERS-PRODUCTION WORKERS'),
+    (5191XX, 'PRD-OTHER PRODUCTION WORKERS, INCLUDING SEMICONDUCTOR PROCESSORS AND COOLING AND FREEZING EQUIPMENT OPERATORS *'),
     (531000, 'TRN-SUPERVISORS, TRANSPORTATION AND MATERIAL MOVING WORKERS'),
     (532010, 'TRN-AIRCRAFT PILOTS AND FLIGHT ENGINEERS'),
     (532020, 'TRN-AIR TRAFFIC CONTROLLERS AND AIRFIELD OPERATIONS SPECIALISTS'),
@@ -2661,11 +4956,14 @@ SOC_OCCUPATION = [
     (533099, 'TRN-MOTOR VEHICLE OPERATORS, ALL OTHER'),
     (534010, 'TRN-LOCOMOTIVE ENGINEERS AND OPERATORS'),
     (534021, 'TRN-RAILROAD BRAKE, SIGNAL, AND SWITCH OPERATORS'),
-    (534031, 'TRN-RAILROAD CONDUCTORS AND YARDMASTERS 340XX .TRN-SUBWAY, STREETCAR, AND OTHER RAIL TRANSPORTATION WORKERS *'),
-    (535020, 'TRN-SHIP AND BOAT CAPTAINS AND OPERATORS 350XX .TRN-SAILORS AND MARINE OILERS, AND SHIP ENGINEERS *'),
+    (534031, 'TRN-RAILROAD CONDUCTORS AND YARDMASTERS'),
+    (5340XX, 'TRN-SUBWAY, STREETCAR, AND OTHER RAIL TRANSPORTATION WORKERS *'),
+    (535020, 'TRN-SHIP AND BOAT CAPTAINS AND OPERATORS'),
+    (5350XX, 'TRN-SAILORS AND MARINE OILERS, AND SHIP ENGINEERS *'),
     (536021, 'TRN-PARKING LOT ATTENDANTS'),
     (536031, 'TRN-SERVICE STATION ATTENDANTS'),
-    (536051, 'TRN-TRANSPORTATION INSPECTORS 360XX .TRN-MISCELLANEOUS TRANSPORTATION WORKERS, INCLUDING BRIDGE AND LOCK TENDERS AND TRAFFIC TECHNICIANS *'),
+    (536051, 'TRN-TRANSPORTATION INSPECTORS'),
+    (5360XX, 'TRN-MISCELLANEOUS TRANSPORTATION WORKERS, INCLUDING BRIDGE AND LOCK TENDERS AND TRAFFIC TECHNICIANS *'),
     (537021, 'TRN-CRANE AND TOWER OPERATORS'),
     (537030, 'TRN-DREDGE, EXCAVATING, AND LOADING MACHINE OPERATORS'),
     (537051, 'TRN-INDUSTRIAL TRUCK AND TRACTOR OPERATORS'),
@@ -2674,30 +4972,33 @@ SOC_OCCUPATION = [
     (537063, 'TRN-MACHINE FEEDERS AND OFFBEARERS'),
     (537064, 'TRN-PACKERS AND PACKAGERS, HAND'),
     (537070, 'TRN-PUMPING STATION OPERATORS'),
-    (537081, 'TRN-REFUSE AND RECYCLABLE MATERIAL COLLECTORS 370XX .TRN-CONVEYOR OPERATORS AND TENDERS, AND HOIST AND WINCH OPERATORS * 371XX .TRN-MISCELLANEOUS MATERIAL MOVING WORKERS, INCLUDING SHUTTLE CAR OPERATORS, AND TANK CAR, TRUCK, AND SHIP LOADERS *'),
+    (537081, 'TRN-REFUSE AND RECYCLABLE MATERIAL COLLECTORS'),
+    (5370XX, 'TRN-CONVEYOR OPERATORS AND TENDERS, AND HOIST AND WINCH OPERATORS *'),
+    (5371XX, 'TRN-MISCELLANEOUS MATERIAL MOVING WORKERS, INCLUDING SHUTTLE CAR OPERATORS, AND TANK CAR, TRUCK, AND SHIP LOADERS *'),
     (551010, 'MIL-MILITARY OFFICER SPECIAL AND TACTICAL OPERATIONS LEADERS/MANAGERS'),
     (552010, 'MIL-FIRST-LINE ENLISTED MILITARY SUPERVISORS/MANAGERS'),
     (553010, 'MIL-MILITARY ENLISTED TACTICAL OPERATIONS AND AIR/WEAPONS SPECIALISTS AND CREW MEMBERS'),
     (559830, 'MIL-MILITARY, RANK NOT SPECIFIED **'),
-    (999920, 'UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS'),
+    (999920, 'UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS **'),
 ]
 
-VETERAN_SERVICE = [
-    (1, 'Gulf War'),
-    (2, 'Gulf War and Vietnam era'),
-    (3, 'Vietnam era'),
-    (4, 'Vietnam era and Korean War'),
-    (5, 'Vietnam era, Korean War, and WWII'),
-    (6, 'Korean War'),
-    (7, 'Korean War and WWII'),
-    (8, 'WWII Peace Times:'),
-    (9, 'Post-Vietnam era only'),
+VPS = [
+    (bb, 'N/A (less than 18 years old, no active duty) War Times:'),
+    (01, 'Gulf War'),
+    (02, 'Gulf War and Vietnam era'),
+    (03, 'Vietnam era'),
+    (04, 'Vietnam era and Korean War'),
+    (05, 'Vietnam era, Korean War, and WWII'),
+    (06, 'Korean War'),
+    (07, 'Korean War and WWII'),
+    (08, 'WWII Peace Times:'),
+    (09, 'Post-Vietnam era only'),
     (10, 'Between Vietnam and Korean War only'),
     (11, 'Between Korean War and WWII only'),
     (12, 'Pre-WWII only'),
 ]
 
-WORLD_POB = [
+WAOB = [
     (1, 'US state (POB = 001-059)'),
     (2, 'PR and US Island Areas (POB = 060-099)'),
     (3, 'Latin America (POB = 303,310-399)'),
@@ -2708,56 +5009,574 @@ WORLD_POB = [
     (8, 'Oceania and at Sea (POB = 500-554)'),
 ]
 
-DIVISION = [
-    (0, 'Puerto Rico'),
-    (1, 'New England (Northeast region)'),
-    (2, 'Middle Atlantic (Northeast region)'),
-    (3, 'East North Central (Midwest region)'),
-    (4, 'West North Central (Midwest region)'),
-    (5, 'South Atlantic (South region)'),
-    (6, 'East South Central (South region)'),
-    (7, 'West South Central (South Region)'),
-    (8, 'Mountain (West region)'),
-    (9, 'Pacific (West region)'),
+FAGEP = [
+    (0, 'No'),
+    (1, 'Yes'),
 ]
 
-REGION = [
-    (1, 'Northeast'),
-    (2, 'Midwest'),
-    (3, 'South'),
-    (4, 'West'),
-    (9, 'Puerto Rico'),
-]
-HOUSE_TYPE = [
-    (1, 'Housing unit'),
-    (2, 'Institutional group quarters'),
-    (3, 'Noninstitutional group quarters'),
+FANCP = [
+    (0, 'No'),
+    (1, 'Yes'),
 ]
 
-LOT_SIZE = [
-    (1, 'House on less than one acre'),
-    (2, 'House on one to less than ten acres'),
-    (3, 'House on ten or more acres'),
+FCITP = [
+    (0, 'No'),
+    (1, 'Yes'),
 ]
 
-AGRICULTURE_PRODUCTS = [
-    (1, 'None'),
-    (2, '$ 1 - $ 999'),
-    (3, '$ 1000 - $ 2499'),
-    (4, '$ 2500 - $ 4999'),
-    (5, '$ 5000 - $ 9999'),
-    (6, '$10000+'),
+FCOWP = [
+    (0, 'No'),
+    (1, 'Yes'),
 ]
 
-UNITS = [
-    (01, 'Mobile home or trailer'),
-    (02, 'One-family house detached'),
-    (03, 'One-family house attached'),
-    (04, '2 Apartments'),
-    (05, '3-4 Apartments'),
-    (06, '5-9 Apartments'),
-    (07, '10-19 Apartments'),
-    (08, '20-49 Apartments'),
-    (09, '50 or more apartments'),
-    (10, 'Boat, RV, van, etc.'),
+FDDRSP = [
+    (0, 'No'),
+    (1, 'Yes'),
 ]
+
+FDEYEP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FDOUTP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FDPHYP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FDREMP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FDWRKP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FENGP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FESRP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FFERP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FGCLP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FGCMP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FGCRP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FHISP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FINDP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FINTP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FJWDP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FJWMNP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FJWRIP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FJWTRP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FLANP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FLANXP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMARP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMIGP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMIGSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMILPP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMILSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FMILYP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FOCCP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FOIP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FPAP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FPOBP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FPOWSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FRACP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FRELP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FRETP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSCHGP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSCHLP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSCHP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSEMP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSEXP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSSIP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FSSP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FWAGP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FWKHP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FWKLP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FWKWP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+FYOEP = [
+    (0, 'No'),
+    (1, 'Yes'),
+]
+
+PWGTP1 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP2 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP3 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP4 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP5 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP6 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP7 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP8 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP9 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP10 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP11 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP12 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP13 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP14 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP15 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP16 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP17 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP18 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP19 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP20 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP21 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP22 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP23 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP24 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP25 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP26 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP27 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP28 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP29 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP30 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP31 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP32 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP33 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP34 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP35 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP36 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP37 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP38 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP39 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP40 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP41 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP42 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP43 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP44 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP45 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP46 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP47 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP48 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP49 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP50 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP51 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP52 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP53 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP54 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP55 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP56 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP57 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP58 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP59 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP60 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP61 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP62 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP63 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP64 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP65 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP66 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP67 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP68 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP69 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP70 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP71 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP72 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP73 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP74 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP75 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP76 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP77 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP78 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
+PWGTP79 = [
+    (0001..9999, 'Integer weight of person'),
+]
+
