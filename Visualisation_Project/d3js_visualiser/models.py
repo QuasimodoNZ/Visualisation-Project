@@ -4,9 +4,11 @@ import choices
 ADJUSTMENT_FACTOR = 1.015675 # Adjustment factor for dollar amounts, this is for 2006
 
 class State(models.Model):
-    code = models.IntegerField()
+    code = models.IntegerField(unique=True)
     name = models.CharField(max_length=80)
     abbreviation = models.CharField(max_length=2)
+    
+    
     
 class PublicUseMicrodataArea(models.Model):
     code = models.IntegerField()
@@ -273,7 +275,7 @@ class Person(models.Model):
     JWAP = models.IntegerField(verbose_name='Time of arrival at work - hour and minute', choices=choices.JWAP, null=True)
     JWDP = models.IntegerField(verbose_name='Time of departure for work - hour and minute', choices=choices.JWDP, null=True)
     LANP = models.IntegerField(verbose_name='Language spoken at home, null means only english', choices=choices.LANP, null=True)
-    MIGPUMA = models.ForeignKey(PublicUseMicrodataArea, verbose_name='Migration PUMA', null=True)
+    MIGPUMA = models.ForeignKey(PublicUseMicrodataArea, verbose_name='Migration PUMA', related_name='migrator', null=True)
     MSP = models.IntegerField(verbose_name='Married, spouse present/spouse absent', choices=choices.MSP, null=True)
     NAICSP = models.CharField(verbose_name='NAICS Industry code', max_length=8, choices=choices.NAICSP, null=True)
     NATIVITY = models.IntegerField(verbose_name='Nativity', choices=choices.NATIVITY)
@@ -285,7 +287,7 @@ class Person(models.Model):
     PINCP = models.IntegerField(verbose_name='Total person\'s income (signed)', null=True)
     POBP = models.IntegerField(verbose_name='Place of birth (Recode)', choices=choices.POBP)
     POVPIP = models.IntegerField(verbose_name='Person poverty status recode', null=True)
-    POWPUMA = models.ForeignKey(PublicUseMicrodataArea, verbose_name='Place of work PUMA', null=True)
+    POWPUMA = models.ForeignKey(PublicUseMicrodataArea, verbose_name='Place of work PUMA', related_name='worker', null=True)
     QTRBIR = models.IntegerField(verbose_name='Quarter of birth', choices=choices.QTRBIR)
     RAC1P = models.IntegerField(verbose_name='Recoded detailed race code', choices=choices.RAC1P)
     RAC2P = models.IntegerField(verbose_name='Recoded detailed race code', choices=choices.RAC2P)
