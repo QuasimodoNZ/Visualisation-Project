@@ -17,7 +17,7 @@ class PublicUseMicrodataArea(models.Model):
 class House(models.Model):
     SERIALNO = models.IntegerField(verbose_name='Housing unit/GQ person serial number')
     DIVISION = models.IntegerField(verbose_name='Division code', choices=choices.DIVISION)
-    PUMA = models.IntegerField(verbose_name='Public use microdata area code (PUMA) Designates area of 100,000 or more population. Use with ST for unique code. 00100..08200')
+    PUMA = models.ForeignKey(PublicUseMicrodataArea, verbose_name='Public use microdata area code (PUMA) Designates area of 100,000 or more population. Use with ST for unique code. 00100..08200')
     REGION = models.IntegerField(verbose_name='Region code', choices=choices.REGION)
     ST = models.IntegerField(verbose_name='State Code', choices=choices.ST)
     WGTP = models.IntegerField(verbose_name='Housing Weight')
@@ -200,11 +200,16 @@ class House(models.Model):
     WGTP77 = models.IntegerField(verbose_name='Housing Weight replicate 77')
     WGTP78 = models.IntegerField(verbose_name='Housing Weight replicate 78')
     WGTP79 = models.IntegerField(verbose_name='Housing Weight replicate 79')
+    WGTP80 = models.IntegerField(verbose_name='Housing Weight replicate 79')
+
+    class Meta:
+        unique_together = ('SERIALNO', 'ST')
 
 class Person(models.Model):
     SERIALNO = models.IntegerField(verbose_name='Housing unit/GQ person serial number')
     SPORDER = models.IntegerField(verbose_name='Person number')
     PUMA = models.ForeignKey(PublicUseMicrodataArea, verbose_name='Public use microdata area code')
+    ST = models.IntegerField(verbose_name='State Code', choices=choices.ST)
     PWGTP = models.IntegerField(verbose_name='Person\'s weight')
     AGEP = models.IntegerField(verbose_name='Age')
     CIT = models.IntegerField(verbose_name='Citizenship status', choices=choices.CIT)
@@ -435,3 +440,7 @@ class Person(models.Model):
     PWGTP77 = models.IntegerField(verbose_name='Person\'s Weight replicate 77')
     PWGTP78 = models.IntegerField(verbose_name='Person\'s Weight replicate 78')
     PWGTP79 = models.IntegerField(verbose_name='Person\'s Weight replicate 79')
+    PWGTP80 = models.IntegerField(verbose_name='Person\'s Weight replicate 80')
+
+    class Meta:
+        unique_together = ('SERIALNO', 'ST')

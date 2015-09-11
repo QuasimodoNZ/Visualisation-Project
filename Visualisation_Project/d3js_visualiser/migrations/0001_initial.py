@@ -199,6 +199,7 @@ class Migration(migrations.Migration):
                 ('WGTP77', models.IntegerField(verbose_name=b'Housing Weight replicate 77')),
                 ('WGTP78', models.IntegerField(verbose_name=b'Housing Weight replicate 78')),
                 ('WGTP79', models.IntegerField(verbose_name=b'Housing Weight replicate 79')),
+                ('WGTP80', models.IntegerField(verbose_name=b'Housing Weight replicate 79')),
             ],
         ),
         migrations.CreateModel(
@@ -206,6 +207,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('SERIALNO', models.IntegerField(verbose_name=b'Housing unit/GQ person serial number')),
+                ('ST', models.IntegerField(verbose_name=b'State Code', choices=[(1, b'Alabama/AL'), (2, b'Alaska/AK'), (4, b'Arizona/AZ'), (5, b'Arkansas/AR'), (6, b'California/CA'), (8, b'Colorado/CO'), (9, b'Connecticut/CT'), (10, b'Delaware/DE'), (11, b'District of Columbia/DC'), (12, b'Florida/FL'), (13, b'Georgia/GA'), (15, b'Hawaii/HI'), (16, b'Idaho/ID'), (17, b'Illinois/IL'), (18, b'Indiana/IN'), (19, b'Iowa/IA'), (20, b'Kansas/KS'), (21, b'Kentucky/KY'), (22, b'Louisiana/LA'), (23, b'Maine/ME'), (24, b'Maryland/MD'), (25, b'Massachusetts/MA'), (26, b'Michigan/MI'), (27, b'Minnesota/MN'), (28, b'Mississippi/MS'), (29, b'Missouri/MO'), (30, b'Montana/MT'), (31, b'Nebraska/NE'), (32, b'Nevada/NV'), (33, b'New Hampshire/NH'), (34, b'New Jersey/NJ'), (35, b'New Mexico/NM'), (36, b'New York/NY'), (37, b'North Carolina/NC'), (38, b'North Dakota/ND'), (39, b'Ohio/OH'), (40, b'Oklahoma/OK'), (41, b'Oregon/OR'), (42, b'Pennsylvania/PA'), (44, b'Rhode Island/RI'), (45, b'South Carolina/SC'), (46, b'South Dakota/SD'), (47, b'Tennessee/TN'), (48, b'Texas/TX'), (49, b'Utah/UT'), (50, b'Vermont/VT'), (51, b'Virginia/VA'), (53, b'Washington/WA'), (54, b'West Virginia/WV'), (55, b'Wisconsin/WI'), (56, b'Wyoming/WY'), (72, b'Puerto Rico/PR')])),
                 ('SPORDER', models.IntegerField(verbose_name=b'Person number')),
                 ('PWGTP', models.IntegerField(verbose_name=b"Person's weight")),
                 ('AGEP', models.IntegerField(verbose_name=b'Age')),
@@ -435,6 +437,7 @@ class Migration(migrations.Migration):
                 ('PWGTP77', models.IntegerField(verbose_name=b"Person's Weight replicate 77")),
                 ('PWGTP78', models.IntegerField(verbose_name=b"Person's Weight replicate 78")),
                 ('PWGTP79', models.IntegerField(verbose_name=b"Person's Weight replicate 79")),
+                ('PWGTP80', models.IntegerField(verbose_name=b"Person's Weight replicate 80")),
             ],
         ),
         migrations.CreateModel(
@@ -448,7 +451,7 @@ class Migration(migrations.Migration):
             name='State',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('code', models.IntegerField()),
+                ('code', models.IntegerField(unique=True)),
                 ('name', models.CharField(max_length=80)),
                 ('abbreviation', models.CharField(max_length=2)),
             ],
