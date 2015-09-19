@@ -4,7 +4,7 @@ var width  = 300;
  var vis = d3.select("body").append("svg")
      .attr("width", width).attr("height", height)
 
- d3.json("static/geojson/AL.geojson", function(json) {
+ d3.json("static/geojson/PR.geojson", function(json) {
      // create a first guess for the projection
      var center = d3.geo.centroid(json)
      var scale  = 150;
