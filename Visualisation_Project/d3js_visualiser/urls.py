@@ -7,6 +7,10 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
 #     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.some_view),
+    url(r'^$', views.home),
+    url(r'choropleth/', views.choropleth),
+    url(r'chord/', views.chord),
+    url(r'bar/', views.bar),
+    url(r'sunburst/', views.sunburst),
 #     url(r'^', 'django.views.generic.simple.direct_to_template', {'template': 'd3js_visualiser/index.html'}),
 ]

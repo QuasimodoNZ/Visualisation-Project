@@ -23,6 +23,13 @@
 		  font: 10px sans-serif;
 		  text-anchor: end;
 		}
+		
+		.PUMA {
+			fill: grey;
+		    stroke-width: 1;
+		    stroke:black;
+        }
+        
     </style>
     </head>
     <body>
@@ -56,6 +63,7 @@
 
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="http://d3js.org/d3.v3.js"></script>
+        <script src="http://d3js.org/queue.v1.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
 
         <script>
@@ -64,13 +72,21 @@
                 // Used when debugging
                 cache: false
             });
+            
+            var controller = {
+            	visualisation: 'choropleth-state',
+            	state: 48, // 48 for TX, 11 for DC
+            	query: {
+            		OCCP: 3060, //occupation is medicine - physician and surgeon
+            		SEX: 1
+            	},
+            	metric: ["PINCP", "WAGP"],
+            };
         
             $.getScript("static/js/choropleth.js");
             $(".choropleth-tab").click(function() {
                 $.getScript("static/js/choropleth.js");
             })
-        </script>
-        <script>
             $(".chord-tab").click(function() {
                 $.getScript("static/js/chord.js");
             })
