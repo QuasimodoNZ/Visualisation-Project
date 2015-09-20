@@ -11,12 +11,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterUniqueTogether(
+        migrations.AlterIndexTogether(
             name='house',
-            unique_together=set([('SERIALNO', 'ST')]),
+            index_together=set([('ST', 'PUMA')]),
         ),
-        migrations.AlterUniqueTogether(
+        migrations.AlterIndexTogether(
             name='person',
-            unique_together=set([('SERIALNO', 'ST')]),
+            index_together=set([('ST', 'PUMA')]),
         ),
     ]

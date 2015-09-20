@@ -203,7 +203,7 @@ class House(models.Model):
     WGTP80 = models.IntegerField(verbose_name='Housing Weight replicate 79')
 
     class Meta:
-        unique_together = ('SERIALNO', 'ST')
+        index_together = ('ST', 'PUMA')
 
 class Person(models.Model):
     SERIALNO = models.IntegerField(verbose_name='Housing unit/GQ person serial number')
@@ -443,4 +443,4 @@ class Person(models.Model):
     PWGTP80 = models.IntegerField(verbose_name='Person\'s Weight replicate 80')
 
     class Meta:
-        unique_together = ('SERIALNO', 'ST')
+        index_together = ('ST', 'PUMA')
