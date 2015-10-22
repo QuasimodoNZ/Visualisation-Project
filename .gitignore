@@ -1,6 +1,9 @@
 # Primary database
 Visualisation_Project/db.sqlite3
 
+# Massive geojson file for mainland USA
+USA.geojson
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
