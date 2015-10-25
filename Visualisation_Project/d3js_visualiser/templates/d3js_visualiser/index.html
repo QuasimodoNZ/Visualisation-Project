@@ -1,100 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="utf-8">
     <title>Demo</title>
-    <link href="static/css/bootstrap-combined.min.css" rel="stylesheet">
-    <style>
-	    .bar-content div{
-		  font: 10px sans-serif;
-		  background-color: steelblue;
-		  text-align: right;
-		  padding: 3px;
-		  margin: 1px;
-		  color: white;
-		}
-		
-		.sunburst rect{
-		  fill: steelblue;
-		}
-		
-		.sunburst text {
-		  fill: white;
-		  font: 10px sans-serif;
-		  text-anchor: end;
-		}
-		
-		.PUMA {
-			fill: grey;
-		    stroke-width: 1;
-		    stroke:black;
-        }
-        
-    </style>
-    </head>
-    <body>
+    <!-- <link href="static/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrap-theme.min.css" rel="stylesheet">
 
-        <div class="tabbable">
-            <ul class="nav nav-tabs">
-                <li class="active"><a class="choropleth-tab" href="#choropleth_tab" data-toggle="tab">Choropleth</a></li>
-                <li><a class="chord-tab" href="#chord_tab" data-toggle="tab">Chord Diagram</a></li>
-                <li><a class="bar-tab" href="#bar_tab" data-toggle="tab">Bar Graphs</a></li>
-                <li><a class="sunburst-tab" href="#sunburst_tab" data-toggle="tab">Sunburst</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="choropleth_tab">
-                    <h1>Choropleth</h1>
-					<div class="choropleth-content"></div>
-                </div>
-                <div class="tab-pane" id="chord_tab">
-                    <h1>Chord Diagram</h1>
-					<div class="chord-content"></div>
-                </div>
-                <div class="tab-pane" id="bar_tab">
-                    <h1>Bar Graph</h1>
-                    <div class="bar-content"></svg>
-                </div>
-                <div class="tab-pane" id="sunburst_tab">
-                    <h1>Zoomable Sunburst</h1>
-                    <svg class="sunburst"></div>
-                </div>
+    <script type="text/javascript" src="static/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="static/js/d3.v3.js"></script>
+
+    <script type="text/javascript" src="static/js/choropleth.js"></script>
+    <script type="text/javascript" src="static/js/chord.js"></script>
+    <script type="text/javascript" src="static/js/bar.js"></script>
+    <script type="text/javascript" src="static/js/sunburst.js"></script>
+
+    <style>
+        #inspector {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 300px;
+        }
+
+        .bar-content div {
+            font: 10px sans-serif;
+            background-color: steelblue;
+            text-align: right;
+            padding: 3px;
+            margin: 1px;
+            color: white;
+        }
+
+        .sunburst rect {
+            fill: steelblue;
+        }
+
+        .sunburst text {
+            fill: white;
+            font: 10px sans-serif;
+            text-anchor: end;
+        }
+
+        .PUMA {
+            fill: grey;
+            stroke-width: 1;
+            stroke: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a class="choropleth-tab" href="#choropleth_tab" data-toggle="tab">Choropleth</a></li>
+            <li><a class="chord-tab" href="#chord_tab" data-toggle="tab">Chord Diagram</a></li>
+            <li><a class="bar-tab" href="#bar_tab" data-toggle="tab">Bar Graphs</a></li>
+            <li><a class="sunburst-tab" href="#sunburst_tab" data-toggle="tab">Sunburst</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="choropleth_tab">
+                <h1>Choropleth</h1>
+                <div class="choropleth-content"></div>
+            </div>
+            <div class="tab-pane" id="chord_tab">
+                <h1>Chord Diagram</h1>
+                <div class="chord-content"></div>
+            </div>
+            <div class="tab-pane" id="bar_tab">
+                <h1>Bar Graph</h1>
+                <div class="bar-content"></div>
+            </div>
+            <div class="tab-pane" id="sunburst_tab">
+                <h1>Zoomable Sunburst</h1>
             </div>
         </div>
 
-        <script type="text/javascript" src="static/js/jquery-1.11.3.min.js"></script>
-        <script src="static/js/d3.v3.js"></script>
-        <script src="static/js/bootstrap.min.js"></script>
 
-        <script>
-            $.ajaxSetup ({
-                // Disable caching of AJAX responses
-                // Used when debugging
-                cache: false
+
+        <div id="inspector" class="panel panel-default">
+            <div id="inspecter-title" class="panel-heading">
+                <h3 class="panel-title">The Inspector
+                    <button id="inspecter-minimizer" type="button" class="btn btn-default btn-sm" aria-label="Right Align" style="float: right;">
+                        <span id="inspector-minimizer-icon" class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+                    </button>
+                </h3>
+
+            </div>
+            <div id="inspecter-body" class="panel-body">
+                <ul class="list-group query-list">
+                    <button type="button" class="list-group-item query-item">Cras justo odio</button>
+                    <button type="button" class="list-group-item query-item">Dapibus ac facilisis ingsdfgsdfg</button>
+                    <button type="button" class="list-group-item query-item">Morbi leo risus</button>
+                    <button type="button" class="list-group-item query-item">Porta ac consectetur ac</button>
+                    <button type="button" class="list-group-item query-item">Vestibulum at eros</button>
+                </ul>
+                <p>lets put a list here</p>
+                <div class="input-group">
+                    <select id='filtering-options' class="form-control">
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger query-add" type="button">Go!</button>
+                    </span>
+                </div>
+                <p> lets put a button here to add a new query item</p>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default choice-set">Min</button>
+                    <button type="button" class="btn btn-default choice-set">Avg</button>
+                    <button type="button" class="btn btn-default choice-set">Max</button>
+                    <button type="button" class="btn btn-primary choice-set">Percentage</button>
+                </div>
+                <p>how about a radio button here to choose between min, average, max, percentage or number of people</p>
+                <button id="redraw-btn" type="button" class="btn btn-primary">Apply Query</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        $.ajaxSetup({
+            // Disable caching of AJAX responses
+            // Used when debugging
+            cache: false
+        });
+
+        // jquery for the inspector panel/controller window
+        {% autoescape off %}
+        var choices = {{ choices }};
+        {% endautoescape %}
+
+        console.log(choices);
+        // delete choices.PAP;
+        // delete choices.DOUT;
+
+        for (var field in choices) {
+            $('<option/>')
+                .attr({
+                    'value': field
+                })
+                .text(choices[field].verbose_name)
+                .appendTo('#filtering-options');
+        }
+        console.log($('#filtering-options').val());
+
+        function replaceChoices(){
+            console.log('replacing choices');
+            var selectedChoice = choices[$('#filtering-options').val()];
+            console.log('selectedChoice', selectedChoice);
+
+            var newFormField;
+            if ('choices' in selectedChoice){
+                newFormField = $('<select/>').attr('id', 'filtering-options-value').addClass('form-control');
+                for(var choice in selectedChoice.choices){
+                    $('<option/>')
+                        .attr({
+                            'value': selectedChoice.choices[choice][0]
+                        })
+                        .text(selectedChoice.choices[choice][1])
+                        .appendTo(newFormField);
+                }
+                // fill with choices
+            } else {
+                newFormField = $('<input>').attr({id:'filtering-options-value', type:'number', class:'form-control'});
+                if ('max' in selectedChoice){
+                    newFormField.attr('max', selectedChoice.max);
+                }
+                if ('min' in selectedChoice){
+                    newFormField.attr('min', selectedChoice.min);
+                }
+            }
+
+            if ($('#filtering-options-value').length){
+                $('#filtering-options-value').replaceWith(newFormField);
+            } else {
+                $('#filtering-options').after(newFormField);
+            }
+        }
+        replaceChoices();
+
+        // for(var choice in choices[$('#filtering-options').val()]){
+        //     console.log(choice);
+        //     console.log(choices[choice]);
+        // }
+
+        $("#filtering-options")
+            .change(function() {
+                replaceChoices();
+                // console.log('something changed');
+                // $("filtering-options option:selected").each(replaceChoices);
             });
-            
-            var controller = {
-            	visualisation: 'choropleth-state',
-            	state: 48, // 48 for TX, 11 for DC
-            	query: {
-            		OCCP: 3060, //occupation is medicine - physician and surgeon
-            		SEX: 1
-            	},
-            	metric: ["PINCP", "WAGP"],
-            };
-        
-            $.getScript("static/js/choropleth.js");
-            $(".choropleth-tab").click(function() {
-                $.getScript("static/js/choropleth.js");
+
+            // function() {
+            //  var choices = choices[$(this).val()].choices;
+            //     // var choices = choices['ANC1P'].choices;
+            //     for(var choice in choices){
+            //         $('<option/>')
+            //             .attr({
+            //                 'value': choices[choice][0]
+            //             })
+            //             .text(choices[choice][1])
+            //             .appendTo('#filtering-options-value');
+            //     }
+            // }
+
+        var removeItem = function() {
+            $(this).slideUp('fast', function() {
+                $(this).remove();
+            });
+        }
+
+        // Temporary as the list will start empty
+        $(".query-item").click(removeItem);
+
+        function getRotationDegrees(obj) {
+            var matrix = obj.css("-webkit-transform") ||
+                obj.css("-moz-transform") ||
+                obj.css("-ms-transform") ||
+                obj.css("-o-transform") ||
+                obj.css("transform");
+            if (matrix !== 'none') {
+                var values = matrix.split('(')[1].split(')')[0].split(',');
+                var a = values[0];
+                var b = values[1];
+                var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            } else {
+                var angle = 0;
+            }
+            return (angle < 0) ? angle += 360 : angle;
+        }
+
+        function animateRotate(d) {
+            var elem = $("#inspector-minimizer-icon");
+            var start = getRotationDegrees(elem);
+            console.log('starting rotation from: ', start, ' to: ', start + d);
+            $({
+                deg: start
+            }).animate({
+                deg: start + d
+            }, {
+
+                duration: 'fast',
+                step: function(now) {
+                    elem.css({
+                        transform: "rotate(" + now + "deg)"
+                    });
+                }
+            });
+        }
+
+        // For when a new filtering option is added
+        $(".query-add").click(function() {
+            $("<button/>").attr({
+                type: 'button',
             })
-            $(".chord-tab").click(function() {
-                $.getScript("static/js/chord.js");
-            })
-            $(".bar-tab").click(function() {
-                $.getScript("static/js/bar.js");
-            })
-            $(".sunburst-tab").click(function() {
-                $.getScript("static/js/sunburst.js");
-            })
-        </script>
-    </body>
+            .addClass('list-group-item query-item')
+            .html()
+                .html('This is the edited button text')
+                .data('value', 'The hidden data')
+                .click(removeItem)
+                .hide()
+                .css('opacity', 0)
+                .appendTo(".query-list")
+                .slideDown('fast')
+                .animate({
+                    opacity: 1
+                }, "fast");
+            console.log('printing queue items');
+            console.log($(this));
+            $(".query-item").each(function() {
+                console.log($(this));
+                console.log('html: ', $(this).html());
+                console.log('value: ', $(this).data());
+            });
+        });
+
+        $('#inspecter-minimizer').click(function() {
+            console.log("inspector is minimizing");
+            animateRotate(180);
+            $('#inspecter-body').slideToggle();
+            // $('#inspector-minimizer-icon').rotate({animateTo:180});
+            console.log("inspector is minimizing");
+        });
+
+        $('.choice-set').click(function() {
+            if (!$(this).hasClass('btn-primary')) {
+                var other = $('.choice-set.btn-primary');
+                other.removeClass('btn-primary');
+                other.addClass('btn-default');
+                $(this).removeClass('btn-default');
+                $(this).addClass('btn-primary');
+            }
+        });
+
+        // "<button type=\"button\" class=\"list-group-item query-item\">Cras justo odio</li>"
+
+        $("#inspector").draggable({
+            containment: 'window',
+            scroll: false,
+            handle: '#inspecter-title'
+        });
+
+        var controller = {
+            visualisation: 'choropleth-state',
+            state: 48, // 48 for TX, 11 for DC
+            query: {
+                OCCP: 3060, //occupation is medicine - physician and surgeon
+                SEX: 1
+            },
+            metric: ["PINCP", "WAGP"],
+        };
+
+        var width = 1280;
+        var height = 720;
+
+        // Initialising the first visualisation
+        var visualisation = new Choropleth();
+        visualisation.redrawFunction();
+        $('#redraw-btn').click(visualisation.redrawFunction);
+
+        // Setting up the the different tabs and visualisations
+        $(".choropleth-tab").click(Choropleth);
+        $(".chord-tab").click(Chord);
+        $(".bar-tab").click(Bar);
+        $(".sunburst-tab").click(Sunburst);
+    </script>
+</body>
+
 </html>

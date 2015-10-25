@@ -7,9 +7,9 @@ class State(models.Model):
     code = models.IntegerField(unique=True)
     name = models.CharField(max_length=80)
     abbreviation = models.CharField(max_length=2)
-    
-    
-    
+
+
+
 class PublicUseMicrodataArea(models.Model):
     code = models.IntegerField()
     state = models.ForeignKey(State)
@@ -200,7 +200,7 @@ class House(models.Model):
     WGTP77 = models.IntegerField(verbose_name='Housing Weight replicate 77')
     WGTP78 = models.IntegerField(verbose_name='Housing Weight replicate 78')
     WGTP79 = models.IntegerField(verbose_name='Housing Weight replicate 79')
-    WGTP80 = models.IntegerField(verbose_name='Housing Weight replicate 79')
+    WGTP80 = models.IntegerField(verbose_name='Housing Weight replicate 80')
 
     class Meta:
         index_together = ('ST', 'PUMA')

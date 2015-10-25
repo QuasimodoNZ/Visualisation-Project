@@ -1,10 +1,71 @@
 import json, re
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from . import models
 
 def home(request):
-    return render_to_response('d3js_visualiser/index.html')
+# housing
+#     filtering
+#         TYPE
+#         ACR
+#         AGS
+#         BDS
+#         BLD
+#         BUS
+#         HFL
+#         KIT
+#         MRGT
+#         MRGX
+#         PLM
+#         RMS
+#         RNTM
+#         TEL
+#         TEN
+#         VACS
+#         VAL
+#         VEH
+#         YBL
+#         FES
+#         FPARC
+#         HHL
+#         HHT
+#         HUGCL
+#         HUPAC
+#         HUPAOC
+#         HUPARC
+#         LNGI
+#         MV
+#
+#     metric
+#         CONP
+#         ELEP
+#         FS
+#         FULP
+#         GASP
+#         INSP
+#         MHP
+#         MRGI
+#         MRGP
+#         RMS
+#         SMP
+#         WATP
+#         FINCP
+#         GRNTP
+#         GRPIP
+#         HINCP
+# persons
+#
+#     query_options = {}
+    query_options = {}
+    for f in models.Person._meta.get_fields():
+        if f.name == 'id' or f.name.startswith('PWGTP'):
+            continue
+        if f.choices:
+            query_options[f.name] = {'verbose_name':f.verbose_name, 'choices':f.choices}
+        else:
+            query_options[f.name] = {'verbose_name':f.verbose_name}
+
+    return render(request, 'd3js_visualiser/index.html', {'choices':json.dumps(query_options)})
 
 def choropleth(request):
 #     print request.GET
@@ -12,21 +73,21 @@ def choropleth(request):
     request_data =  get_to_dict(request.GET)
     options = request_data.get('query', {})
     if 'state' in request_data:
-        options['ST'] = request_data['state']    
-    
+        options['ST'] = request_data['state']
+
     selection = models.Person.objects.filter(**options)
-    
+
     processing = {}
     for item in selection.iterator():
         t = processing.get(item.PUMA.code, [0, 0])
         t[0] += getattr(item, request_data['metric'][0])
         t[1] += 1
         processing[item.PUMA.code] = t
-        
+
     data = {}
     for key, value in processing.iteritems():
         data[format(key, '05')] = value[0] / value[1]
-    
+
 
 #     controller = {
 #                 'visualisation': 'choropleth-state',
@@ -37,7 +98,7 @@ def choropleth(request):
 #                 },
 #                 'metric': ["WAGP", "PINCP"],
 #             }
-    
+
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
 # state level, state id -> value
