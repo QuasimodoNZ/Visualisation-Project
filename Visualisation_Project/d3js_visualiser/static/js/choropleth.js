@@ -57,7 +57,7 @@ function Choropleth(){
         $.ajax({
             type: "GET",
             url: 'choropleth',
-            data: controller,
+            data: evaluateQuery(),
             success: function(json) {
                 console.log(json);
                 var scale = d3.scale.linear()

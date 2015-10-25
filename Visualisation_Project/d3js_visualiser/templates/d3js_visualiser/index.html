@@ -94,13 +94,7 @@
             </div>
             <div id="inspecter-body" class="panel-body">
                 <ul class="list-group query-list">
-                    <button type="button" class="list-group-item query-item">Cras justo odio</button>
-                    <button type="button" class="list-group-item query-item">Dapibus ac facilisis ingsdfgsdfg</button>
-                    <button type="button" class="list-group-item query-item">Morbi leo risus</button>
-                    <button type="button" class="list-group-item query-item">Porta ac consectetur ac</button>
-                    <button type="button" class="list-group-item query-item">Vestibulum at eros</button>
                 </ul>
-                <p>lets put a list here</p>
                 <div class="input-group">
                     <select id='filtering-options' class="form-control">
                     </select>
@@ -108,14 +102,12 @@
                         <button class="btn btn-danger query-add" type="button">Go!</button>
                     </span>
                 </div>
-                <p> lets put a button here to add a new query item</p>
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default choice-set">Min</button>
                     <button type="button" class="btn btn-default choice-set">Avg</button>
                     <button type="button" class="btn btn-default choice-set">Max</button>
                     <button type="button" class="btn btn-primary choice-set">Percentage</button>
                 </div>
-                <p>how about a radio button here to choose between min, average, max, percentage or number of people</p>
                 <button id="redraw-btn" type="button" class="btn btn-primary">Apply Query</button>
             </div>
         </div>
@@ -156,7 +148,7 @@
 
             var newFormField;
             if ('choices' in selectedChoice){
-                newFormField = $('<select/>').attr('id', 'filtering-options-value').addClass('form-control');
+                newFormField = $('<select/>').attr('id', 'filtering-options-values').addClass('form-control');
                 for(var choice in selectedChoice.choices){
                     $('<option/>')
                         .attr({
@@ -167,7 +159,7 @@
                 }
                 // fill with choices
             } else {
-                newFormField = $('<input>').attr({id:'filtering-options-value', type:'number', class:'form-control'});
+                newFormField = $('<input>').attr({id:'filtering-options-values', type:'number', class:'form-control'});
                 if ('max' in selectedChoice){
                     newFormField.attr('max', selectedChoice.max);
                 }
@@ -176,38 +168,16 @@
                 }
             }
 
-            if ($('#filtering-options-value').length){
-                $('#filtering-options-value').replaceWith(newFormField);
+            if ($('#filtering-options-values').length){
+                $('#filtering-options-values').replaceWith(newFormField);
             } else {
                 $('#filtering-options').after(newFormField);
             }
         }
         replaceChoices();
 
-        // for(var choice in choices[$('#filtering-options').val()]){
-        //     console.log(choice);
-        //     console.log(choices[choice]);
-        // }
-
         $("#filtering-options")
-            .change(function() {
-                replaceChoices();
-                // console.log('something changed');
-                // $("filtering-options option:selected").each(replaceChoices);
-            });
-
-            // function() {
-            //  var choices = choices[$(this).val()].choices;
-            //     // var choices = choices['ANC1P'].choices;
-            //     for(var choice in choices){
-            //         $('<option/>')
-            //             .attr({
-            //                 'value': choices[choice][0]
-            //             })
-            //             .text(choices[choice][1])
-            //             .appendTo('#filtering-options-value');
-            //     }
-            // }
+            .change(replaceChoices);
 
         var removeItem = function() {
             $(this).slideUp('fast', function() {
@@ -256,13 +226,22 @@
 
         // For when a new filtering option is added
         $(".query-add").click(function() {
+            console.log('the text selected', $("#filtering-options-values").length, ": ", $("#filtering-options-values").val());
+            var htmlString = $("#filtering-options option:selected").text() + ": ";
+            if ($("#filtering-options-values").is('input')){
+                htmlString += $("#filtering-options-values").val();
+            } else {
+                htmlString += $("#filtering-options-values option:selected").text();
+            }
             $("<button/>").attr({
                 type: 'button',
             })
-            .addClass('list-group-item query-item')
-            .html()
-                .html('This is the edited button text')
-                .data('value', 'The hidden data')
+                .addClass('list-group-item query-item')
+                .html(htmlString)
+                .data({
+                    query: $("#filtering-options option:selected").val(),
+                    value: $("#filtering-options-values").val()
+                })
                 .click(removeItem)
                 .hide()
                 .css('opacity', 0)
@@ -276,7 +255,7 @@
             $(".query-item").each(function() {
                 console.log($(this));
                 console.log('html: ', $(this).html());
-                console.log('value: ', $(this).data());
+                console.log('data: ', $(this).data());
             });
         });
 
@@ -306,14 +285,23 @@
             handle: '#inspecter-title'
         });
 
-        var controller = {
-            visualisation: 'choropleth-state',
-            state: 48, // 48 for TX, 11 for DC
-            query: {
-                OCCP: 3060, //occupation is medicine - physician and surgeon
-                SEX: 1
-            },
-            metric: ["PINCP", "WAGP"],
+        var evaluateQuery = function(){
+            var rtn = {
+                visualisation: 'choropleth-state',
+                state: 48, // 48 for TX, 11 for DC
+                metric: ["PINCP", "WAGP"],
+            };
+
+            var filters = {};
+            $('.query-item').each(function(){
+                console.log();
+                filters[$(this).data().query] = $(this).data().value;
+            })
+            rtn.query = filters;
+
+            console.log(filters);
+
+            return rtn;
         };
 
         var width = 1280;
