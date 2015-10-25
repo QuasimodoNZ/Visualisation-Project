@@ -1,6 +1,7 @@
 import json, re
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render
+from django.db.models import Count, Min, Avg, Max
 from . import models
 
 def home(request):
@@ -25,14 +26,18 @@ def choropleth(request):
         options['ST'] = request_data['state']
     print 'we got to number 1'
     selection = models.Person.objects.filter(**options)
+
+    ########
+    print '***** LOOK HERE *****'
+    print selection.values('PUMA__code').annotate(average=Avg('WAGP'))
+    ########
+
     print 'we got to number 2'
     processing = {}
     counter = 0
     try:
         for item in selection.iterator():
             counter = counter + 1
-            print counter
-            print item
             t = processing.get(item.PUMA.code, [0, 0])
             t[0] += getattr(item, request_data['metric'][0])
             t[1] += 1

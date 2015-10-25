@@ -131,12 +131,27 @@
         // delete choices.PAP;
         // delete choices.DOUT;
 
-        for (var field in choices) {
+        var keys = [];
+        for (var i in choices) {
+            if (choices.hasOwnProperty(i)) {
+                keys.push(i);
+            }
+        }
+
+        // may have to craft a custom sort function to get the right order
+        keys.sort();
+        for (i = 0; i < keys.length; i++) {
+            // operate on obj[keys[i]]
+        // }
+
+        // for (var field in choices) {
             $('<option/>')
                 .attr({
-                    'value': field
+                    'value': keys[i]
+                    // 'value': field
                 })
-                .text(choices[field].verbose_name)
+                .text(choices[keys[i]].verbose_name)
+                // .text(choices[field].verbose_name)
                 .appendTo('#filtering-options');
         }
         console.log($('#filtering-options').val());
