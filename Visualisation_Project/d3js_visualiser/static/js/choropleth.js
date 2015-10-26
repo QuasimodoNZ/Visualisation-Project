@@ -15,6 +15,8 @@ function Choropleth(){
         .attr("height", height)
         .call(zoom);
 
+    var g = vis.append('g');
+
     d3.json("static/geojson/TX.geojson", function(json) {
         // create a first guess for the projection
         var center = d3.geo.centroid(json)
@@ -42,10 +44,10 @@ function Choropleth(){
         path = path.projection(projection);
 
         // add a rectangle to see the bound of the svg
-        vis.append("rect").attr('width', width).attr('height', height)
+        g.append("rect").attr('width', width).attr('height', height)
             .style('stroke', 'black').style('fill', 'none');
 
-        vis.selectAll("path").data(json.features).enter().append("path")
+        g.selectAll("path").data(json.features).enter().append("path")
             .attr("d", path)
             .attr('id', function(d) {
                 return d.properties.PUMA;
@@ -75,7 +77,7 @@ function Choropleth(){
     };
 
     function zoomed() {
-      container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+      g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
 
     function dragstarted(d) {
