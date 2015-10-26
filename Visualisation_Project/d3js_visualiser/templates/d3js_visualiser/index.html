@@ -103,10 +103,10 @@
                     </span>
                 </div>
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default choice-set">Min</button>
-                    <button type="button" class="btn btn-default choice-set">Avg</button>
-                    <button type="button" class="btn btn-default choice-set">Max</button>
-                    <button type="button" class="btn btn-primary choice-set">Percentage</button>
+                    <button type="button" value="MIN" class="btn btn-default choice-set">Min</button>
+                    <button type="button" value="AVG" class="btn btn-primary choice-set">Avg</button>
+                    <button type="button" value="MAX" class="btn btn-default choice-set">Max</button>
+                    <button type="button" value="PCT" class="btn btn-defalut choice-set">Percentage</button>
                 </div>
                 <button id="redraw-btn" type="button" class="btn btn-primary">Apply Query</button>
             </div>
@@ -305,6 +305,7 @@
                 visualisation: 'choropleth-state',
                 state: 48, // 48 for TX, 11 for DC
                 metric: ["PINCP", "WAGP"],
+                aggregation: $(".choice-set.btn-primary").val()
             };
 
             var filters = {};

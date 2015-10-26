@@ -28,29 +28,35 @@ def choropleth(request):
     selection = models.Person.objects.filter(**options)
 
     ########
-    print '***** LOOK HERE *****'
-    print selection.values('PUMA__code').annotate(average=Avg('WAGP'))
+    print '***** LOOK HERE FOR AGGREGATING STUFF *****'
+    if request_data['aggregation'] == 'MIN':
+        processing =  selection.values('PUMA__code').annotate(MIN=Min(request_data['metric'][0]))
+    elif request_data['aggregation'] == 'AVG':
+        processing = selection.values('PUMA__code').annotate(AVG=Avg(request_data['metric'][0]))
+    elif request_data['aggregation'] == 'MAX':
+        processing =  selection.values('PUMA__code').annotate(MAX=Max(request_data['metric'][0]))
     ########
 
     print 'we got to number 2'
-    processing = {}
-    counter = 0
-    try:
-        for item in selection.iterator():
-            counter = counter + 1
-            t = processing.get(item.PUMA.code, [0, 0])
-            t[0] += getattr(item, request_data['metric'][0])
-            t[1] += 1
-            processing[item.PUMA.code] = t
-    except:
-        print "Unexpected error:", sys.exc_info()[0]
-    finally:
-        print 'got to the finally clause'
-    print 'we got to number 3'
+    # processing = {}
+    # counter = 0
+    # try:
+    #     for item in selection.iterator():
+    #         counter = counter + 1
+    #         t = processing.get(item.PUMA.code, [0, 0])
+    #         t[0] += getattr(item, request_data['metric'][0])
+    #         t[1] += 1
+    #         processing[item.PUMA.code] = t
+    # except:
+    #     print "Unexpected error:", sys.exc_info()[0]
+    # finally:
+    #     print 'got to the finally clause'
+    # print 'we got to number 3'
     data = {}
-    for key, value in processing.iteritems():
-        data[format(key, '05')] = value[0] / value[1]
-    print 'we got to number 4'
+    for d in processing:
+        data[format(d['PUMA__code'], '05')] = d[request_data['aggregation']]
+    print data
+    print 'we got to number 3'
 
 
 
