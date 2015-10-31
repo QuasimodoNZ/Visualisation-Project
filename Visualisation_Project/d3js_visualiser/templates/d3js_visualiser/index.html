@@ -84,23 +84,28 @@
 
 
         <div id="inspector" class="panel panel-default">
-            <div id="inspecter-title" class="panel-heading">
+            <div id="inspector-title" class="panel-heading">
                 <h3 class="panel-title" >The Inspector
-                    <button id="inspecter-minimizer" type="button" class="btn btn-default btn-sm" aria-label="Right Align" style="vertical-align: top;margin: 0 0 0 120px;">
+                    <button id="inspector-minimizer" type="button" class="btn btn-default btn-sm" aria-label="Right Align" style="vertical-align: top;margin: 0 0 0 120px;">
                         <span id="inspector-minimizer-icon" class="glyphicon glyphicon-menu-up" aria-hidden="true" ></span>
                     </button>
                 </h3>
             </div>
             <ul id="inspector-body" class="list-group">
                 <li class="list-group-item">
-                        <ul class="list-group query-list">
-                            <p id="empty-message" class="list-group-item">Apply filters below</p>
-                        </ul>
-                        <select id='filtering-options' class="form-control">
-                        </select>
-                        <button class="btn btn-primary query-add" type="button" style="width: 100%;">Add Filter</button>
+                    <h3>Filters</h3>
+                    <ul class="list-group query-list">
+                        <p id="empty-message" class="list-group-item">Apply filters below</p>
+                    </ul>
+                    <select id='filtering-options' class="form-control">
+                    </select>
+                    <button class="btn btn-primary query-add" type="button" style="width: 100%;">Add Filter</button>
                 </li>
                 <li class="list-group-item">
+                    <h3>Metrics</h3>
+                    <ul class="list-group metric-list">
+                        <p id="empty-message" class="list-group-item">Apply filters below, when no metrics are selected, the number of records is used instead.</p>
+                    </ul>
                     <div class="btn-group" role="group" style="width: 100%;">
                         <button type="button" value="MIN" class="btn btn-default choice-set" style="width: 33%;">Min</button>
                         <button type="button" value="AVG" class="btn btn-primary choice-set" style="width: 33%;">Avg</button>
@@ -108,7 +113,7 @@
                     </div>
                 </li>
                 <li class="list-group-item">
-                    <button id="redraw-btn" type="button" class="btn btn-primary">Apply Query</button>
+                    <button id="redraw-btn" type="button" class="btn btn-primary" style="width: 100%;">Apply Query</button>
                 </li>
             </ul>
         </div>

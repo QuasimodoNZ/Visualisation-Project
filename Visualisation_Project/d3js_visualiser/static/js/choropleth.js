@@ -60,7 +60,7 @@ function Choropleth(){
                     throw error ('Trying to draw a choropleth with visualisation: ' + evaluateQuery().visualisation);
                 }
             })
-            .attr('class', 'PUMA').call(drag);
+            .attr('class', 'PUMA');
     });
 
     this.redrawFunction = function(){
