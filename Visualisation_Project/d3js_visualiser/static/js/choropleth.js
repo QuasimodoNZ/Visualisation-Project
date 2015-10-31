@@ -74,11 +74,9 @@ function Choropleth(){
                     .domain([d3.min(d3.values(json)), d3.max(d3.values(json))])
                     .range(['red', 'green']);
                 vis.selectAll('path').style('fill', function(d){
-                    console.log(d.properties.PUMA, d.properties.PUMA in json, scale(json[d.properties.PUMA]));
+                    console.log('PUMA code: ', d.properties.PUMA, ', PUMA code in json: ', d.properties.PUMA in json, ', value from json: ', json[d.properties.PUMA],', colour from scale: ', scale(json[d.properties.PUMA]));
                     return scale(json[d.properties.PUMA]);
                 });
-                // console.log(json);
-
             },
             error: function(request, err, ex) {}
         });

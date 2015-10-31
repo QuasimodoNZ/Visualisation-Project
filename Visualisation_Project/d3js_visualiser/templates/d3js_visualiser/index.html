@@ -85,11 +85,11 @@
 
         <div id="inspector" class="panel panel-default">
             <div id="inspector-title" class="panel-heading">
-                <h3 class="panel-title" >The Inspector
+                <h1 class="panel-title" >The Inspector
                     <button id="inspector-minimizer" type="button" class="btn btn-default btn-sm" aria-label="Right Align" style="vertical-align: top;margin: 0 0 0 120px;">
                         <span id="inspector-minimizer-icon" class="glyphicon glyphicon-menu-up" aria-hidden="true" ></span>
                     </button>
-                </h3>
+                </h1>
             </div>
             <ul id="inspector-body" class="list-group">
                 <li class="list-group-item">
@@ -106,6 +106,10 @@
                     <ul class="list-group metric-list">
                         <p id="empty-message" class="list-group-item">Apply filters below, when no metrics are selected, the number of records is used instead.</p>
                     </ul>
+                    <select id='metric-options' class="form-control">
+                    </select>
+                    <button class="btn btn-primary metric-add" type="button" style="width: 100%;">Add Metric</button>
+
                     <div class="btn-group" role="group" style="width: 100%;">
                         <button type="button" value="MIN" class="btn btn-default choice-set" style="width: 33%;">Min</button>
                         <button type="button" value="AVG" class="btn btn-primary choice-set" style="width: 33%;">Avg</button>
@@ -131,29 +135,42 @@
         var choices = {{ choices }};
         {% endautoescape %}
 
+        console.log(choices);
+
         // jquery for the inspector panel/controller window
 
         // delete choices.PAP;
         // delete choices.DOUT;
 
-        var keys = [];
+        var filters = [];
+        var metrics = [];
         for (var i in choices) {
-            if (choices.hasOwnProperty(i)) {
-                keys.push(i);
+            filters.push(i);
+            if (!('choices' in choices[i])){
+                metrics.push(i);
             }
         }
 
         // may have to craft a custom sort function to get the right order
-        keys.sort();
-        for (i = 0; i < keys.length; i++) {
+        filters.sort();
+        metrics.sort();
+
+        // builds the selections for the filters and the metrics
+        for (i = 0; i < filters.length; i++) {
             $('<option/>')
                 .attr({
-                    'value': keys[i]
-                        // 'value': field
+                    'value': filters[i]
                 })
-                .text(choices[keys[i]].verbose_name)
-                // .text(choices[field].verbose_name)
+                .text(choices[filters[i]].verbose_name)
                 .appendTo('#filtering-options');
+        }
+        for (i = 0; i < metrics.length; i++) {
+            $('<option/>')
+                .attr({
+                    'value': metrics[i]
+                })
+                .text(choices[metrics[i]].verbose_name)
+                .appendTo('#metric-options');
         }
 
         function replaceChoices() {
@@ -204,6 +221,7 @@
 
         // Temporary as the list will start empty
         $(".query-item").click(removeItem);
+        $(".metric-item").click(removeItem);
 
         function getRotationDegrees(obj) {
             var matrix = obj.css("-webkit-transform") ||
@@ -225,7 +243,6 @@
         function animateRotate(d) {
             var elem = $("#inspector-minimizer-icon");
             var start = getRotationDegrees(elem);
-            console.log('starting rotation from: ', start, ' to: ', start + d);
             $({
                 deg: start
             }).animate({
@@ -241,6 +258,21 @@
             });
         }
 
+        function createListButton(target){
+            return $("<button/>").attr({
+                    type: 'button',
+                })
+                .addClass('list-group-item')
+                .click(removeItem)
+                .hide()
+                .css('opacity', 0)
+                .appendTo(target)
+                .slideDown('fast')
+                .animate({
+                    opacity: 1
+                }, "fast");
+        }
+
         // For when a new filtering option is added
         $(".query-add").click(function() {
             var htmlString = $("#filtering-options option:selected").text() + ": ";
@@ -249,32 +281,28 @@
             } else {
                 htmlString += $("#filtering-options-values option:selected").text();
             }
-            $("<button/>").attr({
-                    type: 'button',
-                })
-                .addClass('list-group-item query-item')
+            var button = createListButton(".query-list")
                 .html(htmlString)
+                .addClass('query-item')
                 .data({
                     query: $("#filtering-options option:selected").val(),
                     value: $("#filtering-options-values").val()
-                })
-                .click(removeItem)
-                .hide()
-                .css('opacity', 0)
-                .appendTo(".query-list")
-                .slideDown('fast')
-                .animate({
-                    opacity: 1
-                }, "fast");
-            $(".query-list #")
+                });
+        });
+        // For when a new metric options is added
+        $(".metric-add").click(function() {
+            var htmlString = $("#metric-options option:selected").text();
+            createListButton(".metric-list")
+                .html(htmlString)
+                .addClass('metric-item')
+                .data({
+                    metric: $("#metric-options option:selected").val(),
+                });
         });
 
         $('#inspector-minimizer').click(function() {
-            console.log("inspector is minimizing");
             animateRotate(180);
             $('#inspector-body').slideToggle();
-            // $('#inspector-minimizer-icon').rotate({animateTo:180});
-            console.log("inspector is minimizing");
         });
 
         $('.choice-set').click(function() {
@@ -298,17 +326,26 @@
         var evaluateQuery = function() {
             var rtn = {
                 visualisation: 'choropleth-state',
-                state: 48, // 48 for TX, 11 for DC
-                metric: ["PINCP", "WAGP"],
-                aggregation: $(".choice-set.btn-primary").val()
+                state: 48 // 48 for TX, 11 for DC
             };
 
             var filters = {};
             $('.query-item').each(function() {
-                console.log();
                 filters[$(this).data().query] = $(this).data().value;
             })
             rtn.query = filters;
+
+            var metrics = [];
+            $('.metric-item').each(function(){
+                metrics.push($(this).data().metric)
+            })
+            rtn.metric = metrics;
+
+            if (metrics.length == 0){
+                rtn.aggregation = 'COUNT';
+            } else {
+                rtn.aggregation = $(".choice-set.btn-primary").val();
+            }
 
             return rtn;
         };

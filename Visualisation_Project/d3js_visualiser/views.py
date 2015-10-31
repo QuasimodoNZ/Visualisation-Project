@@ -29,15 +29,18 @@ def choropleth(request):
 
     ########
     print '***** LOOK HERE FOR AGGREGATING STUFF *****'
-    if request_data['aggregation'] == 'MIN':
-        processing =  selection.values('PUMA__code').annotate(MIN=Min(request_data['metric'][0]))
+    if 'metric' not in request_data:
+        print 'no metric found'
+        processing = selection.values('PUMA__code').annotate(COUNT=Count('id'))
+    elif request_data['aggregation'] == 'MIN':
+        processing = selection.values('PUMA__code').annotate(MIN=Min(request_data['metric'][0]))
     elif request_data['aggregation'] == 'AVG':
         processing = selection.values('PUMA__code').annotate(AVG=Avg(request_data['metric'][0]))
     elif request_data['aggregation'] == 'MAX':
         processing =  selection.values('PUMA__code').annotate(MAX=Max(request_data['metric'][0]))
     ########
-
     print 'we got to number 2'
+    print processing
     # processing = {}
     # counter = 0
     # try:
