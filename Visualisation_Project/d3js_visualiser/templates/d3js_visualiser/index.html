@@ -9,7 +9,7 @@
     <link href="static/css/bootstrap-theme.min.css" rel="stylesheet">
 
     <script type="text/javascript" src="static/js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="static/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="static/js/d3.v3.js"></script>
@@ -84,34 +84,34 @@
 
 
         <div id="inspector" class="panel panel-default">
-            <div id="inspecter-title" class="panel-heading">
+            <div id="inspector-title" class="panel-heading">
                 <h3 class="panel-title">The Inspector
-                    <button id="inspecter-minimizer" type="button" class="btn btn-default btn-sm" aria-label="Right Align" style="float: right;">
+                    <button id="inspector-minimizer" type="button" class="btn btn-default btn-sm" aria-label="Right Align" style="float: right;">
                         <span id="inspector-minimizer-icon" class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
                     </button>
                 </h3>
-
             </div>
-            <div id="inspecter-body" class="panel-body">
-                <ul class="list-group query-list">
-                </ul>
-                <div class="input-group">
-                    <select id='filtering-options' class="form-control">
-                    </select>
-                    <span class="input-group-btn">
-                        <button class="btn btn-danger query-add" type="button">Go!</button>
-                    </span>
-                </div>
-                <div class="btn-group" role="group">
-                    <button type="button" value="MIN" class="btn btn-default choice-set">Min</button>
-                    <button type="button" value="AVG" class="btn btn-primary choice-set">Avg</button>
-                    <button type="button" value="MAX" class="btn btn-default choice-set">Max</button>
-                    <button type="button" value="PCT" class="btn btn-defalut choice-set">Percentage</button>
-                </div>
-                <button id="redraw-btn" type="button" class="btn btn-primary">Apply Query</button>
-            </div>
+            <ul id="inspector-body" class="list-group">
+                <li class="list-group-item">
+                        <ul class="list-group query-list">
+                            <p id="empty-message" class="list-group-item">Apply filters below</p>
+                        </ul>
+                        <select id='filtering-options' class="form-control">
+                        </select>
+                        <button class="btn btn-primary query-add" type="button" style="width: 100%;">Add Filter</button>
+                </li>
+                <li class="list-group-item">
+                    <div class="btn-group" role="group" style="width: 100%;">
+                        <button type="button" value="MIN" class="btn btn-default choice-set" style="width: 33%;">Min</button>
+                        <button type="button" value="AVG" class="btn btn-primary choice-set" style="width: 33%;">Avg</button>
+                        <button type="button" value="MAX" class="btn btn-default choice-set" style="width: 33%;">Max</button>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <button id="redraw-btn" type="button" class="btn btn-primary">Apply Query</button>
+                </li>
+            </ul>
         </div>
-
     </div>
 
 
@@ -122,12 +122,12 @@
             cache: false
         });
 
-        // jquery for the inspector panel/controller window
         {% autoescape off %}
         var choices = {{ choices }};
         {% endautoescape %}
 
-        console.log(choices);
+        // jquery for the inspector panel/controller window
+
         // delete choices.PAP;
         // delete choices.DOUT;
 
@@ -141,30 +141,23 @@
         // may have to craft a custom sort function to get the right order
         keys.sort();
         for (i = 0; i < keys.length; i++) {
-            // operate on obj[keys[i]]
-        // }
-
-        // for (var field in choices) {
             $('<option/>')
                 .attr({
                     'value': keys[i]
-                    // 'value': field
+                        // 'value': field
                 })
                 .text(choices[keys[i]].verbose_name)
                 // .text(choices[field].verbose_name)
                 .appendTo('#filtering-options');
         }
-        console.log($('#filtering-options').val());
 
-        function replaceChoices(){
-            console.log('replacing choices');
+        function replaceChoices() {
             var selectedChoice = choices[$('#filtering-options').val()];
-            console.log('selectedChoice', selectedChoice);
 
             var newFormField;
-            if ('choices' in selectedChoice){
+            if ('choices' in selectedChoice) {
                 newFormField = $('<select/>').attr('id', 'filtering-options-values').addClass('form-control');
-                for(var choice in selectedChoice.choices){
+                for (var choice in selectedChoice.choices) {
                     $('<option/>')
                         .attr({
                             'value': selectedChoice.choices[choice][0]
@@ -174,16 +167,20 @@
                 }
                 // fill with choices
             } else {
-                newFormField = $('<input>').attr({id:'filtering-options-values', type:'number', class:'form-control'});
-                if ('max' in selectedChoice){
+                newFormField = $('<input>').attr({
+                    id: 'filtering-options-values',
+                    type: 'number',
+                    class: 'form-control'
+                });
+                if ('max' in selectedChoice) {
                     newFormField.attr('max', selectedChoice.max);
                 }
-                if ('min' in selectedChoice){
+                if ('min' in selectedChoice) {
                     newFormField.attr('min', selectedChoice.min);
                 }
             }
 
-            if ($('#filtering-options-values').length){
+            if ($('#filtering-options-values').length) {
                 $('#filtering-options-values').replaceWith(newFormField);
             } else {
                 $('#filtering-options').after(newFormField);
@@ -241,16 +238,15 @@
 
         // For when a new filtering option is added
         $(".query-add").click(function() {
-            console.log('the text selected', $("#filtering-options-values").length, ": ", $("#filtering-options-values").val());
             var htmlString = $("#filtering-options option:selected").text() + ": ";
-            if ($("#filtering-options-values").is('input')){
+            if ($("#filtering-options-values").is('input')) {
                 htmlString += $("#filtering-options-values").val();
             } else {
                 htmlString += $("#filtering-options-values option:selected").text();
             }
             $("<button/>").attr({
-                type: 'button',
-            })
+                    type: 'button',
+                })
                 .addClass('list-group-item query-item')
                 .html(htmlString)
                 .data({
@@ -265,19 +261,13 @@
                 .animate({
                     opacity: 1
                 }, "fast");
-            console.log('printing queue items');
-            console.log($(this));
-            $(".query-item").each(function() {
-                console.log($(this));
-                console.log('html: ', $(this).html());
-                console.log('data: ', $(this).data());
-            });
+            $(".query-list #")
         });
 
-        $('#inspecter-minimizer').click(function() {
+        $('#inspector-minimizer').click(function() {
             console.log("inspector is minimizing");
             animateRotate(180);
-            $('#inspecter-body').slideToggle();
+            $('#inspector-body').slideToggle();
             // $('#inspector-minimizer-icon').rotate({animateTo:180});
             console.log("inspector is minimizing");
         });
@@ -297,10 +287,10 @@
         $("#inspector").draggable({
             containment: 'window',
             scroll: false,
-            handle: '#inspecter-title'
+            handle: '#inspector-title'
         });
 
-        var evaluateQuery = function(){
+        var evaluateQuery = function() {
             var rtn = {
                 visualisation: 'choropleth-state',
                 state: 48, // 48 for TX, 11 for DC
@@ -309,13 +299,11 @@
             };
 
             var filters = {};
-            $('.query-item').each(function(){
+            $('.query-item').each(function() {
                 console.log();
                 filters[$(this).data().query] = $(this).data().value;
             })
             rtn.query = filters;
-
-            console.log(filters);
 
             return rtn;
         };

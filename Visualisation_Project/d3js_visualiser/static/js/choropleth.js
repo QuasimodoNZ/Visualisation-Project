@@ -1,6 +1,6 @@
 function Choropleth(){
     var zoom = d3.behavior.zoom()
-        .scaleExtent([1, 10])
+        .scaleExtent([1, 100])
         .on("zoom", zoomed);
 
     var drag = d3.behavior.drag()
@@ -17,7 +17,8 @@ function Choropleth(){
 
     var g = vis.append('g');
 
-    d3.json("static/geojson/TX.geojson", function(json) {
+    d3.json("static/geojson/TX.geojson", function(error, json) {
+        if (error) throw error;
         // create a first guess for the projection
         var center = d3.geo.centroid(json)
         var scale = 150;
@@ -45,12 +46,19 @@ function Choropleth(){
 
         // add a rectangle to see the bound of the svg
         g.append("rect").attr('width', width).attr('height', height)
-            .style('stroke', 'black').style('fill', 'none');
+            .style('stroke', 'none').style('fill', 'none');
 
         g.selectAll("path").data(json.features).enter().append("path")
             .attr("d", path)
+            .style('stroke', 'black')
             .attr('id', function(d) {
-                return d.properties.PUMA;
+                if (evaluateQuery().visualisation == 'choropleth-state'){
+                    return d.properties.STATE
+                } else if (evaluateQuery().visualisation == 'choropleth-puma'){
+                    return d.properties.PUMA;
+                } else {
+                    throw error ('Trying to draw a choropleth with visualisation: ' + evaluateQuery().visualisation);
+                }
             })
             .attr('class', 'PUMA').call(drag);
     });
