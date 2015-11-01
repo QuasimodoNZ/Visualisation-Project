@@ -13,15 +13,15 @@ class PublicUseMicrodataArea(models.Model):
     state = models.ForeignKey(State)
 
 class PrecomputedProperties(models.Model):
-    metric_name= models.CharField(max_length=30, unique=True)
-    min = models.IntegerField()
-    avg = models.DecimalField(max_digits=10, decimal_places=2)
-    max = models.IntegerField()
-    count = models.IntegerField()
+    metric_name= models.CharField(max_length=30) # e.g. Person_AGEP, or House_MRGP
+    min = models.IntegerField(null=True)
+    avg = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    max = models.IntegerField(null=True)
+    count = models.IntegerField(null=True)
     ST = models.IntegerField(verbose_name='State Code', choices=choices.ST)
 
     class Meta:
-        index_together = ('metric_name', 'ST')
+        unique_together = (('metric_name', 'ST'),)
 
 class House(models.Model):
     SERIALNO = models.IntegerField(verbose_name='Housing unit/GQ person serial number')

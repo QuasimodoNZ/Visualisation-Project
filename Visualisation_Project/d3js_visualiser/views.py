@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, render
 from django.db.models import Count, Min, Avg, Max
 from . import models
+from decimal import Decimal
 
 def home(request):
     filtering_options = {}
@@ -14,54 +15,9 @@ def home(request):
         else:
             filtering_options[f.name] = {'verbose_name':f.verbose_name}
 
-    return render(request, 'd3js_visualiser/index.html', {'choices':json.dumps(filtering_options)})
+    state_codes = {s.code: s.abbreviation for s in models.State.objects.filter(code__lte=72)} # other countries use codes greater than 72
 
-def choropleth(request):
-#     print request.GET
-#     print request.GET['query']
-    request_data =  get_to_dict(request.GET)
-    print request_data
-    options = request_data.get('query', {})
-    if 'state' in request_data:
-        options['ST'] = request_data['state']
-    print 'we got to number 1'
-    selection = models.Person.objects.filter(**options)
-
-    ########
-    print '***** LOOK HERE FOR AGGREGATING STUFF *****'
-    if 'metric' not in request_data:
-        print 'no metric found'
-        processing = selection.values('PUMA__code').annotate(COUNT=Count('id'))
-    elif request_data['aggregation'] == 'MIN':
-        processing = selection.values('PUMA__code').annotate(MIN=Min(request_data['metric'][0]))
-    elif request_data['aggregation'] == 'AVG':
-        processing = selection.values('PUMA__code').annotate(AVG=Avg(request_data['metric'][0]))
-    elif request_data['aggregation'] == 'MAX':
-        processing =  selection.values('PUMA__code').annotate(MAX=Max(request_data['metric'][0]))
-    ########
-    print 'we got to number 2'
-    print processing
-    # processing = {}
-    # counter = 0
-    # try:
-    #     for item in selection.iterator():
-    #         counter = counter + 1
-    #         t = processing.get(item.PUMA.code, [0, 0])
-    #         t[0] += getattr(item, request_data['metric'][0])
-    #         t[1] += 1
-    #         processing[item.PUMA.code] = t
-    # except:
-    #     print "Unexpected error:", sys.exc_info()[0]
-    # finally:
-    #     print 'got to the finally clause'
-    # print 'we got to number 3'
-    data = {}
-    for d in processing:
-        data[format(d['PUMA__code'], '05')] = d[request_data['aggregation']]
-    print data
-    print 'we got to number 3'
-
-
+    return render(request, 'd3js_visualiser/index.html', {'choices':json.dumps(filtering_options), 'state_codes':json.dumps(state_codes)})
 
 #     controller = {
 #                 'visualisation': 'choropleth-state',
@@ -73,11 +29,59 @@ def choropleth(request):
 #                 'metric': ["WAGP", "PINCP"],
 #             }
 
+def choropleth_country(request):
+    request_data =  get_to_dict(request.GET)
+    print 'request data: ' + str(request_data)
+    if 'metric' not in request_data:
+        print 'handling request for population'
+        metric_name = 'Person_POP'
+        aggregation = 'COUNT'
+    else:
+        print 'handling request for ' + request_data['metric'][0]
+        metric_name = 'Person_' + request_data['metric'][0]
+        aggregation = request_data['aggregation']
+
+    print 'metric_name: ' + metric_name
+    print 'aggregation: ' + aggregation
+
+    query = models.PrecomputedProperties.objects.filter(metric_name=metric_name)
+    data = {}
+    for pp in query:
+        val = getattr(pp, aggregation.lower())
+        print val
+        if isinstance(val, Decimal):
+            print 'val is decimal'
+            data[format(pp.ST, '02')] = float(val)
+        else:
+            print 'val is not decimal'
+            data[format(pp.ST, '02')] = val
+
+    print data
+    print data['30']
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-# state level, state id -> value
-# puma level, puma id -> value
-## what we got
+def choropleth_state(request):
+    request_data =  get_to_dict(request.GET)
+    options = request_data.get('query', {})
+    if 'state' in request_data:
+        options['ST'] = request_data['state']
+    selection = models.Person.objects.filter(**options)
+
+    if 'metric' not in request_data:
+        processing = selection.values('PUMA__code').annotate(COUNT=Count('id'))
+    elif request_data['aggregation'] == 'MIN':
+        processing = selection.values('PUMA__code').annotate(MIN=Min(request_data['metric'][0]))
+    elif request_data['aggregation'] == 'AVG':
+        processing = selection.values('PUMA__code').annotate(AVG=Avg(request_data['metric'][0]))
+    elif request_data['aggregation'] == 'MAX':
+        processing =  selection.values('PUMA__code').annotate(MAX=Max(request_data['metric'][0]))
+
+    # Gotta return the json data
+    data = {}
+    for d in processing:
+        data[format(d['PUMA__code'], '05')] = d[request_data['aggregation']]
+
+    return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def chord(request):
     data = {}

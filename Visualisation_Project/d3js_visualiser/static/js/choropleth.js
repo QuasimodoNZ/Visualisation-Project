@@ -17,69 +17,97 @@ function Choropleth(){
 
     var g = vis.append('g');
 
-    d3.json("static/geojson/TX.geojson", function(error, json) {
-        if (error) throw error;
-        // create a first guess for the projection
-        var center = d3.geo.centroid(json)
-        var scale = 150;
-        var offset = [width / 2, height / 2];
-        var projection = d3.geo.mercator().scale(scale).center(center)
-            .translate(offset);
 
-        // create the path
-        var path = d3.geo.path().projection(projection);
-
-        // using the path determine the bounds of the current map and use
-        // these to determine better values for the scale and translation
-        var bounds = path.bounds(json);
-        var hscale = scale * width / (bounds[1][0] - bounds[0][0]);
-        var vscale = scale * height / (bounds[1][1] - bounds[0][1]);
-        var scale = (hscale < vscale) ? hscale : vscale;
-        var offset = [width - (bounds[0][0] + bounds[1][0]) / 2,
-            height - (bounds[0][1] + bounds[1][1]) / 2
-        ];
-
-        // new projection
-        projection = d3.geo.mercator().center(center)
-            .scale(scale).translate(offset);
-        path = path.projection(projection);
-
-        // add a rectangle to see the bound of the svg
-        g.append("rect").attr('width', width).attr('height', height)
-            .style('stroke', 'none').style('fill', 'none');
-
-        g.selectAll("path").data(json.features).enter().append("path")
-            .attr("d", path)
-            .style('stroke', 'black')
-            .attr('id', function(d) {
-                if (evaluateQuery().visualisation == 'choropleth-state'){
-                    return d.properties.STATE
-                } else if (evaluateQuery().visualisation == 'choropleth-puma'){
-                    return d.properties.PUMA;
-                } else {
-                    throw error ('Trying to draw a choropleth with visualisation: ' + evaluateQuery().visualisation);
-                }
-            })
-            .attr('class', 'PUMA');
-    });
-
-    this.redrawFunction = function(){
+    function refreshDataStyling(){
         $.ajax({
             type: "GET",
-            url: 'choropleth',
-            data: evaluateQuery(),
+            url: controller.visualisation,
+            data: controller,
             success: function(json) {
-                console.log(json);
+                console.log('json for styling: ', json);
                 var scale = d3.scale.linear()
                     .domain([d3.min(d3.values(json)), d3.max(d3.values(json))])
                     .range(['red', 'green']);
                 vis.selectAll('path').style('fill', function(d){
-                    console.log('PUMA code: ', d.properties.PUMA, ', PUMA code in json: ', d.properties.PUMA in json, ', value from json: ', json[d.properties.PUMA],', colour from scale: ', scale(json[d.properties.PUMA]));
-                    return scale(json[d.properties.PUMA]);
+                    if (controller.visualisation == 'choropleth-country'){
+                        return scale(json[d.properties.STATE]);
+                    } else if (controller.visualisation == 'choropleth-state'){
+                        return scale(json[d.properties.PUMA]);
+                    } else {
+                        throw error ('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
+                    }
                 });
             },
             error: function(request, err, ex) {}
         });
+    }
+
+    var map = "";
+    function refreshMap(){
+        d3.json("static/geojson/" + map + ".geojson", function(error, json) {
+            if (error) throw error;
+            // create a first guess for the projection
+            var center = d3.geo.centroid(json)
+            var scale = 150;
+            var offset = [width / 2, height / 2];
+            var projection = d3.geo.mercator().scale(scale).center(center)
+                .translate(offset);
+
+            // create the path
+            var path = d3.geo.path().projection(projection);
+
+            // using the path determine the bounds of the current map and use
+            // these to determine better values for the scale and translation
+            var bounds = path.bounds(json);
+            var hscale = scale * width / (bounds[1][0] - bounds[0][0]);
+            var vscale = scale * height / (bounds[1][1] - bounds[0][1]);
+            var scale = (hscale < vscale) ? hscale : vscale;
+            var offset = [width - (bounds[0][0] + bounds[1][0]) / 2,
+                height - (bounds[0][1] + bounds[1][1]) / 2
+            ];
+
+            // new projection
+            projection = d3.geo.mercator().center(center)
+                .scale(scale).translate(offset);
+            path = path.projection(projection);
+
+            // add a rectangle to see the bound of the svg
+            g.append("rect").attr('width', width).attr('height', height)
+                .style('stroke', 'none').style('fill', 'none');
+
+            g.selectAll("path").data(json.features).enter().append("path")
+                .attr("d", path)
+                .style('stroke', 'black')
+                .attr('id', function(d) {
+                    if (controller.visualisation == 'choropleth-country'){
+                        return d.properties.STATE
+                    } else if (controller.visualisation == 'choropleth-state'){
+                        return d.properties.PUMA;
+                    } else {
+                        throw error ('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
+                    }
+                })
+                .attr('class', 'PUMA');
+
+            // When ever we redraw the map we will probable have to refresh the styling as well
+            refreshDataStyling();
+        });
+    }
+
+    this.redrawFunction = function(){
+        evaluateQuery();
+        if (controller.visualisation == 'choropleth-state' && map != stateCodes[controller.state]){
+            console.log('drawing state')
+            map = stateCodes[controller.state];
+            refreshMap();
+        } else if (controller.visualisation == 'choropleth-country' && map != 'States'){
+            console.log('drawing country');
+            map = 'States';
+            refreshMap();
+        } else {
+            console.log('refreshing the style');
+            refreshDataStyling();
+        }
     };
 
     function zoomed() {

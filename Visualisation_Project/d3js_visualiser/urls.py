@@ -8,7 +8,8 @@ urlpatterns = [
 
 #     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.home),
-    url(r'choropleth/', views.choropleth),
+    url(r'choropleth-country/', views.choropleth_country),
+    url(r'choropleth-state/', views.choropleth_state),
     url(r'chord/', views.chord),
     url(r'bar/', views.bar),
     url(r'sunburst/', views.sunburst),

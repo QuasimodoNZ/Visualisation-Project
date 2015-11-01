@@ -133,9 +133,8 @@
 
         {% autoescape off %}
         var choices = {{ choices }};
+        var stateCodes = {{ state_codes }};
         {% endautoescape %}
-
-        console.log(choices);
 
         // jquery for the inspector panel/controller window
 
@@ -323,32 +322,31 @@
             handle: '#inspector-title'
         });
 
-        var evaluateQuery = function() {
-            var rtn = {
-                visualisation: 'choropleth-state',
-                state: 48 // 48 for TX, 11 for DC
-            };
+        var controller = {
+            visualisation: 'choropleth-country', // 4 different visualisations, choropeth, bar, chord and sunburst. Different levels are have suffix -country, -state or -puma
+            // state: 48, // 48 for TX, 11 for DC
+        };
 
+        var evaluateQuery = function(){
             var filters = {};
             $('.query-item').each(function() {
                 filters[$(this).data().query] = $(this).data().value;
             })
-            rtn.query = filters;
+            controller.query = filters;
 
             var metrics = [];
             $('.metric-item').each(function(){
                 metrics.push($(this).data().metric)
             })
-            rtn.metric = metrics;
+            controller.metric = metrics;
 
             if (metrics.length == 0){
-                rtn.aggregation = 'COUNT';
+                controller.aggregation = 'COUNT';
             } else {
-                rtn.aggregation = $(".choice-set.btn-primary").val();
+                controller.aggregation = $(".choice-set.btn-primary").val();
             }
-
-            return rtn;
-        };
+        }
+        evaluateQuery();
 
         var width = 1280;
         var height = 720;
