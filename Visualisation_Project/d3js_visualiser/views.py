@@ -15,7 +15,7 @@ def home(request):
         else:
             filtering_options[f.name] = {'verbose_name':f.verbose_name}
 
-    state_codes = {s.code: s.abbreviation for s in models.State.objects.filter(code__lte=72)} # other countries use codes greater than 72
+    state_codes = {format(s.code, '02'): s.abbreviation for s in models.State.objects.filter(code__lte=72)} # other countries use codes greater than 72
 
     return render(request, 'd3js_visualiser/index.html', {'choices':json.dumps(filtering_options), 'state_codes':json.dumps(state_codes)})
 

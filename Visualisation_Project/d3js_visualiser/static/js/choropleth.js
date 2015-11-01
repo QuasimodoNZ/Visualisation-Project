@@ -13,10 +13,9 @@ function Choropleth(){
     var vis = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height)
-        .call(zoom);
+        .call(zoom).on("dblclick.zoom", null);
 
     var g = vis.append('g');
-
 
     function refreshDataStyling(){
         $.ajax({
@@ -42,9 +41,10 @@ function Choropleth(){
         });
     }
 
-    var map = "";
+    // var map = "";
     function refreshMap(){
-        d3.json("static/geojson/" + map + ".geojson", function(error, json) {
+        console.log('refreshing map: ', "static/geojson/" + controller.map + ".geojson");
+        d3.json("static/geojson/" + controller.map + ".geojson", function(error, json) {
             if (error) throw error;
             // create a first guess for the projection
             var center = d3.geo.centroid(json)
@@ -72,9 +72,9 @@ function Choropleth(){
             path = path.projection(projection);
 
             // add a rectangle to see the bound of the svg
-            g.append("rect").attr('width', width).attr('height', height)
-                .style('stroke', 'none').style('fill', 'none');
-
+            // g.append("rect").attr('width', width).attr('height', height)
+            //     .style('stroke', 'none').style('fill', 'none');
+            g.selectAll("path").remove();
             g.selectAll("path").data(json.features).enter().append("path")
                 .attr("d", path)
                 .style('stroke', 'black')
@@ -87,7 +87,17 @@ function Choropleth(){
                         throw error ('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
                     }
                 })
-                .attr('class', 'PUMA');
+                .attr('class', controller.visualisation == 'choropleth-country' ? 'STATE' :'PUMA')
+                .on('dblclick', function(d, i){
+                    if ('STATE' in d.properties){
+                        controller.visualisation = 'choropleth-state';
+                        controller.state = this.id;
+                    } else {
+                        console.log('got else');
+                    }
+                    visualisation.redrawFunction();
+                    // console.log('clicked - d: ', d, ', i: ', i, ', this: ', this);
+                });
 
             // When ever we redraw the map we will probable have to refresh the styling as well
             refreshDataStyling();
@@ -96,13 +106,14 @@ function Choropleth(){
 
     this.redrawFunction = function(){
         evaluateQuery();
-        if (controller.visualisation == 'choropleth-state' && map != stateCodes[controller.state]){
+        if (controller.visualisation == 'choropleth-state' && controller.map != stateCodes[controller.state]){
             console.log('drawing state')
-            map = stateCodes[controller.state];
+            console.log('controller.map: ', controller.map, ', stateCodes[controller.state]: ', stateCodes[controller.state]);
+            controller.map = stateCodes[controller.state];
             refreshMap();
-        } else if (controller.visualisation == 'choropleth-country' && map != 'States'){
+        } else if (controller.visualisation == 'choropleth-country' && controller.map != 'States'){
             console.log('drawing country');
-            map = 'States';
+            controller.map = 'States';
             refreshMap();
         } else {
             console.log('refreshing the style');
