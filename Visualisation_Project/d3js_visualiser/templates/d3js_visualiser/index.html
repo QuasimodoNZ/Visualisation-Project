@@ -46,9 +46,9 @@
             text-anchor: end;
         }
 
-        .PUMA {
+        .PUMA, .STATE {
             fill: grey;
-            stroke-width: 1;
+            stroke-width: 2;
             stroke: black;
         }
     </style>
@@ -322,6 +322,22 @@
             handle: '#inspector-title'
         });
 
+        var selectedID = '';
+        var selectID = function(nextID){
+            if (nextID != selectID){
+                $('#' + selectedID)
+                    .css('stroke', '')
+                    // .css('stroke-width', '');
+                selectedID = nextID;
+                $('#' + selectedID)
+                    .css('stroke', '#2E6DA4')
+                    // .css('stroke-width', '2px')
+                    .each(function(){
+                        $(this).appendTo($(this).parent())
+                    });
+            }
+        };
+
         var controller = {
             map: '', // The current map file that has been loaded
             visualisation: 'choropleth-country', // 4 different visualisations, choropeth, bar, chord and sunburst. Different levels are have suffix -country, -state or -puma
@@ -346,7 +362,7 @@
             } else {
                 controller.aggregation = $(".choice-set.btn-primary").val();
             }
-        }
+        };
         evaluateQuery();
 
         var width = 1280;

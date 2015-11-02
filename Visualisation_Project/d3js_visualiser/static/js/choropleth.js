@@ -77,7 +77,7 @@ function Choropleth(){
             g.selectAll("path").remove();
             g.selectAll("path").data(json.features).enter().append("path")
                 .attr("d", path)
-                .style('stroke', 'black')
+                // .style('stroke', 'black')
                 .attr('id', function(d) {
                     if (controller.visualisation == 'choropleth-country'){
                         return d.properties.STATE
@@ -88,7 +88,11 @@ function Choropleth(){
                     }
                 })
                 .attr('class', controller.visualisation == 'choropleth-country' ? 'STATE' :'PUMA')
-                .on('dblclick', function(d, i){
+                .on('click', function(d){
+                    console.log(this.id, ' was clicked');
+                    selectID(this.id);
+                })
+                .on('dblclick', function(d){
                     if ('STATE' in d.properties){
                         controller.visualisation = 'choropleth-state';
                         controller.state = this.id;
