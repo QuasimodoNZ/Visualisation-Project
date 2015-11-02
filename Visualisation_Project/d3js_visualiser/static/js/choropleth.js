@@ -89,6 +89,7 @@ function Choropleth(){
                 })
                 .attr('class', controller.visualisation == 'choropleth-country' ? 'STATE' :'PUMA')
                 .on('click', function(d){
+                    if (d3.event.defaultPrevented) return;
                     console.log(this.id, ' was clicked');
                     selectID(this.id);
                 })
@@ -110,15 +111,18 @@ function Choropleth(){
 
     this.redrawFunction = function(){
         evaluateQuery();
-        if (controller.visualisation == 'choropleth-state' && controller.map != stateCodes[controller.state]){
+        if (controller.visualisation == 'choropleth-country' && controller.map != 'States'){
+
+            console.log('drawing country');
+            controller.map = 'States';
+            refreshMap();
+            selectedID = '';
+        } else if (controller.visualisation == 'choropleth-state' && controller.map != stateCodes[controller.state]){
             console.log('drawing state')
             console.log('controller.map: ', controller.map, ', stateCodes[controller.state]: ', stateCodes[controller.state]);
             controller.map = stateCodes[controller.state];
             refreshMap();
-        } else if (controller.visualisation == 'choropleth-country' && controller.map != 'States'){
-            console.log('drawing country');
-            controller.map = 'States';
-            refreshMap();
+            selectedID = '';
         } else {
             console.log('refreshing the style');
             refreshDataStyling();
