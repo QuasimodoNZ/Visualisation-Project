@@ -163,10 +163,20 @@
         var stateCodes = {{ state_codes }};
         {% endautoescape %}
 
+        console.log('choices: ', choices);
+
         // jquery for the inspector panel/controller window
 
         // delete choices.PAP;
         // delete choices.DOUT;
+
+        function stringComparator (a, b){
+            if ( a < b )
+                return -1;
+            if ( a > b )
+                return 1;
+            return 0;
+        }
 
         var filters = [];
         var metrics = [];
@@ -174,12 +184,22 @@
             filters.push(i);
             if (!('choices' in choices[i])){
                 metrics.push(i);
+            } else {
+                choices[i].choices.sort(function(a, b){
+                    return stringComparator(a[1], b[1]);
+                });
             }
         }
 
-        // may have to craft a custom sort function to get the right order
-        filters.sort();
-        metrics.sort();
+        filters.sort(function(a, b){
+            return stringComparator(choices[a].verbose_name, choices[b].verbose_name);
+        });
+        metrics.sort(function(a, b){
+            return stringComparator(choices[a].verbose_name, choices[b].verbose_name);
+        });
+
+        console.log('filters: ', filters);
+        console.log('metrics: ', metrics);
 
         // builds the selections for the filters and the metrics
         for (i = 0; i < filters.length; i++) {

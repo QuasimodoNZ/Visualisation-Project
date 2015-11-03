@@ -25,13 +25,10 @@ function Choropleth(){
             url: controller.visualisation,
             data: controller,
             success: function(json) {
-                console.log('json for styling: ', json);
                 var scale = d3.scale.linear()
                     .domain([d3.min(d3.values(json)), d3.max(d3.values(json))])
                     .range(['red', 'green']);
                 vis.selectAll('path').style('fill', function(d){
-                    console.log('refreshing data styling for: ', d);
-
                     if (controller.visualisation == 'choropleth-country'){
                         d.properties.VALUE = json[d.properties.STATE];
                     } else if (controller.visualisation == 'choropleth-state'){
@@ -49,7 +46,6 @@ function Choropleth(){
 
     // var map = "";
     function refreshMap(){
-        console.log('refreshing map: ', "static/geojson/" + controller.map + ".geojson");
         d3.json("static/geojson/" + controller.map + ".geojson", function(error, json) {
             if (error) throw error;
             // create a first guess for the projection
@@ -94,20 +90,15 @@ function Choropleth(){
                 .attr('class', controller.visualisation == 'choropleth-country' ? 'STATE' :'PUMA')
                 .on('click', function(d){
                     if (d3.event.defaultPrevented) return;
-                    console.log(this.id, ' was clicked');
                     selectID(this.id);
                 })
                 .on('dblclick', function(d){
                     if ('STATE' in d.properties){
                         controller.visualisation = 'choropleth-state';
                         controller.state = this.id;
-                    } else {
-                        console.log('got else');
                     }
                     visualisation.redrawFunction();
-                    // console.log('clicked - d: ', d, ', i: ', i, ', this: ', this);
                 }).on("mousemove", function(d) {
-                    console.log('mouse moved over ', this.id, ', d: ', d);
                     if(!$(this).is(':last-child')){
                         $(this).appendTo($(this).parent());
                     }
@@ -138,19 +129,14 @@ function Choropleth(){
     this.redrawFunction = function(){
         evaluateQuery();
         if (controller.visualisation == 'choropleth-country' && controller.map != 'States'){
-
-            console.log('drawing country');
             controller.map = 'States';
             refreshMap();
             selectedID = '';
         } else if (controller.visualisation == 'choropleth-state' && controller.map != stateCodes[controller.state]){
-            console.log('drawing state')
-            console.log('controller.map: ', controller.map, ', stateCodes[controller.state]: ', stateCodes[controller.state]);
             controller.map = stateCodes[controller.state];
             refreshMap();
             selectedID = '';
         } else {
-            console.log('refreshing the style');
             refreshDataStyling();
         }
     };
