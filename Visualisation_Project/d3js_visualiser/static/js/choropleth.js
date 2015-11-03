@@ -35,7 +35,6 @@ function Choropleth() {
                         d.properties.VALUE = json[d.properties.STATE];
                     } else if (controller.visualisation == 'choropleth-state') {
                         d.properties.VALUE = json[d.properties.PUMA];
-
                     } else {
                         throw error('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
                     }
@@ -145,6 +144,7 @@ function Choropleth() {
 
     function zoomed() {
         g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        g.style("stroke-width", 1.5 / d3.event.scale + "px");
     }
 
     function dragstarted(d) {
