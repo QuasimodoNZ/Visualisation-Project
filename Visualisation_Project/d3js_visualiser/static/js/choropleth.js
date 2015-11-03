@@ -15,7 +15,9 @@ function Choropleth(){
         .attr("height", height)
         .call(zoom).on("dblclick.zoom", null);
 
-    var g = vis.append('g');
+    var g = vis.append('g').attr('stroke-width', '2px');
+
+    var tooltip = d3.select('#tooltip');
 
     function refreshDataStyling(){
         $.ajax({
@@ -28,13 +30,17 @@ function Choropleth(){
                     .domain([d3.min(d3.values(json)), d3.max(d3.values(json))])
                     .range(['red', 'green']);
                 vis.selectAll('path').style('fill', function(d){
+                    console.log('refreshing data styling for: ', d);
+
                     if (controller.visualisation == 'choropleth-country'){
-                        return scale(json[d.properties.STATE]);
+                        d.properties.VALUE = json[d.properties.STATE];
                     } else if (controller.visualisation == 'choropleth-state'){
-                        return scale(json[d.properties.PUMA]);
+                        d.properties.VALUE = json[d.properties.PUMA];
+
                     } else {
                         throw error ('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
                     }
+                    return scale(d.properties.VALUE);
                 });
             },
             error: function(request, err, ex) {}
@@ -71,10 +77,8 @@ function Choropleth(){
                 .scale(scale).translate(offset);
             path = path.projection(projection);
 
-            // add a rectangle to see the bound of the svg
-            // g.append("rect").attr('width', width).attr('height', height)
-            //     .style('stroke', 'none').style('fill', 'none');
             g.selectAll("path").remove();
+
             g.selectAll("path").data(json.features).enter().append("path")
                 .attr("d", path)
                 // .style('stroke', 'black')
@@ -102,6 +106,28 @@ function Choropleth(){
                     }
                     visualisation.redrawFunction();
                     // console.log('clicked - d: ', d, ', i: ', i, ', this: ', this);
+                }).on("mousemove", function(d) {
+                    console.log('mouse moved over ', this.id, ', d: ', d);
+                    if(!$(this).is(':last-child')){
+                        $(this).appendTo($(this).parent());
+                    }
+                    var mouse = d3.mouse(d3.select('body').node());
+
+                    if(!$(tooltip).is('.hidden')){
+                        tooltip.classed('hidden', false);
+                    }
+                    if ('STATE' in d.properties){
+                        tooltip.attr('style', 'left:' + (mouse[0] + 15) +
+                            'px; top:' + (mouse[1] - 35) + 'px')
+                            .html(d.properties.NAME + ': ' + (d.properties.VALUE || 'NA'));
+                    } else {
+                        tooltip.attr('style', 'left:' + (mouse[0] + 15) +
+                            'px; top:' + (mouse[1] - 35) + 'px')
+                            .html(d.properties.PUMA + ': ' + (d.properties.VALUE || 'NA'));
+                    }
+                })
+                .on("mouseout", function() {
+                    tooltip.classed('hidden', true);
                 });
 
             // When ever we redraw the map we will probable have to refresh the styling as well
