@@ -1,10 +1,12 @@
-function Choropleth(){
+function Choropleth() {
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 100])
         .on("zoom", zoomed);
 
     var drag = d3.behavior.drag()
-        .origin(function(d) { return d; })
+        .origin(function(d) {
+            return d;
+        })
         .on("dragstart", dragstarted)
         .on("drag", dragged)
         .on("dragend", dragended);
@@ -19,7 +21,7 @@ function Choropleth(){
 
     var tooltip = d3.select('#tooltip');
 
-    function refreshDataStyling(){
+    function refreshDataStyling() {
         $.ajax({
             type: "GET",
             url: controller.visualisation,
@@ -28,14 +30,14 @@ function Choropleth(){
                 var scale = d3.scale.linear()
                     .domain([d3.min(d3.values(json)), d3.max(d3.values(json))])
                     .range(['red', 'green']);
-                vis.selectAll('path').style('fill', function(d){
-                    if (controller.visualisation == 'choropleth-country'){
+                vis.selectAll('path').style('fill', function(d) {
+                    if (controller.visualisation == 'choropleth-country') {
                         d.properties.VALUE = json[d.properties.STATE];
-                    } else if (controller.visualisation == 'choropleth-state'){
+                    } else if (controller.visualisation == 'choropleth-state') {
                         d.properties.VALUE = json[d.properties.PUMA];
 
                     } else {
-                        throw error ('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
+                        throw error('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
                     }
                     return scale(d.properties.VALUE);
                 });
@@ -45,7 +47,7 @@ function Choropleth(){
     }
 
     // var map = "";
-    function refreshMap(){
+    function refreshMap() {
         d3.json("static/geojson/" + controller.map + ".geojson", function(error, json) {
             if (error) throw error;
             // create a first guess for the projection
@@ -79,41 +81,41 @@ function Choropleth(){
                 .attr("d", path)
                 // .style('stroke', 'black')
                 .attr('id', function(d) {
-                    if (controller.visualisation == 'choropleth-country'){
+                    if (controller.visualisation == 'choropleth-country') {
                         return d.properties.STATE
-                    } else if (controller.visualisation == 'choropleth-state'){
+                    } else if (controller.visualisation == 'choropleth-state') {
                         return d.properties.PUMA;
                     } else {
-                        throw error ('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
+                        throw error('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
                     }
                 })
-                .attr('class', controller.visualisation == 'choropleth-country' ? 'STATE' :'PUMA')
-                .on('click', function(d){
+                .attr('class', controller.visualisation == 'choropleth-country' ? 'STATE' : 'PUMA')
+                .on('click', function(d) {
                     if (d3.event.defaultPrevented) return;
                     selectID(this.id);
                 })
-                .on('dblclick', function(d){
-                    if ('STATE' in d.properties){
+                .on('dblclick', function(d) {
+                    if ('STATE' in d.properties) {
                         controller.visualisation = 'choropleth-state';
                         controller.state = this.id;
                     }
                     visualisation.redrawFunction();
                 }).on("mousemove", function(d) {
-                    if(!$(this).is(':last-child')){
+                    if (!$(this).is(':last-child')) {
                         $(this).appendTo($(this).parent());
                     }
                     var mouse = d3.mouse(d3.select('body').node());
 
-                    if(!$(tooltip).is('.hidden')){
+                    if (!$(tooltip).is('.hidden')) {
                         tooltip.classed('hidden', false);
                     }
-                    if ('STATE' in d.properties){
+                    if ('STATE' in d.properties) {
                         tooltip.attr('style', 'left:' + (mouse[0] + 15) +
-                            'px; top:' + (mouse[1] - 35) + 'px')
+                                'px; top:' + (mouse[1] - 35) + 'px')
                             .html(d.properties.NAME + ': ' + (d.properties.VALUE || 'NA'));
                     } else {
                         tooltip.attr('style', 'left:' + (mouse[0] + 15) +
-                            'px; top:' + (mouse[1] - 35) + 'px')
+                                'px; top:' + (mouse[1] - 35) + 'px')
                             .html(d.properties.PUMA + ': ' + (d.properties.VALUE || 'NA'));
                     }
                 })
@@ -126,13 +128,13 @@ function Choropleth(){
         });
     }
 
-    this.redrawFunction = function(){
+    this.redrawFunction = function() {
         evaluateQuery();
-        if (controller.visualisation == 'choropleth-country' && controller.map != 'States'){
+        if (controller.visualisation == 'choropleth-country' && controller.map != 'States') {
             controller.map = 'States';
             refreshMap();
             selectedID = '';
-        } else if (controller.visualisation == 'choropleth-state' && controller.map != stateCodes[controller.state]){
+        } else if (controller.visualisation == 'choropleth-state' && controller.map != stateCodes[controller.state]) {
             controller.map = stateCodes[controller.state];
             refreshMap();
             selectedID = '';
@@ -142,19 +144,19 @@ function Choropleth(){
     };
 
     function zoomed() {
-      g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
 
     function dragstarted(d) {
-      d3.event.sourceEvent.stopPropagation();
-      d3.select(this).classed("dragging", true);
+        d3.event.sourceEvent.stopPropagation();
+        d3.select(this).classed("dragging", true);
     }
 
     function dragged(d) {
-      d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+        d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
     }
 
     function dragended(d) {
-      d3.select(this).classed("dragging", false);
+        d3.select(this).classed("dragging", false);
     }
 }
