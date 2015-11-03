@@ -15,9 +15,16 @@ function Choropleth() {
     var vis = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height)
+        .on('click', function(d) {
+            if (d3.event.defaultPrevented) return;
+            selectID('', d3.event.ctrlKey);
+        })
         .call(zoom).on("dblclick.zoom", null);
 
-    var g = vis.append('g').attr('stroke-width', '2px');
+    var g = vis.append('g').attr('stroke-width', '1px');
+
+    var groupMain = g.append('g').attr('id', 'group-main');
+    var groupSelected = g.append('g').attr('id', 'group-selected');
 
     var tooltip = d3.select('#tooltip');
 
@@ -27,6 +34,7 @@ function Choropleth() {
             url: controller.visualisation,
             data: controller,
             success: function(json) {
+                console.log('json data: ', json);
                 var scale = d3.scale.linear()
                     .domain([d3.min(d3.values(json)), d3.max(d3.values(json))])
                     .range(['red', 'green']);
@@ -74,9 +82,10 @@ function Choropleth() {
                 .scale(scale).translate(offset);
             path = path.projection(projection);
 
-            g.selectAll("path").remove();
+            groupMain.selectAll("path").remove();
+            groupSelected.selectAll("path").remove();
 
-            g.selectAll("path").data(json.features).enter().append("path")
+            groupMain.selectAll("path").data(json.features).enter().append("path")
                 .attr("d", path)
                 // .style('stroke', 'black')
                 .attr('id', function(d) {
@@ -91,7 +100,8 @@ function Choropleth() {
                 .attr('class', controller.visualisation == 'choropleth-country' ? 'STATE' : 'PUMA')
                 .on('click', function(d) {
                     if (d3.event.defaultPrevented) return;
-                    selectID(this.id);
+                    selectID(this.id, d3.event.ctrlKey);
+                    d3.event.stopPropagation();
                 })
                 .on('dblclick', function(d) {
                     if ('STATE' in d.properties) {

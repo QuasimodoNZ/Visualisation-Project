@@ -11,6 +11,7 @@
     <!-- <link href="static/css/bootstrap-combined.min.css" rel="stylesheet"> -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <link href="static/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="static/css/my_style.css" rel="stylesheet">
 
     <script type="text/javascript" src="static/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="static/js/jquery-ui.min.js"></script>
@@ -23,60 +24,6 @@
     <script type="text/javascript" src="static/js/bar.js"></script>
     <script type="text/javascript" src="static/js/sunburst.js"></script>
 
-    <style>
-        #inspector {
-            position: absolute;
-            top: 50px;
-            right: 50px;
-            width: 300px;
-        }
-
-        .bar-content div {
-            font: 10px sans-serif;
-            background-color: steelblue;
-            text-align: right;
-            padding: 3px;
-            margin: 1px;
-            color: white;
-        }
-
-        .sunburst rect {
-            fill: steelblue;
-        }
-
-        .sunburst text {
-            fill: white;
-            font: 10px sans-serif;
-            text-anchor: end;
-        }
-
-        .PUMA,
-        .STATE {
-            fill: grey;
-            /*stroke-width: 2;*/
-            stroke: black;
-        }
-
-        .STATE:hover,
-        .PUMA:hover {
-            opacity: 0.9;
-            stroke: darkgray;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        div.tooltip {
-            color: #222;
-            background-color: #fff;
-            padding: .5em;
-            text-shadow: #f5f5f5 0 1px 0;
-            border-radius: 2px;
-            opacity: 0.9;
-            position: absolute;
-        }
-    </style>
 </head>
 
 <body>
@@ -106,9 +53,6 @@
                 <h1>Zoomable Sunburst</h1>
             </div>
         </div>
-
-
-
 
         <div id="inspector" class="panel panel-default">
             <div id="inspector-title" class="panel-heading">
@@ -144,7 +88,7 @@
                     </div>
                 </li>
                 <li class="list-group-item">
-                    <h3>Control</h3>
+                    <h3>View Control</h3>
                     <button id="redraw-btn" type="button" class="btn btn-primary" style="width: 100%;">Redraw with new query</button>
                     <button id="zoom-out-btn" type="button" class="btn btn-default" style="width: 100%;">Move up a level</button>
                     <button id="zoom-in-btn" type="button" class="btn btn-default" style="width: 100%;">Move down into selected</button>
@@ -370,18 +314,89 @@
             handle: '#inspector-title'
         });
 
-        var selectedID = '';
-        var selectID = function(nextID) {
-            if (nextID != selectID) {
-                $('#' + selectedID)
-                    .css('stroke', '')
-                selectedID = nextID;
-                $('#' + selectedID)
-                    .css('stroke', '#2E6DA4')
-                    .each(function() {
-                        $(this).appendTo($(this).parent())
+        var selectedIDs = [];
+        var selectID = function(newID, shouldntClear) {
+            // console.log('selecting id: ', newID, ', shouldntClear: ', shouldntClear);
+            // new id is blank
+            if (newID == ''){
+                if (shouldntClear){ // white space with ctrl, so do nothing
+                    return;
+                } else { // white space pressed without ctrl
+                    $('#group-selected').children().each(function(){
+                        $(this)
+                            .appendTo('#group-main')
+                            .css('stroke', '');
                     });
+                    selectedIDs = [];
+                }
+            } else if (shouldntClear) { // ctrl key is being pressed
+                if (selectedIDs.indexOf(newID) == -1){ // id not found, add the id
+                    selectedIDs.push(newID);
+                    $('#' + newID)
+                        .css('stroke', 'black')
+                        .appendTo('#group-selected');
+                } else { // id is already there, de select it
+                    selectedIDs.splice(selectedIDs.indexOf(newID), 1);
+                    $('#' + newID)
+                        .css('stroke', '')
+                        .appendTo('#group-main');
+                }
+            } else { // no ctrl key
+                if (selectedIDs.length > 1 || selectedIDs.indexOf(newID) == -1){ // multiple are selected, clear all
+                    $('#group-selected').children().each(function(){
+                        if ($(this).attr('id') != newID){
+                            selectedIDs.splice(selectedIDs.indexOf($(this).attr('id')), 1);
+                            $(this)
+                                .css('stroke', '')
+                                .appendTo('#group-main');
+                        }
+                    });
+                }
+                if (selectedIDs.length == 1){ // the id has been reselected
+                    return;
+                } else {
+                    selectedIDs.push(newID);
+                    $('#' + newID)
+                        .css('stroke', 'black')
+                        .appendTo('#group-selected');
+                }
+
             }
+            // else if (selectedID.length == 0){
+            //     selectedID.push(newID);
+            //     $('#' + newID)
+            //         .css('stroke', 'black')
+            //         .appendTo('#group-selected');
+            // }
+            //shouldntClear
+                // new id is present
+                    // do nothing
+                // new id
+                    // add it
+            //shouldClear
+                // more than one selected
+                    // clear all
+                // new id is present
+                    // do nothing
+                // else
+                    // clear current selection
+                // new id
+
+            // if (shouldntClear){
+            //     selectedID = [];
+            // }
+            // if ($.inArray(newID, selectedID) == -1) {
+            //     $('#' + selectedID)
+            //         .css('stroke', '')
+            //         .appendTo('#group-main')
+            //     selectedID = nextID;
+            //     $('#' + selectedID)
+            //         .css('stroke', 'black')
+            //         .appendTo('#group-selected');
+                    // .each(function() {
+                    //     $(this).appendTo($(this).parent())
+                    // });
+            // }
         };
 
         var controller = {

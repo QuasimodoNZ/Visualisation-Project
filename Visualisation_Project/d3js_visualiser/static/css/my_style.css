@@ -1,0 +1,60 @@
+#inspector {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 300px;
+}
+
+#empty-message {
+    display: none;
+}
+
+#empty-message:last-child {
+    display: block;
+}
+
+.bar-content div {
+    font: 10px sans-serif;
+    background-color: steelblue;
+    text-align: right;
+    padding: 3px;
+    margin: 1px;
+    color: white;
+}
+
+.sunburst rect {
+    fill: steelblue;
+}
+
+.sunburst text {
+    fill: white;
+    font: 10px sans-serif;
+    text-anchor: end;
+}
+
+.PUMA,
+.STATE {
+    fill: grey;
+    /*stroke-width: 2;*/
+    stroke: white;
+}
+
+.STATE:hover,
+.PUMA:hover {
+    opacity: 0.9;
+    stroke: darkgray;
+}
+
+.hidden {
+    display: none;
+}
+
+div.tooltip {
+    color: #222;
+    background-color: #fff;
+    padding: .5em;
+    text-shadow: #f5f5f5 0 1px 0;
+    border-radius: 2px;
+    opacity: 0.9;
+    position: absolute;
+}
