@@ -316,7 +316,6 @@
 
         var selectedIDs = [];
         var selectID = function(newID, shouldntClear) {
-            // console.log('selecting id: ', newID, ', shouldntClear: ', shouldntClear);
             // new id is blank
             if (newID == ''){
                 if (shouldntClear){ // white space with ctrl, so do nothing
@@ -333,12 +332,10 @@
                 if (selectedIDs.indexOf(newID) == -1){ // id not found, add the id
                     selectedIDs.push(newID);
                     $('#' + newID)
-                        .css('stroke', 'black')
                         .appendTo('#group-selected');
                 } else { // id is already there, de select it
                     selectedIDs.splice(selectedIDs.indexOf(newID), 1);
                     $('#' + newID)
-                        .css('stroke', '')
                         .appendTo('#group-main');
                 }
             } else { // no ctrl key
@@ -347,7 +344,6 @@
                         if ($(this).attr('id') != newID){
                             selectedIDs.splice(selectedIDs.indexOf($(this).attr('id')), 1);
                             $(this)
-                                .css('stroke', '')
                                 .appendTo('#group-main');
                         }
                     });
@@ -357,7 +353,6 @@
                 } else {
                     selectedIDs.push(newID);
                     $('#' + newID)
-                        .css('stroke', 'black')
                         .appendTo('#group-selected');
                 }
 

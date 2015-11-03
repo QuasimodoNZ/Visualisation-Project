@@ -24,7 +24,8 @@ function Choropleth() {
     var g = vis.append('g').attr('stroke-width', '1px');
 
     var groupMain = g.append('g').attr('id', 'group-main');
-    var groupSelected = g.append('g').attr('id', 'group-selected');
+    var groupSelected = g.append('g')
+        .attr('id', 'group-selected');
 
     var tooltip = d3.select('#tooltip');
 
@@ -107,6 +108,7 @@ function Choropleth() {
                     if ('STATE' in d.properties) {
                         controller.visualisation = 'choropleth-state';
                         controller.state = this.id;
+                        selectedIDs = [];
                     }
                     visualisation.redrawFunction();
                 }).on("mousemove", function(d) {

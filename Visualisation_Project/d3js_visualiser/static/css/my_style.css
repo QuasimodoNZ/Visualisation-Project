@@ -13,6 +13,10 @@
     display: block;
 }
 
+#group-selected path{
+    stroke: black;
+}
+
 .bar-content div {
     font: 10px sans-serif;
     background-color: steelblue;
