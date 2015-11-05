@@ -17,7 +17,7 @@ function Choropleth() {
         .attr("height", height)
         .on('click', function(d) {
             if (d3.event.defaultPrevented) return;
-            selectID('', d3.event.ctrlKey);
+            selectID('', d3.event.shiftKey);
         })
         .call(zoom).on("dblclick.zoom", null);
 
@@ -101,7 +101,7 @@ function Choropleth() {
                 .attr('class', controller.visualisation == 'choropleth-country' ? 'STATE' : 'PUMA')
                 .on('click', function(d) {
                     if (d3.event.defaultPrevented) return;
-                    selectID(this.id, d3.event.ctrlKey);
+                    selectID(this.id, d3.event.shiftKey);
                     d3.event.stopPropagation();
                 })
                 .on('dblclick', function(d) {
