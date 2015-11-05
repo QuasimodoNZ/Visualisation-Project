@@ -119,7 +119,7 @@ function Bar() {
     var margin = {
             top: 20,
             right: 20,
-            bottom: 30,
+            bottom: 100,
             left: 40
         },
         width = 960 - margin.left - margin.right,
@@ -149,6 +149,12 @@ function Bar() {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    svg.append("g")
+        .attr("class", "y axis")
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
 
     this.redrawFunction = function() {
         evaluateQuery();
@@ -192,20 +198,24 @@ function Bar() {
                     return d.total;
                 })]);
 
-                svg.append("g")
-                    .attr("class", "x axis")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(xAxis);
-
-                svg.append("g")
-                    .attr("class", "y axis")
-                    .call(yAxis)
-                    .append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
-                    .attr("dy", ".71em")
+                svg.selectAll('g.x.axis')
+                    .call(xAxis)
+                    .selectAll("text")
                     .style("text-anchor", "end")
-                    .text("Population");
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", function(d) {
+                        return "rotate(-65)"
+                    });
+
+                svg.selectAll('g.y.axis')
+                    .call(yAxis);
+                    // .append("text");
+                    // .attr("transform", "rotate(-90)")
+                    // .attr("y", 6)
+                    // .attr("dy", ".71em")
+                    // .style("text-anchor", "end")
+                    // .text("Population");
 
                 svg.selectAll(".state")
                     .data(json)
@@ -217,7 +227,14 @@ function Bar() {
                     .attr("class", "g")
                     .attr("transform", function(d) {
                         return "translate(" + x(stateCodes[d.id]) + ",0)";
-                    });
+                    })
+                    .style("opacity", 0.5);;
+
+                state.selectAll("rect")
+                    .data(function(d) {
+                        return d.values;
+                    })
+                    .exit().remove();
 
                 state.selectAll("rect")
                     .data(function(d) {
@@ -234,6 +251,10 @@ function Bar() {
                     .style("fill", function(d) {
                         return color(d.name);
                     });
+
+                svg.selectAll(".legend")
+                    .data(color.domain().slice().reverse())
+                    .exit().remove();
 
                 var legend = svg.selectAll(".legend")
                     .data(color.domain().slice().reverse())
@@ -255,7 +276,7 @@ function Bar() {
                     .attr("dy", ".35em")
                     .style("text-anchor", "end")
                     .text(function(d) {
-                        return choices[d].verbose_name;
+                        return d == 'POP' ? 'Population' : choices[d].verbose_name;
                     });
             }
         });
