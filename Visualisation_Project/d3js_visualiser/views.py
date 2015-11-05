@@ -1,7 +1,7 @@
 import json, re
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render
-from django.db.models import Count, Min, Avg, Max
+from django.db.models import Count, Min, Avg, Max, Q
 from . import models
 from decimal import Decimal
 
@@ -50,14 +50,10 @@ def choropleth_country(request):
         val = getattr(pp, aggregation.lower())
         print val
         if isinstance(val, Decimal):
-            print 'val is decimal'
             data[format(pp.ST, '02')] = float(val)
         else:
-            print 'val is not decimal'
             data[format(pp.ST, '02')] = val
 
-    print data
-    print data['30']
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def choropleth_state(request):
@@ -88,7 +84,40 @@ def chord(request):
     data['something'] = 'useful'
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-def bar(request):
+def bar_country(request):
+    request_data =  get_to_dict(request.GET)
+    print 'request data: ' + str(request_data)
+    if 'metric' not in request_data:
+        # print 'handling request for population'
+        metrics = ['POP']
+        aggregation = 'COUNT'
+    else:
+        # print 'handling request for ' + request_data['metric'][0]
+        metrics = request_data['metric']
+        aggregation = request_data['aggregation']
+
+    processing = {}
+    for metric in metrics:
+        query = models.PrecomputedProperties.objects.filter(metric_name='Person_'+metric)
+
+        for pp in query:
+            val = getattr(pp, aggregation.lower())
+            if isinstance(val, Decimal):
+                val = float(val)
+
+            st = format(pp.ST, '02')
+            datum = processing.get(st, {'id':st, 'metrics':[]})
+            datum['metrics'].append([metric, val])
+            processing[st] = datum
+
+    data = []
+
+    for key in processing:
+        data.append(processing[key])
+
+    return HttpResponse(json.dumps(data), content_type = "application/json")
+
+def bar_state(request):
     data = {}
     data['something'] = 'useful'
     return HttpResponse(json.dumps(data), content_type = "application/json")

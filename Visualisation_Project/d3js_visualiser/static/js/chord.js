@@ -65,4 +65,6 @@ function Chord(){
     });
 
     })(d3);
+
+    this.redrawFunction = function(){};
 }

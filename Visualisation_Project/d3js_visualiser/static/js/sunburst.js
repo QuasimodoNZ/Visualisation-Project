@@ -33,4 +33,6 @@ function Sunburst(){
         .attr('y', barHeight / 2)
         .attr('dy', '.35em')
         .text(function(d){return d.value;});
+
+    this.redrawFunction = function(){};
 }

@@ -12,14 +12,14 @@ function Choropleth() {
         .on("dragend", dragended);
 
     $('svg').remove();
-    var vis = d3.select("body").append("svg")
+    var vis = d3.select("#choropleth-content").append("svg")
         .attr("width", width)
         .attr("height", height)
         .on('click', function(d) {
             if (d3.event.defaultPrevented) return;
             selectID('', d3.event.ctrlKey);
         })
-        .call(zoom).on("dblclick.zoom", null);
+        .call(zoom).on("dblclick.zoom", null); // removes the scrolling zoom for double clicking
 
     var g = vis.append('g').attr('stroke-width', '1px');
 

@@ -39,18 +39,19 @@
         <div class="tab-content">
             <div class="tab-pane active" id="choropleth_tab">
                 <h1>Choropleth</h1>
-                <div class="choropleth-content"></div>
+                <div id="choropleth-content"></div>
             </div>
             <div class="tab-pane" id="chord_tab">
                 <h1>Chord Diagram</h1>
-                <div class="chord-content"></div>
+                <div id="chord-content"></div>
             </div>
             <div class="tab-pane" id="bar_tab">
                 <h1>Bar Graph</h1>
-                <div class="bar-content"></div>
+                <div id="bar-content"></div>
             </div>
             <div class="tab-pane" id="sunburst_tab">
                 <h1>Zoomable Sunburst</h1>
+                <div id="sunburst-content"></div>
             </div>
         </div>
 
@@ -412,7 +413,7 @@
                 metrics.push($(this).data().metric)
             })
             controller.metric = metrics;
-
+            console.log('controller.metrics: ', controller.metric);
             if (metrics.length == 0) {
                 controller.aggregation = 'COUNT';
             } else {
@@ -427,7 +428,7 @@
         // Initialising the first visualisation
         var visualisation = new Choropleth();
         visualisation.redrawFunction();
-        $('#redraw-btn').click(visualisation.redrawFunction);
+        $('#redraw-btn').click(function(){visualisation.redrawFunction();});
         $('#zoom-out-btn').click(function() {
             if (controller.visualisation == 'choropleth-state') {
                 controller.visualisation = 'choropleth-country';
@@ -440,18 +441,45 @@
             // state selected
             // puma selected
             // no selection
-            if (selectedID != '' && controller.visualisation == 'choropleth-country') {
+            if (selectedIDs.length == 1 && controller.visualisation == 'choropleth-country') {
                 controller.visualisation = 'choropleth-state';
-                controller.state = selectedID;
+                controller.state = selectedIDs[0];
                 visualisation.redrawFunction();
             }
         });
 
         // Setting up the the different tabs and visualisations
-        $(".choropleth-tab").click(Choropleth);
-        $(".chord-tab").click(Chord);
-        $(".bar-tab").click(Bar);
-        $(".sunburst-tab").click(Sunburst);
+        $(".choropleth-tab").click(function(){
+            if(!$(this).parent().hasClass('active')){
+                controller.visualisation = 'choropleth-country';
+                visualisation = new Choropleth();
+                visualisation.redrawFunction();
+            }
+        });
+        $(".chord-tab").click(function(){
+            if(!$(this).parent().hasClass('active')){
+                controller.visualisation = 'chord-country';
+                delete controller.map;
+                visualisation = new Chord();
+                visualisation.redrawFunction();
+            }
+        });
+        $(".bar-tab").click(function(){
+            if(!$(this).parent().hasClass('active')){
+                controller.visualisation = 'bar-country';
+                delete controller.map;
+                visualisation = new Bar();
+                visualisation.redrawFunction();
+            }
+        });
+        $(".sunburst-tab").click(function(){
+            if(!$(this).parent().hasClass('active')){
+                controller.visualisation = 'sunburst-country';
+                delete controller.map;
+                visualisation = new Sunburst();
+                visualisation.redrawFunction();
+            }
+        });
     </script>
 </body>
 
