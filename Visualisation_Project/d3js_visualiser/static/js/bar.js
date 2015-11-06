@@ -60,7 +60,7 @@ function Bar() {
                 $('#group-selected').children().appendTo('#group-main');
 
                 var metricGroups = [];
-                json[0].metrics.forEach(function(d){
+                json[0].metrics.forEach(function(d) {
                     metricGroups.push(d[0]);
                 });
 
@@ -85,7 +85,7 @@ function Bar() {
                 });
 
                 x.domain(json.map(function(d) {
-                    if (controller.visualisation == 'bar-state'){
+                    if (controller.visualisation == 'bar-state') {
                         return d.id;
                     } else {
                         return stateCodes[d.id][1];
@@ -96,7 +96,7 @@ function Bar() {
                 })]);
 
                 svg.selectAll('g.x.axis')
-                .transition().duration(1000)
+                    .transition().duration(1000)
                     .call(xAxis);
 
                 svg.selectAll('g.x.axis')
@@ -112,21 +112,25 @@ function Bar() {
                     .call(yAxis);
 
                 var states = groupMain.selectAll(".STATE")
-                    .data(json, function(d){return d.id;})
+                    .data(json, function(d) {
+                        return d.id;
+                    })
 
                 states.exit().remove();
 
                 states.enter().append("g")
                     .attr("class", "STATE")
-                    .attr('id', function(d){return d.id;});
+                    .attr('id', function(d) {
+                        return d.id;
+                    });
 
                 states.attr("transform", function(d) {
-                    var label;
-                    if (controller.visualisation == 'bar-state'){
-                        label = d.id;
-                    } else {
-                        label = stateCodes[d.id][1];
-                    }
+                        var label;
+                        if (controller.visualisation == 'bar-state') {
+                            label = d.id;
+                        } else {
+                            label = stateCodes[d.id][1];
+                        }
                         return "translate(" + x(label) + ",0)";
                     })
                     .style("opacity", 0.5)
@@ -153,14 +157,14 @@ function Bar() {
                             tooltip.classed('hidden', false);
                         }
                         var label;
-                        if (controller.visualisation == 'bar-state'){
+                        if (controller.visualisation == 'bar-state') {
                             label = d.id;
                         } else {
                             label = stateCodes[d.id][1];
                         }
                         tooltip.attr('style', 'left:' + (mouse[0] + 15) +
                                 'px; top:' + (mouse[1] - 35) + 'px')
-                            .html( label + ': ' + d.total);
+                            .html(label + ': ' + d.total);
 
                     })
                     .on("mouseout", function() {
@@ -170,7 +174,9 @@ function Bar() {
                 var layers = states.selectAll("rect")
                     .data(function(d) {
                         return d.values;
-                    }, function(val){return val.name;});
+                    }, function(val) {
+                        return val.name;
+                    });
 
                 layers.exit().remove();
 
@@ -188,15 +194,17 @@ function Bar() {
                     });
 
                 var legend = svg.selectAll(".legend")
-                    .data(color.domain().slice().reverse(), function(d){return d;})
+                    .data(color.domain().slice().reverse(), function(d) {
+                        return d;
+                    })
 
 
                 legend.enter().append("g")
                     .attr("class", "legend")
 
                 legend.transition().attr("transform", function(d, i) {
-                        return "translate(0," + i * 20 + ")";
-                    });
+                    return "translate(0," + i * 20 + ")";
+                });
 
                 legend.append("rect").transition()
                     .attr("x", width - 18)
@@ -216,7 +224,7 @@ function Bar() {
 
 
                 clearNonExistentSelection();
-                selectedIDs.forEach(function(selectedID){
+                selectedIDs.forEach(function(selectedID) {
                     $('#' + selectedID).appendTo('#group-selected');
                 });
 

@@ -142,7 +142,6 @@ def bar_state(request):
     elif aggregation == 'MAX':
         class_ = Max
 
-
     processing = {}
     for metric in metrics:
         query = selection.values('PUMA__code').annotate(aggregation=class_(metric))

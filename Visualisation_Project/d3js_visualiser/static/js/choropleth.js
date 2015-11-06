@@ -50,7 +50,7 @@ function Choropleth() {
                     return scale(d.properties.VALUE);
                 });
                 clearNonExistentSelection();
-                selectedIDs.forEach(function(selectedID){
+                selectedIDs.forEach(function(selectedID) {
                     $('#' + selectedID).appendTo('#group-selected');
                 });
             },

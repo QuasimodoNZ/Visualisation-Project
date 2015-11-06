@@ -4,20 +4,15 @@
     right: 50px;
     width: 300px;
 }
-
 #empty-message {
     display: none;
 }
-
 #empty-message:last-child {
     display: block;
 }
-
-#group-selected g,
-#group-selected path{
+#group-selected g, #group-selected path {
     stroke: black;
 }
-
 .bar-content div {
     font: 10px sans-serif;
     background-color: steelblue;
@@ -26,34 +21,26 @@
     margin: 1px;
     color: white;
 }
-
 .sunburst rect {
     fill: steelblue;
 }
-
 .sunburst text {
     fill: white;
     font: 10px sans-serif;
     text-anchor: end;
 }
-
-.PUMA,
-.STATE {
+.PUMA, .STATE {
     fill: grey;
     /*stroke-width: 2;*/
     stroke: white;
 }
-
-.STATE:hover,
-.PUMA:hover {
+.STATE:hover, .PUMA:hover {
     opacity: 0.9;
     stroke: darkgray;
 }
-
 .hidden {
     display: none;
 }
-
 div.tooltip {
     color: #222;
     background-color: #fff;

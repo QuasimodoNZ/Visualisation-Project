@@ -105,10 +105,19 @@
             cache: false
         });
 
-        {% autoescape off %}
-        var choices = {{ choices }};
-        var stateCodes = {{ state_codes }};
-        {% endautoescape %}
+        { % autoescape off %
+        }
+        var choices = {
+            {
+                choices
+            }
+        };
+        var stateCodes = {
+            {
+                state_codes
+            }
+        }; { % endautoescape %
+        }
 
 
         console.log('stateCodes: ', stateCodes);
@@ -319,11 +328,11 @@
         var selectID = function(newID, shouldntClear) {
             console.log('calling select id: ', newID, selectedIDs);
             // new id is blank
-            if (newID == ''){
-                if (shouldntClear){ // white space with ctrl, so do nothing
+            if (newID == '') {
+                if (shouldntClear) { // white space with ctrl, so do nothing
                     return;
                 } else { // white space pressed without ctrl
-                    $('#group-selected').children().each(function(){
+                    $('#group-selected').children().each(function() {
                         $(this)
                             .appendTo('#group-main')
                             .css('stroke', '');
@@ -331,7 +340,7 @@
                     selectedIDs = [];
                 }
             } else if (shouldntClear) { // ctrl key is being pressed
-                if (selectedIDs.indexOf(newID) == -1){ // id not found, add the id
+                if (selectedIDs.indexOf(newID) == -1) { // id not found, add the id
                     selectedIDs.push(newID);
                     $('#' + newID)
                         .appendTo('#group-selected');
@@ -341,16 +350,16 @@
                         .appendTo('#group-main');
                 }
             } else { // no ctrl key
-                if (selectedIDs.length > 1 || selectedIDs.indexOf(newID) == -1){ // multiple are selected, clear all
-                    $('#group-selected').children().each(function(){
-                        if ($(this).attr('id') != newID){
+                if (selectedIDs.length > 1 || selectedIDs.indexOf(newID) == -1) { // multiple are selected, clear all
+                    $('#group-selected').children().each(function() {
+                        if ($(this).attr('id') != newID) {
                             selectedIDs.splice(selectedIDs.indexOf($(this).attr('id')), 1);
                             $(this)
                                 .appendTo('#group-main');
                         }
                     });
                 }
-                if (selectedIDs.length == 1){ // the id has been reselected
+                if (selectedIDs.length == 1) { // the id has been reselected
                     return;
                 } else {
                     selectedIDs.push(newID);
@@ -361,13 +370,13 @@
             }
         };
 
-        var clearNonExistentSelection = function(){
+        var clearNonExistentSelection = function() {
             console.log('clearing the selection');
-            for (var i = selectedIDs.length - 1; i >= 0; i--){
+            for (var i = selectedIDs.length - 1; i >= 0; i--) {
                 console.log('i: ', i);
                 console.log('i: ', i);
                 var elem = $('#' + selectedIDs[i]);
-                if(elem.length == 0){
+                if (elem.length == 0) {
                     selectedIDs.splice(i, 1);
                 } else {
                     elem.appendTo('#group-selected');
@@ -408,7 +417,9 @@
         // Initialising the first visualisation
         var visualisation = new Choropleth();
         visualisation.redrawFunction();
-        $('#redraw-btn').click(function(){visualisation.redrawFunction();});
+        $('#redraw-btn').click(function() {
+            visualisation.redrawFunction();
+        });
         $('#zoom-out-btn').click(function() {
             if (controller.visualisation == 'choropleth-state') {
                 controller.visualisation = 'choropleth-country';
@@ -438,31 +449,31 @@
         });
 
         // Setting up the the different tabs and visualisations
-        $(".choropleth-tab").click(function(){
-            if(!$(this).parent().hasClass('active')){
+        $(".choropleth-tab").click(function() {
+            if (!$(this).parent().hasClass('active')) {
                 controller.visualisation = 'choropleth-' + controller.visualisation.split('-')[1];
                 visualisation = new Choropleth();
                 visualisation.redrawFunction();
             }
         });
-        $(".chord-tab").click(function(){
-            if(!$(this).parent().hasClass('active')){
+        $(".chord-tab").click(function() {
+            if (!$(this).parent().hasClass('active')) {
                 controller.visualisation = 'chord-' + controller.visualisation.split('-')[1];
                 delete controller.map;
                 visualisation = new Chord();
                 visualisation.redrawFunction();
             }
         });
-        $(".bar-tab").click(function(){
-            if(!$(this).parent().hasClass('active')){
+        $(".bar-tab").click(function() {
+            if (!$(this).parent().hasClass('active')) {
                 controller.visualisation = 'bar-' + controller.visualisation.split('-')[1];
                 delete controller.map;
                 visualisation = new Bar();
                 visualisation.redrawFunction();
             }
         });
-        $(".sunburst-tab").click(function(){
-            if(!$(this).parent().hasClass('active')){
+        $(".sunburst-tab").click(function() {
+            if (!$(this).parent().hasClass('active')) {
                 controller.visualisation = 'sunburst-' + controller.visualisation.split('-')[1];
                 delete controller.map;
                 visualisation = new Sunburst();
