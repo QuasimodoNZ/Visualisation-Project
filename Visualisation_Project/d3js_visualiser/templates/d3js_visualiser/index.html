@@ -414,7 +414,12 @@
                 controller.visualisation = 'choropleth-country';
                 delete controller.state;
                 visualisation.redrawFunction();
+            } else if (controller.visualisation == 'bar-state') {
+                controller.visualisation = 'bar-country';
+                delete controller.state;
+                visualisation.redrawFunction();
             }
+
         });
         $('#zoom-in-btn').click(function() {
             // the different cases for current selection
@@ -425,20 +430,24 @@
                 controller.visualisation = 'choropleth-state';
                 controller.state = selectedIDs[0];
                 visualisation.redrawFunction();
+            } else if (selectedIDs.length == 1 && controller.visualisation == 'bar-country') {
+                controller.visualisation = 'bar-state';
+                controller.state = selectedIDs[0];
+                visualisation.redrawFunction();
             }
         });
 
         // Setting up the the different tabs and visualisations
         $(".choropleth-tab").click(function(){
             if(!$(this).parent().hasClass('active')){
-                controller.visualisation = 'choropleth-country';
+                controller.visualisation = 'choropleth-' + controller.visualisation.split('-')[1];
                 visualisation = new Choropleth();
                 visualisation.redrawFunction();
             }
         });
         $(".chord-tab").click(function(){
             if(!$(this).parent().hasClass('active')){
-                controller.visualisation = 'chord-country';
+                controller.visualisation = 'chord-' + controller.visualisation.split('-')[1];
                 delete controller.map;
                 visualisation = new Chord();
                 visualisation.redrawFunction();
@@ -446,7 +455,7 @@
         });
         $(".bar-tab").click(function(){
             if(!$(this).parent().hasClass('active')){
-                controller.visualisation = 'bar-country';
+                controller.visualisation = 'bar-' + controller.visualisation.split('-')[1];
                 delete controller.map;
                 visualisation = new Bar();
                 visualisation.redrawFunction();
@@ -454,7 +463,7 @@
         });
         $(".sunburst-tab").click(function(){
             if(!$(this).parent().hasClass('active')){
-                controller.visualisation = 'sunburst-country';
+                controller.visualisation = 'sunburst-' + controller.visualisation.split('-')[1];
                 delete controller.map;
                 visualisation = new Sunburst();
                 visualisation.redrawFunction();

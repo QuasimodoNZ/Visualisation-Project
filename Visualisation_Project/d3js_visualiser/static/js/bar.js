@@ -85,7 +85,11 @@ function Bar() {
                 });
 
                 x.domain(json.map(function(d) {
-                    return stateCodes[d.id][1];
+                    if (controller.visualisation == 'bar-state'){
+                        return d.id;
+                    } else {
+                        return stateCodes[d.id][1];
+                    }
                 }));
                 y.domain([0, d3.max(json, function(d) {
                     return d.total;
@@ -117,13 +121,27 @@ function Bar() {
                     .attr('id', function(d){return d.id;});
 
                 states.attr("transform", function(d) {
-                        return "translate(" + x(stateCodes[d.id][1]) + ",0)";
+                    var label;
+                    if (controller.visualisation == 'bar-state'){
+                        label = d.id;
+                    } else {
+                        label = stateCodes[d.id][1];
+                    }
+                        return "translate(" + x(label) + ",0)";
                     })
                     .style("opacity", 0.5)
                     .on('click', function(d) {
                         if (d3.event.defaultPrevented) return;
                         selectID(this.id, d3.event.shiftKey);
                         d3.event.stopPropagation();
+                    })
+                    .on('dblclick', function(d) {
+                        if (controller.visualisation = 'bar-country') {
+                            controller.visualisation = 'bar-state';
+                            controller.state = this.id;
+                            selectedIDs = [];
+                        }
+                        visualisation.redrawFunction()
                     })
                     .on("mousemove", function(d) {
                         if (!$(this).is(':last-child')) {
@@ -134,10 +152,15 @@ function Bar() {
                         if (!$(tooltip).is('.hidden')) {
                             tooltip.classed('hidden', false);
                         }
-                        console.log('mouse moved: ', d);
+                        var label;
+                        if (controller.visualisation == 'bar-state'){
+                            label = d.id;
+                        } else {
+                            label = stateCodes[d.id][1];
+                        }
                         tooltip.attr('style', 'left:' + (mouse[0] + 15) +
                                 'px; top:' + (mouse[1] - 35) + 'px')
-                            .html( stateCodes[d.id][1] + ': ' + d.total);
+                            .html( label + ': ' + d.total);
 
                     })
                     .on("mouseout", function() {
@@ -187,7 +210,7 @@ function Bar() {
                     .attr("dy", ".35em")
                     .style("text-anchor", "end")
                     .text(function(d) {
-                        return d == 'POP' ? 'Population' : choices[d].verbose_name;
+                        return d == 'id' || d == 'POP' ? 'Population' : choices[d].verbose_name;
                     });
                 legend.exit().transition().remove();
 

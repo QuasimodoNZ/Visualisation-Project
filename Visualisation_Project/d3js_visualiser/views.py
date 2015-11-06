@@ -59,8 +59,7 @@ def choropleth_country(request):
 def choropleth_state(request):
     request_data =  get_to_dict(request.GET)
     options = request_data.get('query', {})
-    if 'state' in request_data:
-        options['ST'] = request_data['state']
+    options['ST'] = request_data['state']
     selection = models.Person.objects.filter(**options)
 
     if 'metric' not in request_data:
@@ -86,7 +85,7 @@ def chord(request):
 
 def bar_country(request):
     request_data =  get_to_dict(request.GET)
-    print 'request data: ' + str(request_data)
+
     if 'metric' not in request_data:
         # print 'handling request for population'
         metrics = ['POP']
@@ -118,9 +117,57 @@ def bar_country(request):
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def bar_state(request):
-    data = {}
-    data['something'] = 'useful'
+    request_data =  get_to_dict(request.GET)
+
+    options = request_data.get('query', {})
+    options['ST'] = request_data['state']
+    selection = models.Person.objects.filter(**options)
+
+
+    if 'metric' not in request_data:
+        # print 'handling request for population'
+        metrics = ['id']
+        aggregation = 'COUNT'
+    else:
+        # print 'handling request for ' + request_data['metric'][0]
+        metrics = request_data['metric']
+        aggregation = request_data['aggregation']
+
+    if aggregation == 'COUNT':
+        class_ = Count
+    elif aggregation == 'MIN':
+        class_ = Min
+    elif aggregation == 'AVG':
+        class_ = Avg
+    elif aggregation == 'MAX':
+        class_ = Max
+
+
+    processing = {}
+    for metric in metrics:
+        query = selection.values('PUMA__code').annotate(aggregation=class_(metric))
+        # query = models.PrecomputedProperties.objects.filter(metric_name='Person_'+metric)
+        print query
+        for pp in query:
+            val = pp['aggregation']
+            if isinstance(val, Decimal):
+                val = float(val)
+
+            puma_id = format(pp['PUMA__code'], '05')
+            datum = processing.get(puma_id, {'id':puma_id, 'metrics':[]})
+            datum['metrics'].append([metric, val])
+            processing[puma_id] = datum
+            print 'got here: ' + puma_id
+            print datum
+
+    data = []
+
+    for key in processing:
+        data.append(processing[key])
+    print data
+
     return HttpResponse(json.dumps(data), content_type = "application/json")
+
 
 def sunburst(request):
     data = {}
