@@ -49,6 +49,10 @@ function Choropleth() {
                     }
                     return scale(d.properties.VALUE);
                 });
+                clearNonExistentSelection();
+                selectedIDs.forEach(function(selectedID){
+                    $('#' + selectedID).appendTo('#group-selected');
+                });
             },
             error: function(request, err, ex) {}
         });
@@ -145,8 +149,8 @@ function Choropleth() {
             controller.map = 'States';
             refreshMap();
             selectedID = '';
-        } else if (controller.visualisation == 'choropleth-state' && controller.map != stateCodes[controller.state]) {
-            controller.map = stateCodes[controller.state];
+        } else if (controller.visualisation == 'choropleth-state' && controller.map != stateCodes[controller.state][0]) {
+            controller.map = stateCodes[controller.state][0];
             refreshMap();
             selectedID = '';
         } else {

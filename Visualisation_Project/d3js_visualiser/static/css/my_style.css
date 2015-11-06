@@ -13,6 +13,7 @@
     display: block;
 }
 
+#group-selected g,
 #group-selected path{
     stroke: black;
 }

@@ -111,7 +111,7 @@
         {% endautoescape %}
 
 
-        console.log('choices: ', choices);
+        console.log('stateCodes: ', stateCodes);
 
         // jquery for the inspector panel/controller window
 
@@ -317,6 +317,7 @@
 
         var selectedIDs = [];
         var selectID = function(newID, shouldntClear) {
+            console.log('calling select id: ', newID, selectedIDs);
             // new id is blank
             if (newID == ''){
                 if (shouldntClear){ // white space with ctrl, so do nothing
@@ -358,41 +359,20 @@
                 }
 
             }
-            // else if (selectedID.length == 0){
-            //     selectedID.push(newID);
-            //     $('#' + newID)
-            //         .css('stroke', 'black')
-            //         .appendTo('#group-selected');
-            // }
-            //shouldntClear
-                // new id is present
-                    // do nothing
-                // new id
-                    // add it
-            //shouldClear
-                // more than one selected
-                    // clear all
-                // new id is present
-                    // do nothing
-                // else
-                    // clear current selection
-                // new id
+        };
 
-            // if (shouldntClear){
-            //     selectedID = [];
-            // }
-            // if ($.inArray(newID, selectedID) == -1) {
-            //     $('#' + selectedID)
-            //         .css('stroke', '')
-            //         .appendTo('#group-main')
-            //     selectedID = nextID;
-            //     $('#' + selectedID)
-            //         .css('stroke', 'black')
-            //         .appendTo('#group-selected');
-                    // .each(function() {
-                    //     $(this).appendTo($(this).parent())
-                    // });
-            // }
+        var clearNonExistentSelection = function(){
+            console.log('clearing the selection');
+            for (var i = selectedIDs.length - 1; i >= 0; i--){
+                console.log('i: ', i);
+                console.log('i: ', i);
+                var elem = $('#' + selectedIDs[i]);
+                if(elem.length == 0){
+                    selectedIDs.splice(i, 1);
+                } else {
+                    elem.appendTo('#group-selected');
+                }
+            }
         };
 
         var controller = {
