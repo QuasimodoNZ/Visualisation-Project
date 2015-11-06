@@ -57,6 +57,8 @@ function Bar() {
             success: function(json) {
                 console.log('json: ', json);
 
+                $('#group-selected').children().appendTo('#group-main');
+
                 var metricGroups = [];
                 json[0].metrics.forEach(function(d){
                     metricGroups.push(d[0]);
@@ -193,7 +195,7 @@ function Bar() {
                 clearNonExistentSelection();
                 selectedIDs.forEach(function(selectedID){
                     $('#' + selectedID).appendTo('#group-selected');
-                })
+                });
 
             }
         });
