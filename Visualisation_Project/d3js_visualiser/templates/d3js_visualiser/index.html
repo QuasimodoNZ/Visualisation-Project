@@ -105,19 +105,10 @@
             cache: false
         });
 
-        { % autoescape off %
-        }
-        var choices = {
-            {
-                choices
-            }
-        };
-        var stateCodes = {
-            {
-                state_codes
-            }
-        }; { % endautoescape %
-        }
+        {% autoescape off %}
+        var choices = {{choices}};
+        var stateCodes = {{state_codes}};
+        {% endautoescape %}
 
 
         console.log('stateCodes: ', stateCodes);

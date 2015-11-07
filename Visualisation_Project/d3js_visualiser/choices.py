@@ -2481,6 +2481,31 @@ MSP = [
     (6, 'Never married'),
 ]
 
+
+NAICSI = [
+    (1, 'Agriculture, Forestry, Fishing and Hunting'),
+    (2, 'Mining'),
+    (3, 'Utilities'),
+    (4, 'Construction'),
+    (5, 'Manufacturing'),
+    (6, 'Wholesale Trade'),
+    (7, 'Retail Trade'),
+    (8, 'Transportation and Warehousing'),
+    (9, 'Information'),
+    (10, 'Finance and Insurance'),
+    (11, 'Real Estate Rental and Leasing'),
+    (12, 'Professional, Scientific, and Technical Services'),
+    (13, 'Management of Companies and Enterprises'),
+    (14, 'Administrative and Support and Waste Management and Remediation Services'),
+    (15, 'Educational Services'),
+    (16, 'Health Care and Social Assistance'),
+    (17, 'Arts, Entertainment, and Recreation'),
+    (18, 'Accommodation and Food Services'),
+    (19, 'Other Services (except Public Administration)'),
+    (20, 'Public Administration'),
+    (21, 'Unemployed, with No Work Experience in the Last 5 Years')
+]
+
 NAICSP = [
     ('111', 'AGR-CROP PRODUCTION'),
     ('112', 'AGR-ANIMAL PRODUCTION'),
@@ -2773,6 +2798,35 @@ NOP = [
 OC = [
     (0, 'No (includes GQ)'),
     (1, 'Yes'),
+]
+
+OCCI = [
+    (1, 'Management, Business, Science, and Arts Occupations'),
+    (2, 'Business Operations Specialists'),
+    (3, 'Financial Specialists'),
+    (4, 'Computer and Mathematical Occupations'),
+    (5, 'Architecture and Engineering Occupations'),
+    (6, 'Life, Physical, and Social Science Occupations'),
+    (7, 'Community and Social Services Occupations'),
+    (8, 'Legal Occupations'),
+    (9, 'Education, Training, and Library Occupations'),
+    (10, 'Arts, Design, Entertainment, Sports, and Media Occupations'),
+    (11, 'Healthcare Practitioners and Technical Occupations'),
+    (12, 'Healthcare Support Occupations'),
+    (13, 'Protective Service Occupations'),
+    (14, 'Food Preparation and Serving Occupations'),
+    (15, 'Building and Grounds Cleaning and Maintenance Occupations'),
+    (16, 'Personal Care and Service Occupations'),
+    (17, 'Sales and Related Occupations'),
+    (18, 'Office and Administrative Support Occupations'),
+    (19, 'Farming, Fishing, and Forestry Occupations'),
+    (20, 'Construction and Extraction Occupations'),
+    (21, 'Extraction Workers'),
+    (22, 'Installation, Maintenance, and Repair Workers'),
+    (23, 'Production Occupations'),
+    (24, 'Transportation and Material Moving Occupations'),
+    (25, 'Military Specific Occupations'),
+    (26, 'Unemployed, with No Work Experience in the Last 5 Years or Earlier or Never Worked'),
 ]
 
 OCCP = [
@@ -3678,6 +3732,33 @@ SFR = [
     (4, 'Child in a married-couple subfamily'),
     (5, 'Child in a mother-child subfamily'),
     (6, 'Child in a father-child subfamily'),
+]
+
+SOCI = [
+    (1, 'Management Occupations'),
+    (2, 'Business and Financial Operations Occupations'),
+    (3, 'Computer and Mathematical Occupations'),
+    (4, 'Architecture and Engineering Occupations'),
+    (5, 'Life, Physical and Social Sciene Occupations'),
+    (6, 'Community and social service Occupations'),
+    (7, 'Legal Occupations'),
+    (8, 'Education, Training, and Library Occupations'),
+    (9, 'Arts, Design, Entertainment, Sports, and Media Occupations'),
+    (10, 'Healthcare Practitioners and Technical Occupations'),
+    (11, 'Healthcare Support Occupations'),
+    (12, 'Protective Service Occupations'),
+    (13, 'Food Preparation and Serving Related Occupations'),
+    (14, 'Building and Grounds Cleaning and maintenance Occupations'),
+    (15, 'Personal Care and Service Occupations'),
+    (16, 'Sales and Related Occupations'),
+    (17, 'Office and Administrative Support Occupations'),
+    (18, 'Farming, Fishing, and Forestry Occupations'),
+    (19, 'Construction and Extraction Occupations'),
+    (20, 'Installation, Maintenance, and Repair Occupations'),
+    (21, 'Production Occupations'),
+    (22, 'Transportation and Material Moving Occupations'),
+    (23, 'Military Specific Occupations'),
+    (24, 'Unemployed, With No Work Experience in the Last 5 Years')
 ]
 
 SOCP = [
