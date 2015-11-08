@@ -13,8 +13,8 @@ function Choropleth() {
 
     $('svg').remove();
     var vis = d3.select("#choropleth-content").append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", $(document).width() - 5)
+        .attr("height", function(){console.log(this);return $(document).height() - this.offsetTop - 5;})
         .on('click', function(d) {
             if (d3.event.defaultPrevented) return;
             selectID('', d3.event.shiftKey);
@@ -63,6 +63,7 @@ function Choropleth() {
         d3.json("static/geojson/" + controller.map + ".geojson", function(error, json) {
             if (error) throw error;
             // create a first guess for the projection
+            var width = vis.attr('width'), height = vis.attr('height');
             var center = d3.geo.centroid(json)
             var scale = 150;
             var offset = [width / 2, height / 2];

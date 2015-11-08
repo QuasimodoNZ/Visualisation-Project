@@ -203,6 +203,8 @@
                     class: 'form-control'
                 });
 
+                numberField.val(selectedChoice.min || 0);
+
                 // <div class="btn-group" role="group" style="width: 100%;">
                 //     <button type="button" value="MIN" class="btn btn-default choice-set" style="width: 33%;">Min</button>
                 //     <button type="button" value="AVG" class="btn btn-primary choice-set" style="width: 33%;">Avg</button>
@@ -214,6 +216,22 @@
                 if ('min' in selectedChoice) {
                     numberField.attr('min', selectedChoice.min);
                 }
+                console.log('selectedChoice: ', selectedChoice);
+                numberField.focusout(function(){
+                    var max, min;
+                    if ('max' in selectedChoice) {
+                        max = Number.MAX_VALUE;
+                    } else {
+                        max = selectedChoice.max;
+                    }
+                    if ('min' in selectedChoice) {
+                        min = selectedChoice.min;
+                    } else {
+                        min = Number.MIN_VALUE;
+                    }
+                    $(this).val($(this).val() > max ? max : $(this).val())
+                    $(this).val($(this).val() < min ? min : $(this).val())
+                })
             }
 
             if ($('#filtering-options-values').length) {
@@ -431,8 +449,8 @@
         };
         evaluateQuery();
 
-        var width = 1280;
-        var height = 720;
+        // var width = $(document).width();
+        // var height = $(document).height() - $('#choropleth-content').position.top;
 
         // Initialising the first visualisation
         var visualisation = new Choropleth();
