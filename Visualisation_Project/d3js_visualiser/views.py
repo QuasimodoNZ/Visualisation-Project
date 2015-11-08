@@ -174,7 +174,7 @@ def sunburst(request):
     data['something'] = 'useful'
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-GET_DICT = re.compile('^([A-Za-z]+)\[([A-Za-z_]+)\]$')
+GET_DICT = re.compile('^([A-Za-z]+)\[([0-9A-Za-z_]+)\]$')
 GET_LIST = re.compile('^([A-Za-z]+)\[\]$')
 GET_VAR = re.compile('^([A-Za-z]+)$')
 
