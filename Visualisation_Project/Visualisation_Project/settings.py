@@ -50,6 +50,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'Visualisation_Project.urls.ExceptionLoggingMiddleware',
 )
 
 ROOT_URLCONF = 'Visualisation_Project.urls'

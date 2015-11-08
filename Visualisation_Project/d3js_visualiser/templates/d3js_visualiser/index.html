@@ -82,7 +82,7 @@
                     </select>
                     <button class="btn btn-primary metric-add" type="button" style="width: 100%;">Add Metric</button>
 
-                    <div class="btn-group" role="group" style="width: 100%;">
+                    <div id="aggregation-choices" class="btn-group" role="group" style="width: 100%;">
                         <button type="button" value="MIN" class="btn btn-default choice-set" style="width: 33%;">Min</button>
                         <button type="button" value="AVG" class="btn btn-primary choice-set" style="width: 33%;">Avg</button>
                         <button type="button" value="MAX" class="btn btn-default choice-set" style="width: 33%;">Max</button>
@@ -111,7 +111,6 @@
         {% endautoescape %}
 
 
-        console.log('stateCodes: ', stateCodes);
 
         // jquery for the inspector panel/controller window
 
@@ -146,9 +145,6 @@
             return stringComparator(choices[a].verbose_name, choices[b].verbose_name);
         });
 
-        console.log('filters: ', filters);
-        console.log('metrics: ', metrics);
-
         // builds the selections for the filters and the metrics
         for (i = 0; i < filters.length; i++) {
             $('<option/>')
@@ -171,6 +167,7 @@
             var selectedChoice = choices[$('#filtering-options').val()];
 
             var newFormField;
+            var numberField;
             if ('choices' in selectedChoice) {
                 newFormField = $('<select/>').attr('id', 'filtering-options-values').addClass('form-control');
                 for (var choice in selectedChoice.choices) {
@@ -181,18 +178,39 @@
                         .text(selectedChoice.choices[choice][1])
                         .appendTo(newFormField);
                 }
-                // fill with choices
             } else {
-                newFormField = $('<input>').attr({
+                var newFormField = $('<div/>').attr({
                     id: 'filtering-options-values',
+                    class: 'btn-group',
+                    role: 'group',
+                    style: 'width: 100%;'
+                });
+
+                [['<', '__lt'], ['<=', '__lte'], ['=', ''], ['=>', '__gte'], ['>', '__gt']].forEach(function(s, i){
+                    $('<button/>').attr({
+                        type: 'button',
+                        value: s[1],
+                        class: 'btn choice-set ' + (i == 2 ? 'btn-primary' : 'btn-default'),
+                        style: 'width: 20%;'
+                    }).text(s[0]).appendTo(newFormField).click(choiceSetClick);
+                });
+
+                numberField = $('<input>').attr({
+                    id: 'filtering-options-number',
                     type: 'number',
                     class: 'form-control'
                 });
+
+                // <div class="btn-group" role="group" style="width: 100%;">
+                //     <button type="button" value="MIN" class="btn btn-default choice-set" style="width: 33%;">Min</button>
+                //     <button type="button" value="AVG" class="btn btn-primary choice-set" style="width: 33%;">Avg</button>
+                // </div>
+
                 if ('max' in selectedChoice) {
-                    newFormField.attr('max', selectedChoice.max);
+                    numberField.attr('max', selectedChoice.max);
                 }
                 if ('min' in selectedChoice) {
-                    newFormField.attr('min', selectedChoice.min);
+                    numberField.attr('min', selectedChoice.min);
                 }
             }
 
@@ -200,6 +218,11 @@
                 $('#filtering-options-values').replaceWith(newFormField);
             } else {
                 $('#filtering-options').after(newFormField);
+            }
+            if ($('#filtering-options-number').length) {
+                $('#filtering-options-number').replaceWith(numberField);
+            } else {
+                $('#filtering-options-values').after(numberField);
             }
         }
         replaceChoices();
@@ -269,19 +292,26 @@
 
         // For when a new filtering option is added
         $(".query-add").click(function() {
-            var htmlString = $("#filtering-options option:selected").text() + ": ";
-            if ($("#filtering-options-values").is('input')) {
-                htmlString += $("#filtering-options-values").val();
+            var htmlString = $("#filtering-options option:selected").text();
+            if ($("#filtering-options-number").length) {
+                htmlString += ' ' + $("#filtering-options-values .btn-primary").text() + ' ' + $("#filtering-options-number").val();
             } else {
-                htmlString += $("#filtering-options-values option:selected").text();
+                htmlString +=  ": " + $("#filtering-options-values option:selected").text();
             }
+            var data = {
+                query: $("#filtering-options option:selected").val(),
+            };
+            if ($('#filtering-options-number').length){
+                data.value = $("#filtering-options-number").val();
+                data.query += $("#filtering-options-values button.btn-primary").val();
+            } else {
+                data.value = $("#filtering-options-values").val();
+            }
+
             var button = createListButton(".query-list")
                 .html(htmlString)
                 .addClass('query-item')
-                .data({
-                    query: $("#filtering-options option:selected").val(),
-                    value: $("#filtering-options-values").val()
-                });
+                .data(data);
         });
         // For when a new metric options is added
         $(".metric-add").click(function() {
@@ -299,15 +329,17 @@
             $('#inspector-body').slideToggle();
         });
 
-        $('.choice-set').click(function() {
+        function choiceSetClick(){
             if (!$(this).hasClass('btn-primary')) {
-                var other = $('.choice-set.btn-primary');
+                var other = $(this).siblings('.choice-set.btn-primary');
                 other.removeClass('btn-primary');
                 other.addClass('btn-default');
                 $(this).removeClass('btn-default');
                 $(this).addClass('btn-primary');
             }
-        });
+        }
+
+        $('.choice-set').click(choiceSetClick);
 
         $("#inspector").draggable({
             containment: 'window',
@@ -317,7 +349,6 @@
 
         var selectedIDs = [];
         var selectID = function(newID, shouldntClear) {
-            console.log('calling select id: ', newID, selectedIDs);
             // new id is blank
             if (newID == '') {
                 if (shouldntClear) { // white space with ctrl, so do nothing
@@ -362,10 +393,7 @@
         };
 
         var clearNonExistentSelection = function() {
-            console.log('clearing the selection');
             for (var i = selectedIDs.length - 1; i >= 0; i--) {
-                console.log('i: ', i);
-                console.log('i: ', i);
                 var elem = $('#' + selectedIDs[i]);
                 if (elem.length == 0) {
                     selectedIDs.splice(i, 1);
@@ -393,11 +421,10 @@
                 metrics.push($(this).data().metric)
             })
             controller.metric = metrics;
-            console.log('controller.metrics: ', controller.metric);
             if (metrics.length == 0) {
                 controller.aggregation = 'COUNT';
             } else {
-                controller.aggregation = $(".choice-set.btn-primary").val();
+                controller.aggregation = $("#aggregation-choices .choice-set.btn-primary").val();
             }
         };
         evaluateQuery();

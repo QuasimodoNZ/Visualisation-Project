@@ -48,7 +48,6 @@ def choropleth_country(request):
     data = {}
     for pp in query:
         val = getattr(pp, aggregation.lower())
-        print val
         if isinstance(val, Decimal):
             data[format(pp.ST, '02')] = float(val)
         else:
@@ -58,6 +57,7 @@ def choropleth_country(request):
 
 def choropleth_state(request):
     request_data =  get_to_dict(request.GET)
+    print 'request data: ' + str(request_data)
     options = request_data.get('query', {})
     options['ST'] = request_data['state']
     selection = models.Person.objects.filter(**options)
@@ -173,7 +173,7 @@ def sunburst(request):
     data['something'] = 'useful'
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-GET_DICT = re.compile('^([A-Za-z]+)\[([A-Za-z]+)\]$')
+GET_DICT = re.compile('^([A-Za-z]+)\[([A-Za-z_]+)\]$')
 GET_LIST = re.compile('^([A-Za-z]+)\[\]$')
 GET_VAR = re.compile('^([A-Za-z]+)$')
 
@@ -192,5 +192,5 @@ def get_to_dict(get_data):
         elif GET_VAR.match(key):
             rtn[str(GET_VAR.match(key).groups()[0])] = str(value[0])
         else:
-            raise Exception('Invalid key in the GET data: {}'.format(key))
+            raise Exception('Invalid key in the GET data - key: {}, data: {}'.format(key, get_data))
     return rtn
