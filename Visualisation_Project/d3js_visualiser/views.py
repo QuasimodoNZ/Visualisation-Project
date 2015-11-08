@@ -13,7 +13,8 @@ def home(request):
         if f.choices:
             filtering_options[f.name] = {'verbose_name':f.verbose_name, 'choices':f.choices}
         else:
-            filtering_options[f.name] = {'verbose_name':f.verbose_name}
+            filtering_options[f.name] = models.PrecomputedProperties.objects.filter(metric_name='Person_'+f.name).aggregate(min=Min('min'), max=Max('max'))
+            filtering_options[f.name]['verbose_name'] = f.verbose_name
 
     state_codes = {format(s.code, '02'): (s.abbreviation, s.name) for s in models.State.objects.filter(code__lte=72)} # other countries use codes greater than 72
 
