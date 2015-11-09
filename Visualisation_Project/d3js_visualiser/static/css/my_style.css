@@ -13,6 +13,23 @@
 #group-selected g, #group-selected path {
     stroke: black;
 }
+path.link {
+  fill: none;
+  /*stroke: #666;*/
+  stroke-width: 3px;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
+text {
+  fill: #000;
+  font: 15px sans-serif;
+  pointer-events: none;
+}
 .bar-content div {
     font: 10px sans-serif;
     background-color: steelblue;
@@ -20,14 +37,6 @@
     padding: 3px;
     margin: 1px;
     color: white;
-}
-.sunburst rect {
-    fill: steelblue;
-}
-.sunburst text {
-    fill: white;
-    font: 10px sans-serif;
-    text-anchor: end;
 }
 .PUMA, .STATE {
     fill: grey;

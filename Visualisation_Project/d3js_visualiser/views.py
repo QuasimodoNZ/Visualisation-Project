@@ -2,8 +2,10 @@ import json, re
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render
 from django.db.models import Count, Min, Avg, Max, Q
-from . import models
+from . import models, puma_groupings
 from decimal import Decimal
+from sets import Set
+from collections import defaultdict
 
 def home(request):
     filtering_options = {}
@@ -18,7 +20,7 @@ def home(request):
 
     state_codes = {format(s.code, '02'): (s.abbreviation, s.name) for s in models.State.objects.filter(code__lte=72)} # other countries use codes greater than 72
 
-    return render(request, 'd3js_visualiser/index.html', {'choices':json.dumps(filtering_options), 'state_codes':json.dumps(state_codes)})
+    return render(request, 'd3js_visualiser/index.html', {'choices':json.dumps(filtering_options), 'state_codes':json.dumps(state_codes), 'puma_to_group': puma_groupings.puma_to_group, 'group_to_puma': puma_groupings.group_to_puma})
 
 #     controller = {
 #                 'visualisation': 'choropleth-state',
@@ -79,10 +81,63 @@ def choropleth_state(request):
 
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-def chord(request):
-    data = {}
+def chord_country(request):
+
+    data = []
     data['something'] = 'useful'
     return HttpResponse(json.dumps(data), content_type = "application/json")
+
+def chord_state(request):
+    request_data =  get_to_dict(request.GET)
+    print 'request data: ' + str(request_data)
+    options = request_data.get('query', {})
+    options['ST'] = request_data['state']
+    options['POWPUMA__state__code'] = request_data['state']
+    # assumption is place of work, but we will get this from request_data eventually
+
+    print 'options: ' + str(options)
+
+    selection = models.Person.objects.filter(**options)
+    counter = defaultdict(int)
+    indicies = {}
+    temp_groupings = {}
+    for p in selection.values('PUMA__code', 'POWPUMA__code'):
+        src = format(p['PUMA__code'], '05')
+        dst = format(p['POWPUMA__code'], '05')
+        if src in temp_groupings:
+            src = temp_groupings[src]
+        else:
+            src = get_puma_group(options['ST'], src)
+            temp_groupings[src] = src
+        if dst in temp_groupings:
+            dst = temp_groupings[dst]
+        else:
+            dst = get_puma_group(options['ST'], dst)
+            temp_groupings[dst] = dst
+
+        if src not in indicies:
+            indicies[src] = len(indicies)
+        if dst not in indicies:
+            indicies[dst] = len(indicies)
+        counter[(src, dst,)] += 1
+
+    matrix = [[0] * len(indicies) for _ in xrange(len(indicies)) ]
+    # matrix = [[0] * len(indicies)] * len(indicies)
+    for key, val in counter.iteritems():
+        row = indicies[key[0]]
+        col = indicies[key[1]]
+        matrix[row][col] = val
+
+    # print 'indicies: ' + str(indicies)
+    # print 'counter: ' + str(counter)
+    # print 'matrix: ' + str(matrix)
+    # data = []
+    # data['something'] = 'useful'
+    print 'number of rows and columns: ' + str(len(indicies))
+    index_to_code = [None] * len(indicies)
+    for code, index in indicies.iteritems():
+        index_to_code[index] = code
+    return HttpResponse(json.dumps({'matrix': matrix, 'indicies': index_to_code}), content_type = "application/json")
 
 def bar_country(request):
     request_data =  get_to_dict(request.GET)
@@ -169,10 +224,64 @@ def bar_state(request):
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
 
-def sunburst(request):
+def force_country(request):
     data = {}
     data['something'] = 'useful'
     return HttpResponse(json.dumps(data), content_type = "application/json")
+
+def force_state(request):
+    request_data =  get_to_dict(request.GET)
+    print 'request data: ' + str(request_data)
+    options = request_data.get('query', {})
+    options['ST'] = request_data['state']
+    options['POWPUMA__state__code'] = request_data['state']
+    # assumption is place of work, but we will get this from request_data eventually
+
+    print 'options: ' + str(options)
+
+    selection = models.Person.objects.filter(**options)
+    print 'values: ' + str(selection.values('PUMA__code', 'POWPUMA__code'))
+
+    counter = defaultdict(int)
+    indicies = {}
+    started = False
+    for p in selection.values('PUMA__code', 'POWPUMA__code'):
+        if not started:
+            started = True
+        src = format(p['PUMA__code'], '05')
+        if src != get_puma_group(options['ST'], src):
+            # print src + ' puma should be in group ' + get_puma_group(options['ST'], src)
+            src = get_puma_group(options['ST'], src)
+
+        dst = format(p['POWPUMA__code'], '05')
+        if dst != get_puma_group(options['ST'], dst):
+            # print 'dst was not pointing to group ' + dst + ': ' + get_puma_group(options['ST'], dst)
+            # print src + ' puma should be in group ' + get_puma_group(options['ST'], src)
+            dst = get_puma_group(options['ST'], dst)
+
+        if src not in indicies:
+            indicies[src] = len(indicies)
+        if dst not in indicies:
+            indicies[dst] = len(indicies)
+        if src != dst:
+            counter[(src, dst,)] += 1
+
+    links = []
+    nodes = [None] * len(indicies)
+
+    for key, val in indicies.iteritems():
+        nodes[val] = {'name': key, 'prestart_weight': 0}
+    for key, val in counter.iteritems():
+        link = {'source': indicies[key[0]], 'target': indicies[key[1]], 'value': val}
+        nodes[link['source']]['prestart_weight'] += 1
+        nodes[link['target']]['prestart_weight'] += 1
+        links.append(link)
+    # print 'data: ' + str(data)
+    print 'indicies: ' + str(indicies)
+    print 'links: ' + str(links)
+    print 'nodes: ' + str(nodes)
+
+    return HttpResponse(json.dumps({'links': links, 'nodes': nodes}), content_type = "application/json")
 
 GET_DICT = re.compile('^([A-Za-z]+)\[([0-9A-Za-z_]+)\]$')
 GET_LIST = re.compile('^([A-Za-z]+)\[\]$')
@@ -195,3 +304,16 @@ def get_to_dict(get_data):
         else:
             raise Exception('Invalid key in the GET data - key: {}, data: {}'.format(key, get_data))
     return rtn
+
+def get_puma_group(state, puma):
+    if state not in puma_groupings.groups:
+        # print 'no groupings for ' + state
+        return puma
+
+    matchings = puma_groupings.groups[state]['matchings']
+    for code, ranges in matchings.iteritems():
+        if puma >= ranges[0] and puma <= ranges[1]:
+            return code # is within the bounds for the group
+    # print 'no mathcings found for {} in state {}: '.format(puma, puma_groupings.group[state]['name'], puma_groupings.group[state]['matchings'])
+    # print 'no grouping for ' + state + ': '+ puma
+    return puma # group found

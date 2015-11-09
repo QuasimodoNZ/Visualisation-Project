@@ -23,6 +23,16 @@ class PrecomputedProperties(models.Model):
     class Meta:
         unique_together = (('metric_name', 'ST'),)
 
+class RelationshipPairs(models.Model):
+    metric_name = models.CharField(max_length=30)
+    source = models.ForeignKey(PublicUseMicrodataArea, related_name='relationship_source')
+    destination = models.ForeignKey(PublicUseMicrodataArea, related_name='relationship_destination')
+    amount = models.IntegerField(verbose_name='Flow amount', default=0)
+
+    class Meta:
+        index_together = (('metric_name', 'source'),)
+        unique_together= (('metric_name', 'source', 'destination'),)
+
 class House(models.Model):
     SERIALNO = models.IntegerField(verbose_name='Housing unit/GQ person serial number')
     DIVISION = models.IntegerField(verbose_name='Division code', choices=choices.DIVISION)

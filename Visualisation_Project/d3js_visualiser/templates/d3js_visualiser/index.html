@@ -22,7 +22,7 @@
     <script type="text/javascript" src="static/js/choropleth.js"></script>
     <script type="text/javascript" src="static/js/chord.js"></script>
     <script type="text/javascript" src="static/js/bar.js"></script>
-    <script type="text/javascript" src="static/js/sunburst.js"></script>
+    <script type="text/javascript" src="static/js/force.js"></script>
 
 </head>
 
@@ -34,7 +34,7 @@
             <li class="active"><a class="choropleth-tab" href="#choropleth_tab" data-toggle="tab">Choropleth</a></li>
             <li><a class="chord-tab" href="#chord_tab" data-toggle="tab">Chord Diagram</a></li>
             <li><a class="bar-tab" href="#bar_tab" data-toggle="tab">Bar Graphs</a></li>
-            <li><a class="sunburst-tab" href="#sunburst_tab" data-toggle="tab">Sunburst</a></li>
+            <li><a class="force-tab" href="#force_tab" data-toggle="tab">Force Layout</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="choropleth_tab">
@@ -49,9 +49,9 @@
                 <h1>Bar Graph</h1>
                 <div id="bar-content"></div>
             </div>
-            <div class="tab-pane" id="sunburst_tab">
-                <h1>Zoomable Sunburst</h1>
-                <div id="sunburst-content"></div>
+            <div class="tab-pane" id="force_tab">
+                <h1>Force Layout</h1>
+                <div id="force-content"></div>
             </div>
         </div>
 
@@ -105,16 +105,21 @@
             cache: false
         });
 
+        var controller = {
+            map: '', // The current map file that has been loaded
+            visualisation: 'choropleth-country', // 4 different visualisations, choropeth, bar, chord and force. Different levels are have suffix -country, -state or -puma
+            // state: 48, // 48 for TX, 11 for DC
+        };
+
         {% autoescape off %}
         var choices = {{choices}};
         var stateCodes = {{state_codes}};
+        var pumaToGroup = {{puma_to_group}}
+        var groupToPuma = {{group_to_puma}}
         {% endautoescape %}
-
-        console.log('choices: ', choices);
-
-
-
         // jquery for the inspector panel/controller window
+
+        console.log(groupToPuma);
 
         // delete choices.PAP;
         // delete choices.DOUT;
@@ -216,7 +221,6 @@
                 if ('min' in selectedChoice) {
                     numberField.attr('min', selectedChoice.min);
                 }
-                console.log('selectedChoice: ', selectedChoice);
                 numberField.focusout(function(){
                     var max, min;
                     if ('max' in selectedChoice) {
@@ -367,50 +371,52 @@
             handle: '#inspector-title'
         });
 
+        var getGroup = function(id){
+            console.log('getting group for ', id);
+            if (controller.visualisation.endsWith('-country')){
+                console.log('just going to return the id cause it should be a state');
+                return [id];
+            }
+            console.log('groupToPuma[controller.state][id]: ', groupToPuma[controller.state][id]);
+            return groupToPuma[controller.state][id];
+        }
+
         var selectedIDs = [];
-        var selectID = function(newID, shouldntClear) {
-            // new id is blank
-            if (newID == '') {
-                if (shouldntClear) { // white space with ctrl, so do nothing
-                    return;
-                } else { // white space pressed without ctrl
-                    $('#group-selected').children().each(function() {
-                        $(this)
-                            .appendTo('#group-main')
-                            .css('stroke', '');
-                    });
+        function selectID(newID, shouldntClear) {
+            console.log('selected id: ', newID);
+            console.log('selectedIDs: ', selectedIDs);
+            if(newID == '' ){
+                if (!shouldntClear) {
                     selectedIDs = [];
                 }
-            } else if (shouldntClear) { // ctrl key is being pressed
-                if (selectedIDs.indexOf(newID) == -1) { // id not found, add the id
-                    selectedIDs.push(newID);
-                    $('#' + newID)
-                        .appendTo('#group-selected');
-                } else { // id is already there, de select it
-                    selectedIDs.splice(selectedIDs.indexOf(newID), 1);
-                    $('#' + newID)
-                        .appendTo('#group-main');
-                }
-            } else { // no ctrl key
-                if (selectedIDs.length > 1 || selectedIDs.indexOf(newID) == -1) { // multiple are selected, clear all
-                    $('#group-selected').children().each(function() {
-                        if ($(this).attr('id') != newID) {
-                            selectedIDs.splice(selectedIDs.indexOf($(this).attr('id')), 1);
-                            $(this)
-                                .appendTo('#group-main');
-                        }
-                    });
-                }
-                if (selectedIDs.length == 1) { // the id has been reselected
-                    return;
-                } else {
-                    selectedIDs.push(newID);
-                    $('#' + newID)
-                        .appendTo('#group-selected');
-                }
-
+            } else if (shouldntClear){
+                getGroup(newID).forEach(function(id){
+                    var i = selectedIDs.indexOf(id);
+                    if (i == -1){
+                        selectedIDs.push(id);
+                    } else {
+                        selectedIDs.splice(i, 1);
+                    }
+                });
+            } else {
+                selectedIDs = [];
+                getGroup(newID).forEach(function(id){
+                    selectedIDs.push(id);
+                });
             }
+            console.log('selectedIDs: ', selectedIDs);
+
+            refreshSelection();
         };
+
+        function refreshSelection(){
+            $('#group-selected').children().each(function(){
+                $(this).appendTo('#group-main');
+            });
+            selectedIDs.forEach(function(id){
+                $('#' + id).appendTo('#group-selected');
+            })
+        }
 
         var clearNonExistentSelection = function() {
             for (var i = selectedIDs.length - 1; i >= 0; i--) {
@@ -421,12 +427,6 @@
                     elem.appendTo('#group-selected');
                 }
             }
-        };
-
-        var controller = {
-            map: '', // The current map file that has been loaded
-            visualisation: 'choropleth-country', // 4 different visualisations, choropeth, bar, chord and sunburst. Different levels are have suffix -country, -state or -puma
-            // state: 48, // 48 for TX, 11 for DC
         };
 
         var evaluateQuery = function() {
@@ -510,11 +510,11 @@
                 visualisation.redrawFunction();
             }
         });
-        $(".sunburst-tab").click(function() {
+        $(".force-tab").click(function() {
             if (!$(this).parent().hasClass('active')) {
-                controller.visualisation = 'sunburst-' + controller.visualisation.split('-')[1];
+                controller.visualisation = 'force-' + controller.visualisation.split('-')[1];
                 delete controller.map;
-                visualisation = new Sunburst();
+                visualisation = new Force();
                 visualisation.redrawFunction();
             }
         });

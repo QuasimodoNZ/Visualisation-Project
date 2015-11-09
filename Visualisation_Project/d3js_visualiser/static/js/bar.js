@@ -7,8 +7,8 @@ function Bar() {
             bottom: 100,
             left: 80
         },
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        width = $(document).width() - 5 - margin.left - margin.right,
+        height = $(document).height() - $('#bar-content').offset().top - 200 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1);
@@ -36,7 +36,7 @@ function Bar() {
 
     var groupMain = svg.append('g').attr('id', 'group-main');
     var groupSelected = svg.append('g')
-        .attr('id', 'group-selected');
+        .attr('id', 'group-selected').attr('stroke-width', '2px');
 
     svg.append("g")
         .attr("class", "y axis")
@@ -49,14 +49,11 @@ function Bar() {
 
     this.redrawFunction = function() {
         evaluateQuery();
-        console.log('controller: ', controller);
         $.ajax({
             type: "GET",
             url: controller.visualisation,
             data: controller,
             success: function(json) {
-                console.log('json: ', json);
-
                 $('#group-selected').children().appendTo('#group-main');
 
                 var metricGroups = [];
@@ -77,8 +74,6 @@ function Bar() {
                     });
                     d.total = d.values[d.values.length - 1].y1;
                 });
-
-                console.log('json: ', json);
 
                 json.sort(function(a, b) {
                     return b.total - a.total;

@@ -14,7 +14,7 @@ function Choropleth() {
     $('svg').remove();
     var vis = d3.select("#choropleth-content").append("svg")
         .attr("width", $(document).width() - 5)
-        .attr("height", function(){console.log(this);return $(document).height() - this.offsetTop - 5;})
+        .attr("height", $(document).height() - $('#choropleth-content').offset().top - 5)
         .on('click', function(d) {
             if (d3.event.defaultPrevented) return;
             selectID('', d3.event.shiftKey);
@@ -35,7 +35,6 @@ function Choropleth() {
             url: controller.visualisation,
             data: controller,
             success: function(json) {
-                console.log('json data: ', json);
                 var scale = d3.scale.linear()
                     .domain([d3.min(d3.values(json)), d3.max(d3.values(json))])
                     .range(['red', 'green']);
@@ -49,9 +48,16 @@ function Choropleth() {
                     }
                     return scale(d.properties.VALUE);
                 });
-                clearNonExistentSelection();
                 selectedIDs.forEach(function(selectedID) {
-                    $('#' + selectedID).appendTo('#group-selected');
+                    console.log('reselecting id', selectedID);
+                    if ($('#' + selectedID).length){
+                        $('#' + selectedID).appendTo('#group-selected');
+                    }
+                    // } else if (pumaGroupings[controller.state] && pumaGroupings[controller.state][selectedID]){
+                    //     pumaGroupings[controller.state][selectedID].forEach(function(pumaGroup){
+                    //         console.log('pumaGroup: ', pumaGroup);
+                    //     });
+                    // }
                 });
             },
             error: function(request, err, ex) {}

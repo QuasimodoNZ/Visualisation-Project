@@ -10,9 +10,11 @@ urlpatterns = [
     url(r'^$', views.home),
     url(r'choropleth-country/', views.choropleth_country),
     url(r'choropleth-state/', views.choropleth_state),
-    url(r'chord/', views.chord),
+    url(r'chord-country/', views.chord_country),
+    url(r'chord-state/', views.chord_state),
     url(r'bar-country/', views.bar_country),
     url(r'bar-state/', views.bar_state),
-    url(r'sunburst/', views.sunburst),
+    url(r'force-country/', views.force_country),
+    url(r'force-state/', views.force_state),
 #     url(r'^', 'django.views.generic.simple.direct_to_template', {'template': 'd3js_visualiser/index.html'}),
 ]
