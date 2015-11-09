@@ -111,6 +111,10 @@
             // state: 48, // 48 for TX, 11 for DC
         };
 
+        var width = $(document).width() - 5,
+            height = $(document).height() - $('#choropleth-content').offset().top - 5;
+
+
         {% autoescape off %}
         var choices = {{choices}};
         var stateCodes = {{state_codes}};

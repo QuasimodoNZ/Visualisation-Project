@@ -1,9 +1,7 @@
 function Chord() {
     $('svg').remove();
 
-    var width = $(document).width() - 5,
-        height = $(document).height() - $('#chord-content').offset().top - 5,
-        innerRadius = Math.min(width, height) * .36,
+    var innerRadius = Math.min(width, height) * .36,
         outerRadius = innerRadius * 1.1;
     console.log(width, height);
 
@@ -14,6 +12,10 @@ function Chord() {
     var svg = d3.select("#chord-content").append("svg")
         .attr("width", width)
         .attr("height", height)
+        .on('click', function(d) {
+            if (d3.event.defaultPrevented) return;
+            selectID('', d3.event.shiftKey);
+        })
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 

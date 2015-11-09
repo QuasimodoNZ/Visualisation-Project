@@ -12,6 +12,7 @@
 }
 #group-selected g, #group-selected path {
     stroke: black;
+    stroke-width: 2px;
 }
 path.link {
   fill: none;

@@ -13,8 +13,8 @@ function Choropleth() {
 
     $('svg').remove();
     var vis = d3.select("#choropleth-content").append("svg")
-        .attr("width", $(document).width() - 5)
-        .attr("height", $(document).height() - $('#choropleth-content').offset().top - 5)
+        .attr("width", width)
+        .attr("height", height)
         .on('click', function(d) {
             if (d3.event.defaultPrevented) return;
             selectID('', d3.event.shiftKey);

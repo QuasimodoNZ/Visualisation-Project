@@ -4,17 +4,17 @@ function Bar() {
     var margin = {
             top: 20,
             right: 20,
-            bottom: 100,
+            bottom: 150,
             left: 80
         },
-        width = $(document).width() - 5 - margin.left - margin.right,
-        height = $(document).height() - $('#bar-content').offset().top - 200 - margin.top - margin.bottom;
+        barWidth = width - margin.left - margin.right,
+        barHeight = height - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);
+        .rangeRoundBands([0, barWidth], .1);
 
     var y = d3.scale.linear()
-        .rangeRound([height, 0]);
+        .rangeRound([barHeight, 0]);
 
     var color = d3.scale.ordinal()
         .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
@@ -29,8 +29,12 @@ function Bar() {
         .tickFormat(d3.format(".2s"));
 
     var svg = d3.select("#bar-content").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", barWidth + margin.left + margin.right)
+        .attr("height", barHeight + margin.top + margin.bottom)
+        .on('click', function(d) {
+            if (d3.event.defaultPrevented) return;
+            selectID('', d3.event.shiftKey);
+        })
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -43,7 +47,7 @@ function Bar() {
 
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + barHeight + ")")
 
     var tooltip = d3.select('#tooltip');
 
@@ -202,13 +206,13 @@ function Bar() {
                 });
 
                 legend.append("rect").transition()
-                    .attr("x", width - 18)
+                    .attr("x", barWidth - 18)
                     .attr("width", 18)
                     .attr("height", 18)
                     .style("fill", color);
 
                 legend.append("text").transition()
-                    .attr("x", width - 24)
+                    .attr("x", barWidth - 24)
                     .attr("y", 9)
                     .attr("dy", ".35em")
                     .style("text-anchor", "end")
