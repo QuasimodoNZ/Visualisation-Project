@@ -1,7 +1,7 @@
 import json, re
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render
-from django.db.models import Count, Min, Avg, Max, Q
+from django.db.models import Count, Min, Avg, Max, Q, Sum
 from . import models, puma_groupings
 from decimal import Decimal
 from sets import Set
@@ -82,10 +82,48 @@ def choropleth_state(request):
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def chord_country(request):
+    request_data =  get_to_dict(request.GET)
+    print 'request data: ' + str(request_data)
+    options = request_data.get('query', {})
 
-    data = []
-    data['something'] = 'useful'
-    return HttpResponse(json.dumps(data), content_type = "application/json")
+    selection = models.RelationshipPairs.objects.filter(metric_name='POWPUMA', destination__state__code__lte=72).values('source__state__code', 'destination__state__code').annotate(Sum('amount'))
+
+    indicies = {}
+    l = []
+    for rp in selection:
+        src = format(rp['source__state__code'], '02')
+        dst = format(rp['destination__state__code'], '02')
+
+        if src not in indicies:
+            indicies[src] = len(indicies)
+        if dst not in indicies:
+            indicies[dst] = len(indicies)
+
+        l.append((src, dst, rp['amount__sum'],))
+
+    matrix = [[0] * len(indicies) for _ in xrange(len(indicies)) ]
+
+    for t in l:
+        matrix[indicies[t[0]]][indicies[t[1]]] = t[2]
+
+    print 'len(indicies): ' + str(len(indicies))
+    for line in matrix:
+        print line
+
+    for i in range(len(matrix)):
+        matrix[i][i] = 0
+    # sum = 0
+
+    # for d in selection:
+    #     if d['source__state__code'] == 55 and d['destination__state__code'] == 17:
+    #         print 'sum: ' + str(d['amount__sum'])
+            # sum += d['amount']
+    # print 'sum: ' + str(sum) # = 369
+
+    index_to_code = [None] * len(indicies)
+    for code, index in indicies.iteritems():
+        index_to_code[index] = code
+    return HttpResponse(json.dumps({'matrix': matrix, 'indicies': index_to_code}), content_type = "application/json")
 
 def chord_state(request):
     request_data =  get_to_dict(request.GET)
@@ -127,6 +165,9 @@ def chord_state(request):
         row = indicies[key[0]]
         col = indicies[key[1]]
         matrix[row][col] = val
+
+    for i in range(len(matrix)):
+        matrix[i][i] = 0
 
     # print 'indicies: ' + str(indicies)
     # print 'counter: ' + str(counter)

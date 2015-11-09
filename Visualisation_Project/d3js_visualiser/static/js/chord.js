@@ -19,9 +19,15 @@ function Chord() {
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+
+
     var groupMain = svg.append('g').attr('id', 'group-main');
     var groupSelected = svg.append('g')
         .attr('id', 'group-selected');
+
+    var chords = svg.append("g")
+        .attr("class", "chord");
+    var labelsGroup = svg.append('g');
 
 
     // Returns an array of tick angles and labels, given a group.
@@ -34,6 +40,8 @@ function Chord() {
             };
         });
     }
+
+
 
     // Returns an event handler for fading a given chord group.
     function fade(opacity) {
@@ -56,14 +64,33 @@ function Chord() {
             success: function(json) {
                 console.log('chord json: ', json);
                 var indexCodes = json.indicies;
+                console.log('indexCodes: ', indexCodes);
                 var chord = d3.layout.chord()
                     .padding(.05)
                     .sortSubgroups(d3.descending)
                     .matrix(json.matrix);
 
-                groupMain.selectAll("path")
-                    .data(chord.groups)
-                    .enter().append("path")
+                var labelGenerator = function(d) {
+                    var f = function(d) {
+                        if (controller.visualisation == 'chord-country'){
+                            return stateCodes[indexCodes[d.index]][1];
+                        } else {
+                            return visualisation.state + ':' + indexCodes[d.index];
+                        }
+                    };
+                    // console.log(d);
+                    var r = f(d);
+                    // console.log(r);
+                    if (!r){
+                        console.log('must have been undefined: ', r, d);
+                    }
+                    return r
+                };
+
+                var arcs = groupMain.selectAll("path")
+                    .data(chord.groups, function(d){return indexCodes[d.index];});
+
+                arcs.enter().append("path")
                     .style("fill", function(d) {
                         return fill(d.index);
                     })
@@ -74,13 +101,25 @@ function Chord() {
                         selectID(this.id, d3.event.shiftKey);
                         d3.event.stopPropagation();
                     })
-                    .on("mouseover", fade(.1))
-                    .on("mouseout", fade(1));
+                    .on("mousemove", fade(.1))
+                    .on("mouseout", fade(1))
+                    .on('dblclick', function(d) {
+                        if (controller.visualisation = 'country-state') {
+                            controller.visualisation = 'chord-state';
+                            controller.state = this.id;
+                            selectedIDs = [];
+                            console.log('state id', controller.state);
+                        }
+                        visualisation.redrawFunction();
+                    });
+                arcs.exit().remove();
+
+                var labels = labelsGroup.selectAll("path")
+                                    .data(chord.groups, labelGenerator)
+                labels.exit().remove();
 
                 // not sure of this
-                svg.append("g").selectAll("path")
-                    .data(chord.groups)
-                    .enter().append("svg:text")
+                labels.enter().append("svg:text")
                     .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
                     .attr("dy", ".35em")
                     .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
@@ -89,48 +128,24 @@ function Chord() {
                           + "translate(" + (outerRadius + 26) + ")"
                           + (d.angle > Math.PI ? "rotate(180)" : "");
                     })
-                    .text(function(d) { return indexCodes[d.index]; });
+                    .text(labelGenerator);
 
+                var chordLabelGenerator = function(d){
+                    return labelGenerator(d.source) + '-' + labelGenerator(d.target);
+                }
 
-                // var ticks = svg.append("g").selectAll("g")
-                //     .data(chord.groups)
-                //     .enter().append("g").selectAll("g")
-                //     .data(groupTicks)
-                //     .enter().append("g")
-                //     .attr("transform", function(d) {
-                //         return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")" + "translate(" + outerRadius + ",0)";
-                //     });
-                //
-                // ticks.append("line")
-                //     .attr("x1", 1)
-                //     .attr("y1", 0)
-                //     .attr("x2", 5)
-                //     .attr("y2", 0)
-                //     .style("stroke", "#000");
-                //
-                // ticks.append("text")
-                //     .attr("x", 8)
-                //     .attr("dy", ".35em")
-                //     .attr("transform", function(d) {
-                //         return d.angle > Math.PI ? "rotate(180)translate(-16)" : null;
-                //     })
-                //     .style("text-anchor", function(d) {
-                //         return d.angle > Math.PI ? "end" : null;
-                //     })
-                //     .text(function(d) {
-                //         return d.label;
-                //     });
-
-                svg.append("g")
-                    .attr("class", "chord")
-                    .selectAll("path")
-                    .data(chord.chords)
+                chords.selectAll("path")
+                    .data(chord.chords, chordLabelGenerator)
                     .enter().append("path")
                     .attr("d", d3.svg.chord().radius(innerRadius))
                     .style("fill", function(d) {
                         return fill(d.target.index);
                     })
                     .style("opacity", 1);
+
+                chords.selectAll("path")
+                    .data(chord.chords, chordLabelGenerator)
+                    .exit().remove();
                 }
             });
     };

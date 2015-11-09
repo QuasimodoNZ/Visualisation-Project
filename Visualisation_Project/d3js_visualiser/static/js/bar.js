@@ -16,8 +16,8 @@ function Bar() {
     var y = d3.scale.linear()
         .rangeRound([barHeight, 0]);
 
-    var color = d3.scale.ordinal()
-        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    var color = d3.scale.category20b();
+        // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
     var xAxis = d3.svg.axis()
         .scale(x)
@@ -132,7 +132,6 @@ function Bar() {
                         }
                         return "translate(" + x(label) + ",0)";
                     })
-                    .style("opacity", 0.5)
                     .on('click', function(d) {
                         if (d3.event.defaultPrevented) return;
                         selectID(this.id, d3.event.shiftKey);

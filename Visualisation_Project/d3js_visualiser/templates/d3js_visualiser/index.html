@@ -34,7 +34,7 @@
             <li class="active"><a class="choropleth-tab" href="#choropleth_tab" data-toggle="tab">Choropleth</a></li>
             <li><a class="chord-tab" href="#chord_tab" data-toggle="tab">Chord Diagram</a></li>
             <li><a class="bar-tab" href="#bar_tab" data-toggle="tab">Bar Graphs</a></li>
-            <li><a class="force-tab" href="#force_tab" data-toggle="tab">Force Layout</a></li>
+            <!-- <li><a class="force-tab" href="#force_tab" data-toggle="tab">Force Layout</a></li> -->
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="choropleth_tab">
@@ -49,10 +49,10 @@
                 <h1>Bar Graph</h1>
                 <div id="bar-content"></div>
             </div>
-            <div class="tab-pane" id="force_tab">
+            <!-- <div class="tab-pane" id="force_tab" style="display: none">
                 <h1>Force Layout</h1>
                 <div id="force-content"></div>
-            </div>
+            </div> -->
         </div>
 
         <div id="inspector" class="panel panel-default">
@@ -123,7 +123,7 @@
         {% endautoescape %}
         // jquery for the inspector panel/controller window
 
-        console.log(groupToPuma);
+        console.log('stateCodes: ', stateCodes);
 
         // delete choices.PAP;
         // delete choices.DOUT;
@@ -471,6 +471,10 @@
                 controller.visualisation = 'bar-country';
                 delete controller.state;
                 visualisation.redrawFunction();
+            } else if (controller.visualisation == 'chord-state') {
+                controller.visualisation = 'chord-country';
+                delete controller.state;
+                visualisation.redrawFunction();
             }
 
         });
@@ -514,14 +518,14 @@
                 visualisation.redrawFunction();
             }
         });
-        $(".force-tab").click(function() {
-            if (!$(this).parent().hasClass('active')) {
-                controller.visualisation = 'force-' + controller.visualisation.split('-')[1];
-                delete controller.map;
-                visualisation = new Force();
-                visualisation.redrawFunction();
-            }
-        });
+        // $(".force-tab").click(function() {
+        //     if (!$(this).parent().hasClass('active')) {
+        //         controller.visualisation = 'force-' + controller.visualisation.split('-')[1];
+        //         delete controller.map;
+        //         visualisation = new Force();
+        //         visualisation.redrawFunction();
+        //     }
+        // });
     </script>
 </body>
 

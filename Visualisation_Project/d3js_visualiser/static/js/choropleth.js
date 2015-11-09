@@ -21,7 +21,7 @@ function Choropleth() {
         })
         .call(zoom).on("dblclick.zoom", null); // removes the scrolling zoom for double clicking
 
-    var g = vis.append('g').attr('stroke-width', '1px');
+    var g = vis.append('g').attr('stroke-width', '2px');
 
     var groupMain = g.append('g').attr('id', 'group-main');
     var groupSelected = g.append('g')
@@ -43,8 +43,6 @@ function Choropleth() {
                         d.properties.VALUE = json[d.properties.STATE];
                     } else if (controller.visualisation == 'choropleth-state') {
                         d.properties.VALUE = json[d.properties.PUMA];
-                    } else {
-                        throw error('Trying to draw a choropleth with visualisation: ' + controller.visualisation);
                     }
                     return scale(d.properties.VALUE);
                 });
@@ -90,7 +88,7 @@ function Choropleth() {
             ];
 
             // new projection
-            projection = d3.geo.mercator().center(center)
+            projection = d3.geo.albersUsa()//.center(center)
                 .scale(scale).translate(offset);
             path = path.projection(projection);
 
