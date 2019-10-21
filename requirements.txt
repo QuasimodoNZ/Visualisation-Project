@@ -62,7 +62,7 @@ PyPDF2==1.26.0
 python-apt==1.4.0b3
 python-dateutil==2.7.5
 pytz==2018.9
-pyxdg==0.25
+pyxdg==0.26
 requests==2.20.1
 rpy2==2.8.6
 s3transfer==0.1.13
